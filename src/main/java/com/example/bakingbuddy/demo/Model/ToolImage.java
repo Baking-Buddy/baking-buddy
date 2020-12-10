@@ -1,4 +1,4 @@
-package com.example.bakingbuddy.demo.models;
+package com.example.bakingbuddy.demo.Model;
 
 import javax.persistence.*;
 

@@ -35,7 +35,24 @@ public class User {
     @Column(nullable = false, length = 100)
     private String state;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Tool> tools;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Consumable> consumables;
+
     public User(){}
+
+    public User(String firstName, String lastName, String username, String email, String password, boolean isBaker, String city, String state) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.isBaker = isBaker;
+        this.city = city;
+        this.state = state;
+    }
 
     public User(long id, String firstName, String lastName, String username, String email, String password, boolean isBaker, String city, String state) {
         this.id = id;

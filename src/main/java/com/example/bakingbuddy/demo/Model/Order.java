@@ -37,11 +37,11 @@ public class Order {
         this.baker = baker;
     }
 
-    public Order(long id, String description, double price, User consumer) {
-        this.id = id;
+    public Order(String description, double price, User consumer, User baker) {
         this.description = description;
         this.price = price;
         this.consumer = consumer;
+        this.baker = baker;
     }
 
     public long getId() {

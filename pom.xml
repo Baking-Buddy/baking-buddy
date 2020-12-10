@@ -12,7 +12,7 @@
     <artifactId>demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>baking-buddy</name>
-    <description>Capstone Project</description>
+    <description>Capstone</description>
 
     <properties>
         <java.version>11</java.version>

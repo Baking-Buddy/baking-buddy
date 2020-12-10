@@ -15,17 +15,23 @@ public class Tool {
     @Column(nullable = false)
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private User owner;
+
     public Tool(){}
 
-    public Tool(long id, String name, String description){
+    public Tool(long id, String name, String description, User owner){
         this.id = id;
         this.name = name;
         this.description = description;
+        this.owner = owner;
     }
 
-    public Tool(String name, String description){
+    public Tool(String name, String description, User owner){
         this.name = name;
         this.description = description;
+        this.owner = owner;
     }
 
     public long getId() {
@@ -50,5 +56,13 @@ public class Tool {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }

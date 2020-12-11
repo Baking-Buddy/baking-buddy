@@ -15,7 +15,6 @@ public class Tool {
     @Column(nullable = false)
     private String description;
 
-<<<<<<< HEAD
     @ManyToOne
     @JoinColumn(name = "id")
     private User owner;
@@ -33,7 +32,7 @@ public class Tool {
         this.name = name;
         this.description = description;
         this.owner = owner;
-=======
+
     public Tool(){}
 
     public Tool(long id, String name, String description){
@@ -45,7 +44,7 @@ public class Tool {
     public Tool(String name, String description){
         this.name = name;
         this.description = description;
->>>>>>> skyler
+
     }
 
     public long getId() {
@@ -71,7 +70,6 @@ public class Tool {
     public void setDescription(String description) {
         this.description = description;
     }
-<<<<<<< HEAD
 
     public User getOwner() {
         return owner;
@@ -80,6 +78,5 @@ public class Tool {
     public void setOwner(User owner) {
         this.owner = owner;
     }
-=======
->>>>>>> skyler
+
 }

@@ -1,5 +1,7 @@
 package com.example.bakingbuddy.demo.Model;
 
+import com.example.bakingbuddy.demo.Model.Tool;
+
 import javax.persistence.*;
 
 @Entity

@@ -23,7 +23,7 @@ public class Consumable {
     private String weightUnit;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private User owner;
 
 

@@ -18,7 +18,7 @@ public class Image {
 
     @Column(nullable = false)
     @ManyToOne
-    @JoinColumn (name = "id")
+    @JoinColumn (name = "user_id")
     private User owner;
 
     public Image(){}

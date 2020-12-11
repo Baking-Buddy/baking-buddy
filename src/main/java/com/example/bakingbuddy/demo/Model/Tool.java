@@ -28,13 +28,12 @@ public class Tool {
         this.owner = owner;
     }
 
-    public Tool(String name, String description, User owner){
+    public Tool(String name, String description, User owner) {
         this.name = name;
         this.description = description;
         this.owner = owner;
-
-    public Tool(){}
-
+    }
+    
     public Tool(long id, String name, String description){
         this.id = id;
         this.name = name;

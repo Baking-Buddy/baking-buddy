@@ -1,7 +1,6 @@
 package com.example.bakingbuddy.demo.Model;
 
 import javax.annotation.Generated;
-import
 import javax.persistence.*;
 
 @Entity

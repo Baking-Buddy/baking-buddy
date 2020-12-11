@@ -1,7 +1,9 @@
 package com.example.bakingbuddy.demo.models;
 
 import javax.annotation.Generated;
-import
+
+import com.example.bakingbuddy.demo.Model.User;
+
 import javax.persistence.*;
 
 @Entity

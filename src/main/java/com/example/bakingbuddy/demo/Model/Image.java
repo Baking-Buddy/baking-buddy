@@ -16,9 +16,8 @@ public class Image {
     @Column(nullable = true, length = 255)
     private String imageURL;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     @ManyToOne
-    @JoinColumn (name = "id")
     private User owner;
 
     public Image(){}

@@ -35,11 +35,17 @@ public class User {
     @Column(nullable = false, length = 100)
     private String state;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(mappedBy = "owner")
+    private List<Image> images;
+
+    @OneToMany(mappedBy = "owner")
     private List<Tool> tools;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(mappedBy = "owner")
     private List<Consumable> consumables;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Order> orders;
 
     public User(){}
 
@@ -136,5 +142,37 @@ public class User {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+    public List<Tool> getTools() {
+        return tools;
+    }
+
+    public void setTools(List<Tool> tools) {
+        this.tools = tools;
+    }
+
+    public List<Consumable> getConsumables() {
+        return consumables;
+    }
+
+    public void setConsumables(List<Consumable> consumables) {
+        this.consumables = consumables;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

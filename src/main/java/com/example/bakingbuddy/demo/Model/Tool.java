@@ -17,7 +17,7 @@ public class Tool {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+//    @JoinColumn(name = "user_id")
     private User owner;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tool")

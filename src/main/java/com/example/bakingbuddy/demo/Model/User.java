@@ -35,18 +35,16 @@ public class User {
     @Column(nullable = false, length = 100)
     private String state;
 
-//    @OneToMany(cascade = CascadeType.ALL, targetEntity = Image.class)
-//    @JoinColumn(name = "user_image_fk", referencedColumnName = "id")
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(mappedBy = "owner")
     private List<Image> images;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(mappedBy = "owner")
     private List<Tool> tools;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(mappedBy = "owner")
     private List<Consumable> consumables;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(mappedBy = "owner")
     private List<Order> orders;
 
     public User(){}

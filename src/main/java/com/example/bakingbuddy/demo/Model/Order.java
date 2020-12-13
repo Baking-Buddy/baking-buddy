@@ -19,11 +19,11 @@ public class Order {
     private double price;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name = "user_id")
+//    @JoinColumn(nullable = false, name = "user_id")
     private User consumer;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name = "user_id")
+//    @JoinColumn(nullable = false, name = "user_id")
     private User owner;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")

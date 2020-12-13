@@ -49,6 +49,13 @@ public class User {
 
     public User(){}
 
+    public User(User copy) {
+        id = copy.id;
+        email = copy.email;
+        username = copy.username;
+        password = copy.password;
+    }
+
     public User(String firstName, String lastName, String username, String email, String password, boolean isBaker, String city, String state) {
         this.firstName = firstName;
         this.lastName = lastName;

@@ -23,6 +23,13 @@ public class UserController {
         return"users";
     }
 
+    @GetMapping("/dashboard")
+    public String showDashboard() {
+        return "users/dashboard";
+    }
+
+
+
 //    @PostMapping("/sign-up")
 //    public String saveUser(@ModelAttribute User user) {
 //        String hash = passwordEncoder.encoder(user.getPassword());

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+<form th:action="@{/register}" th:method="POST" th:object="${user}">
+
+    <label for="isBaker">Are you a Baker? Check box if yes</label>
+    <input id="isBaker" name="isBaker" th:type="checkbox" th:checked="${is_baker}">
+
+    <label for="username">Username:</label>
+    <input id="username" th:field="*{username}">
+
+    <label for="firstName">First Name:</label>
+    <input id="firstName" th:field="*{firstName}">
+
+    <label for="lastName">Last Name:</label>
+    <input id="lastName" th:field="*{lastName}">
+
+    <label for="city">City:</label>
+    <input id="city" th:field="*{city}">
+
+    <label for="state">State:</label>
+    <input id="state" th:field="*{state}">
+
+    <label for="email">Email:</label>
+    <input id="email" th:field="*{email}">
+
+    <label for="password">Password:</label>
+    <input id="password" th:type="password" th:field="*{password}">
+
+<!--    <label for="confirmPass">Confirm Password:</label>-->
+<!--    <input id="confirmPass" th:type="password"></input>-->
+
+    <button>Submit</button>
+
+</form>
+</body>
+</html>

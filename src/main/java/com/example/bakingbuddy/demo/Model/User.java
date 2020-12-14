@@ -132,7 +132,7 @@ public class User {
     }
 
     public void setBaker(boolean baker) {
-        isBaker = baker;
+        this.isBaker = baker;
     }
 
     public String getCity() {

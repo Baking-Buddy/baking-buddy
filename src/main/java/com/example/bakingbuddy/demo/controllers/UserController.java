@@ -33,5 +33,19 @@ public class UserController {
         usersDao.save(user);
         return "redirect:/login";
     }
+    @GetMapping("/dashboard")
+    public String showDashboard() {
+        return "users/dashboard";
+    }
+
+
+
+//    @PostMapping("/sign-up")
+//    public String saveUser(@ModelAttribute User user) {
+//        String hash = passwordEncoder.encoder(user.getPassword());
+//        user.setPassword(hash);
+//        usersDao.save(user);
+//        return "redirect:/login";
+//    }
 
 }

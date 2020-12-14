@@ -15,7 +15,7 @@ public class Order {
     @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private double price;
 
     @ManyToOne

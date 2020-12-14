@@ -34,7 +34,7 @@ public class UserController {
         return "redirect:/login";
     }
     @GetMapping("/dashboard")
-    public String showDashboard() {
+    public String showDashboard(Model model) {
         return "users/dashboard";
     }
 

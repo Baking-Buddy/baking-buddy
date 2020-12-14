@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory</title>
+</head>
+<body>
+    <main class="container">
+        <div th:each="tool : ${user.tools}">
+            <h3 th:text="${tool.name}"></h3>
+            <p th:text="${tool.description}"></p>
+        </div>
+    </main>
+</body>
+</html>

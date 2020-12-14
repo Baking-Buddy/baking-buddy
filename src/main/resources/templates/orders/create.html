@@ -6,7 +6,17 @@
 </head>
 <body>
 
-<h1>this is the creation page</h1>
+<main class="container">
+    <form th:action="@{/orders/create}" th:method="post" th:object="${order}">
+        Description of what you want:
+        <input name="description" th:field="*{description}">
+        <br>
+        Budget (Optional): $
+        <input name="price" th:field="*{price}">
+        <br>
+        <input type="submit">
+    </form>
+</main>
 
 </body>
 </html>

@@ -23,6 +23,10 @@ public class UserController {
         return"users";
     }
 
+    @GetMapping("/dashboard")
+    public String showDashboard(Model model) {
+        return "users/dashboard";
+    }
 
 
 

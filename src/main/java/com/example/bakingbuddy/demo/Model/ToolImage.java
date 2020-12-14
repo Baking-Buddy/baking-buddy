@@ -15,7 +15,7 @@ public class ToolImage {
     private String imageUrl;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+//    @JoinColumn(name = "tool_id")
     private Tool tool;
 
     public ToolImage() {}

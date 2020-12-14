@@ -1,6 +1,7 @@
 package com.example.bakingbuddy.demo.Model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "tools")
@@ -16,8 +17,11 @@ public class Tool {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+//    @JoinColumn(name = "user_id")
     private User owner;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tool")
+    private List<ToolImage> toolImages;
 
     public Tool(){}
 

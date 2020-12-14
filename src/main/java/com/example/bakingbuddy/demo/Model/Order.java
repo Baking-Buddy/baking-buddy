@@ -2,6 +2,7 @@ package com.example.bakingbuddy.demo.Model;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -18,30 +19,33 @@ public class Order {
     private double price;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name = "consumer_id")
+//    @JoinColumn(nullable = false, name = "user_id")
     private User consumer;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name = "baker_id")
-    private User baker;
+//    @JoinColumn(nullable = false, name = "user_id")
+    private User owner;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+    private List<OrderImage> orderImages;
 
     public Order(){
 
     }
 
-    public Order(long id, String description, double price, User consumer, User baker) {
+    public Order(long id, String description, double price, User consumer, User owner) {
         this.id = id;
         this.description = description;
         this.price = price;
         this.consumer = consumer;
-        this.baker = baker;
+        this.owner = owner;
     }
 
     public Order(String description, double price, User consumer, User baker) {
         this.description = description;
         this.price = price;
         this.consumer = consumer;
-        this.baker = baker;
+        this.owner = owner;
     }
 
     public long getId() {
@@ -76,11 +80,11 @@ public class Order {
         this.consumer = consumer;
     }
 
-    public User getBaker() {
-        return baker;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setBaker(User baker) {
-        this.baker = baker;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }

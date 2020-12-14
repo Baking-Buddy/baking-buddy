@@ -13,7 +13,7 @@ public class OrderImage {
     private String imageURL;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+//    @JoinColumn(name = "order_id")
     private Order order;
 
     public OrderImage(){}

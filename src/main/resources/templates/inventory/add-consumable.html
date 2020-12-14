@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:action="@{/inventory/consumables/add}" th:method="post" th:object="${consumable}">
+    Brand Name:
+    <input name="brand" id="brand" th:field="*{brand}">
+    <br>
+    Type:
+    <input name="type" id="type" th:field="*{type}">
+    <br>
+    Amount:
+    <input name="amount" id="amount" th:field="*{amount}">
+    <br>
+    Weight-Unit:
+    <br>
+    <input type="radio" id="lbs" name="weight_unit" value="lb(s)" th:field="*{weightUnit}">
+    <label for="lbs">lbs</label><br>
+    <input type="radio" id="oz" name="weight_unit" value="oz" th:field="*{weightUnit}">
+    <label for="oz">oz</label><br>
+    <input type="radio" id="kg" name="weight_unit" value="kg" th:field="*{weightUnit}">
+    <label for="kg">kg</label><br>
+    <br>
+    <input type="submit">
+</form>
+
+</body>
+</html>

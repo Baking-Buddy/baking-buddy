@@ -26,6 +26,23 @@ public class UserController {
         return"users/register";
     }
 
+
+    @GetMapping("/dashboard")
+    public String showDashboard(Model model) {
+        return "users/dashboard";
+    }
+
+
+
+
+//    @PostMapping("/sign-up")
+//    public String saveUser(@ModelAttribute User user) {
+//        String hash = passwordEncoder.encoder(user.getPassword());
+//        user.setPassword(hash);
+//        usersDao.save(user);
+//        return "redirect:/login";
+//    }
+
     @PostMapping("/register")
     public String saveUser(@ModelAttribute User user,
                            @RequestParam(required = false) boolean isBaker) {
@@ -48,5 +65,6 @@ public class UserController {
 //        usersDao.save(user);
 //        return "redirect:/login";
 //    }
+
 
 }

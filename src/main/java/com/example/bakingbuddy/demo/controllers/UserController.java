@@ -47,8 +47,9 @@ public class UserController {
     }
 
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public String showHomePage(Model model){
+        model.addAttribute("users", usersDao.findAll());
         return "home/index";
     }
 

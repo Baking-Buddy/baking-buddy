@@ -80,6 +80,9 @@
                                 <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Settings</a>
 
                                 <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Reports</a>
+
+<!--                                paragraph tag is test to make sure correct user logs in-->
+                                <p>Welcome to your dashboard, <span th:text="${#authentication.principal.username}"></span></p>
                             </div>
                         </div>
                     </div>
@@ -116,7 +119,9 @@
 
                                     <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Settings</a>
 
-                                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign out</a>
+                                    <form th:action="@{/logout}" th:method="post">
+                                        <button class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign out</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -185,8 +190,8 @@
                         <a th:href="@{/dashboard}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">Your Profile</a>
 
                         <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">Settings</a>
-                        <form th:action="@{/logout}" sec:authorize="isAuthenticated()">
-                            <a href="" class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">Sign out</a>
+                        <form th:action="@{/logout}" th:method="post">
+                            <button class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700">Sign out</button>
                         </form>
 
                     </div>

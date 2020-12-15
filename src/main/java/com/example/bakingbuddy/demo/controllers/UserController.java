@@ -51,5 +51,12 @@ public class UserController {
         return "redirect:/login";
     }
 
+    @GetMapping("/home")
+    public String showHomePage(Model model){
+        return "home/index";
+    }
+
+
+
 
 }

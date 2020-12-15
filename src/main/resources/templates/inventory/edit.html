@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<main class="container">
+    <div>
+        <h2 th:text="${consumable.brand}"></h2>
+        <h4 th:text="${consumable.type}"></h4>
+        <p>Current Amount: <span th:text="${consumable.amount}"></span> - <span th:text="${consumable.weightUnit}"></span></p>
+    </div>
+    <form th:action="@{/inventory/consumables/{id}/edit(id=${consumable.id})}" th:method="post" th:object="${consumable}">
+        New Amount:
+        <input name="amount" id="amount" th:field="*{amount}">
+        <br>
+        <input type="submit">
+    </form>
+</main>
+
+</body>
+</html>

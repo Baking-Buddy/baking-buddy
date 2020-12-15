@@ -8,20 +8,12 @@
     <nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
     <header th:replace="partials/banner :: banner('Welcome to Baking Buddy')"></header>
 
-<!--    <main>-->
-<!--        <div class="card" th:if="${users.isBaker}" th:each="user : ${users}">-->
-<!--            <h2 th:text="${user.username}">-->
-<!--                <p th:text="${user.city}, ${user.state}"></p>-->
-<!--            </h2>-->
-<!--        </div>-->
-<!--    </main>-->
-
-
-
-
-
-
-
-
+    <main>
+        <div class="card" th:if="${user.isBaker}" th:each="user : ${users}">
+            <h2 th:text="${user.username}">
+                <p th:text="${user.city}, ${user.state}"></p>
+            </h2>
+        </div>
+    </main>
 </body>
 </html>

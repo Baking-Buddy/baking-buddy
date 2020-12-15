@@ -9,9 +9,7 @@ import com.example.bakingbuddy.demo.Repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class InventoryController {
@@ -63,6 +61,20 @@ public class InventoryController {
         User userDb = userDao.getOne(1L);
         consumableToBeSaved.setOwner(userDb);
         consumableDao.save(consumableToBeSaved);
+        return "redirect:/inventory/consumables";
+    }
+
+    @GetMapping("/inventory/consumables/{id}/edit")
+    public String editConsumablesForm(@PathVariable long id, Model model){
+        model.addAttribute("consumable", consumableDao.getOne(id));
+        return "inventory/edit";
+    }
+
+    @PostMapping("inventory/consumables/{id}/edit")
+    public String submitConsumableEdit(@PathVariable long id, @RequestParam(name = "amount") double newAmount){
+        Consumable oldConsumable = consumableDao.getOne(id);
+        oldConsumable.setAmount(newAmount);
+        consumableDao.save(oldConsumable);
         return "redirect:/inventory/consumables";
     }
 }

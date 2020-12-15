@@ -10,6 +10,7 @@
             <h3 th:text="${consumable.brand}"></h3>
             <h4 th:text="${consumable.type}"></h4>
             <p><span th:text="${consumable.amount}"></span> - <span th:text="${consumable.weightUnit}"></span></p>
+            <a th:href="@{/inventory/consumables/{id}/edit(id=${consumable.id})}">EDIT</a>
         </div>
     </main>
 </body>

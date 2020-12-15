@@ -51,13 +51,11 @@ public class UserController {
         return "redirect:/login";
     }
 
-//    @PostMapping("/sign-up")
-//    public String saveUser(@ModelAttribute User user) {
-//        String hash = passwordEncoder.encoder(user.getPassword());
-//        user.setPassword(hash);
-//        usersDao.save(user);
-//        return "redirect:/login";
-//    }
+
+    @GetMapping("/home")
+    public String showHomePage(Model model){
+        return "home/index";
+    }
 
 
 }

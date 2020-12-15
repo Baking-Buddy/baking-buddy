@@ -1,41 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
-<head>
+<head th:replace="partials/bs-head :: head('Register')">
     <meta charset="UTF-8">
-    <title>Register</title>
+    <title></title>
 </head>
 <body>
+<nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
+<h1>Registration</h1>
+<div class="container mx-auto">
 <form th:action="@{/register}" th:method="POST" th:object="${user}">
 
     <label for="isBaker">Are you a Baker? Check box if yes</label>
     <input id="isBaker" name="isBaker" th:type="checkbox" th:checked="${is_baker}">
-
+    <br>
     <label for="username">Username:</label>
-    <input id="username" th:field="*{username}">
-
+    <input class="bg-white" id="username" th:field="*{username}">
+    <br>
     <label for="firstName">First Name:</label>
     <input id="firstName" th:field="*{firstName}">
-
+    <br>
     <label for="lastName">Last Name:</label>
     <input id="lastName" th:field="*{lastName}">
-
+    <br>
     <label for="city">City:</label>
     <input id="city" th:field="*{city}">
-
+    <br>
     <label for="state">State:</label>
     <input id="state" th:field="*{state}">
-
+    <br>
     <label for="email">Email:</label>
     <input id="email" th:field="*{email}">
-
+    <br>
     <label for="password">Password:</label>
     <input id="password" th:type="password" th:field="*{password}">
-
+    <br>
 <!--    <label for="confirmPass">Confirm Password:</label>-->
 <!--    <input id="confirmPass" th:type="password"></input>-->
 
     <button>Submit</button>
 
 </form>
+</div>
 </body>
 </html>

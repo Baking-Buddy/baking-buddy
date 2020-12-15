@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-
+<nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
 <main class="container">
     <form th:action="@{/orders/create}" th:method="post" th:object="${order}">
         Description of what you want:

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <header th:fragment="banner(title)">
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4 text-center"><span><th:block th:text="${title}"></th:block></span></h1>
+                <p class="lead text-center">Baker's: Your Sweetest Buddy!'</p>
+            </div>
+        </div>
+    </header>
+
+</body>
+</html>

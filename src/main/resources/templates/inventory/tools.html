@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <title>Inventory</title>
 </head>
+<body>
 <nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
 <h1>Tools</h1>
-<body>
+<br>
+<a th:href="@{/inventory/tools/add}" class="btn btn-primary">Add Tool</a>
     <main class="container">
         <div th:each="tool : ${user.tools}" class="col-sm-6">
             <h4 th:text="${tool.name}" class="card-title"></h4>

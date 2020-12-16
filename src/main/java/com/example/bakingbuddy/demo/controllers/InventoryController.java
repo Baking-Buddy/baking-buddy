@@ -26,7 +26,7 @@ public class InventoryController {
     @GetMapping("/inventory/tools")
     public String userTools(Model model){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("user",user);
+        model.addAttribute("user",userDao.getOne(user.getId()));
         return "inventory/tools";
     }
 
@@ -47,7 +47,7 @@ public class InventoryController {
     @GetMapping("/inventory/consumables")
     public String userConsumables(Model model){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("user", user);
+        model.addAttribute("user", userDao.getOne(user.getId()));
         return "inventory/consumables";
     }
 

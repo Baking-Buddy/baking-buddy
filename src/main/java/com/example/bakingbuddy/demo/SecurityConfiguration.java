@@ -57,7 +57,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/inventory/tools/add",
                         "/inventory/consumables",
                         "/inventory/consumables/add",
-                        "/users/dashboard",
                         "/dashboard"
                 )
                     .authenticated()

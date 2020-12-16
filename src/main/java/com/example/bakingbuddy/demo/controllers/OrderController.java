@@ -5,6 +5,7 @@ import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Repos.OrderRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +41,7 @@ public class OrderController {
 
     @PostMapping("/orders/create")
     public String createOrder(@ModelAttribute Order orderToBeSaved){
-        User userDb = userDao.getOne(1L);
+        User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         orderToBeSaved.setOwner(userDb);
         Order dbOrder = orderDao.save(orderToBeSaved);
         return "redirect:/orders/" + dbOrder.getId();

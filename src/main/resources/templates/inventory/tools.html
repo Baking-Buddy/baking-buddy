@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="partials/bs-head :: head('Tools')">
     <meta charset="UTF-8">
     <title>Inventory</title>
 </head>
+<nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
+<h1>Tools</h1>
 <body>
     <main class="container">
-        <div th:each="tool : ${user.tools}">
-            <h3 th:text="${tool.name}"></h3>
-            <p th:text="${tool.description}"></p>
+        <div th:each="tool : ${user.tools}" class="col-sm-6">
+            <h4 th:text="${tool.name}" class="card-title"></h4>
+            <p th:text="${tool.description}" class="card-text"></p>
+            <a th:href="@{/inventory/tools/{id}/edit(id=${tool.id})}" class="btn btn-primary">EDIT</a>
         </div>
     </main>
 </body>

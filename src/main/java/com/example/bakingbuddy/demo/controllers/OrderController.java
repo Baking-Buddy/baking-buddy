@@ -1,6 +1,7 @@
 package com.example.bakingbuddy.demo.controllers;
 
 import com.example.bakingbuddy.demo.Model.Order;
+import com.example.bakingbuddy.demo.Model.OrderStatus;
 import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Repos.OrderRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
@@ -22,10 +23,6 @@ public class OrderController {
     @Autowired
     private UserRepository userDao;
 
-//    public OrderController(OrderRepository orderDao, UserRepository userDao){
-//        this.orderDao = orderDao;
-//        this.userDao = userDao;
-//    }
 
     @GetMapping("/orders/{id}")
     public String order(@PathVariable long id, Model viewModel){
@@ -43,9 +40,12 @@ public class OrderController {
     public String createOrder(@ModelAttribute Order orderToBeSaved){
         User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         orderToBeSaved.setOwner(userDb);
+        orderToBeSaved.setStatus(OrderStatus.PENDING);
         Order dbOrder = orderDao.save(orderToBeSaved);
         return "redirect:/orders/" + dbOrder.getId();
     }
+
+
 
 
 }

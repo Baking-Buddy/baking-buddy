@@ -26,6 +26,8 @@ public class Consumable {
 //    @JoinColumn(name = "user_id")
     private User owner;
 
+    @ManyToOne
+    private Recipe recipe;
 
     public Consumable() {}
 
@@ -92,5 +94,13 @@ public class Consumable {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 }

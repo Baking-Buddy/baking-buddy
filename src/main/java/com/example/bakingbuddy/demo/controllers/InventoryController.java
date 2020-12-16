@@ -7,6 +7,7 @@ import com.example.bakingbuddy.demo.Repos.ConsumableRepository;
 import com.example.bakingbuddy.demo.Repos.ToolRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class InventoryController {
 
     @GetMapping("/inventory/tools")
     public String userTools(Model model){
-        User user = userDao.getOne(1L);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user",user);
         return "inventory/tools";
     }
@@ -37,7 +38,7 @@ public class InventoryController {
 
     @PostMapping("/inventory/tools/add")
     public String newTool(@ModelAttribute Tool toolToBeSaved){
-        User userDb = userDao.getOne(1L);
+        User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         toolToBeSaved.setOwner(userDb);
         toolDao.save(toolToBeSaved);
         return "redirect:/inventory/tools";
@@ -45,7 +46,7 @@ public class InventoryController {
 
     @GetMapping("/inventory/consumables")
     public String userConsumables(Model model){
-        User user = userDao.getOne(1L);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user", user);
         return "inventory/consumables";
     }
@@ -58,7 +59,7 @@ public class InventoryController {
 
     @PostMapping("/inventory/consumables/add")
     public String newConsumable(@ModelAttribute Consumable consumableToBeSaved){
-        User userDb = userDao.getOne(1L);
+        User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         consumableToBeSaved.setOwner(userDb);
         consumableDao.save(consumableToBeSaved);
         return "redirect:/inventory/consumables";

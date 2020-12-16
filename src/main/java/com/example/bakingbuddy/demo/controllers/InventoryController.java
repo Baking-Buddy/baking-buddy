@@ -68,7 +68,7 @@ public class InventoryController {
     @GetMapping("/inventory/consumables/{id}/edit")
     public String editConsumablesForm(@PathVariable long id, Model model){
         model.addAttribute("consumable", consumableDao.getOne(id));
-        return "inventory/edit";
+        return "inventory/edit-consumables";
     }
 
     @PostMapping("inventory/consumables/{id}/edit")
@@ -77,5 +77,19 @@ public class InventoryController {
         oldConsumable.setAmount(newAmount);
         consumableDao.save(oldConsumable);
         return "redirect:/inventory/consumables";
+    }
+
+    @GetMapping("inventory/tools/{id}/edit")
+    public String editToolsForm(@PathVariable long id, Model model){
+        model.addAttribute("tool", toolDao.getOne(id));
+        return "inventory/edit-tools";
+    }
+
+    @PostMapping("inventory/tools/{id}/edit")
+    public String submitToolEdit(@PathVariable long id, @RequestParam(name = "description") String newDescription){
+        Tool oldTool = toolDao.getOne(id);
+        oldTool.setDescription(newDescription);
+        toolDao.save(oldTool);
+        return "redirect:/inventory/tools";
     }
 }

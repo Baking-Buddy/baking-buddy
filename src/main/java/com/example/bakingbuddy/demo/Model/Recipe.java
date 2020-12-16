@@ -17,7 +17,7 @@ public class Recipe {
     @ManyToOne
     private User owner;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "recipe")
     private List<Consumable> consumables;
 
     public Recipe(){

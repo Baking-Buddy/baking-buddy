@@ -30,6 +30,12 @@ public class OrderController {
         return "orders/customer-order";
     }
 
+    @GetMapping("/orders")
+    public String showOrders(Model vModel) {
+        vModel.addAttribute("orders", orderDao.findAll());
+        return "orders/orders";
+    }
+
     @GetMapping("/orders/create")
     public String showOrderForm(Model viewModel){
         viewModel.addAttribute("order", new Order());

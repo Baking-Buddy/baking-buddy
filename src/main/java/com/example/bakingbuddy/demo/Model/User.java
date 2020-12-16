@@ -47,6 +47,9 @@ public class User {
     @OneToMany(mappedBy = "owner")
     private List<Order> orders;
 
+    @OneToMany(mappedBy = "owner")
+    private List<Recipe> recipes;
+
     public User(){}
 
     public User(User copy) {
@@ -181,5 +184,13 @@ public class User {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
     }
 }

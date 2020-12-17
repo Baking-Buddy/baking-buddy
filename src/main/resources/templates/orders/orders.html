@@ -1,28 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="partials/bs-head ::head('Orders')">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="partials/bs-head :: head('Orders')">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Orders</title>
 </head>
 <body>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th scope="col">Due Date</th>
-            <th scope="col">Type</th>
-            <th scope="col">Customer</th>
-            <th scope="col">More details</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="order : ${orders}">
-            <td scope="row">1</td>
-            <td>Mark</td>
-            <td></td>
-            <td th:text="${order.description}"></td>
-        </tr>
-        </tbody>
-    </table>
-    <div th:replace="partials/scripts :: scripts"></div>
+<nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
+<h1>Orders</h1>
+<br>
+<a th:href="@{/orders/create}" class="btn btn-primary">Create Order</a>
+<main class="container">
+    <div th:each="order : ${orders}" class="col-sm-6">
+        <h4 th:text="${order.date}" class="card-title"></h4>
+        <p th:text="${order.description}" class="card-text"></p>
+        <a th:href="@{/orders/{id}/edit(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">EDIT</a>
+    </div>
+</main>
 </body>
 </html>

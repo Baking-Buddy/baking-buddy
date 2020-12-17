@@ -1,5 +1,6 @@
 package com.example.bakingbuddy.demo.controllers;
 
+import com.example.bakingbuddy.demo.Model.Consumable;
 import com.example.bakingbuddy.demo.Model.Order;
 import com.example.bakingbuddy.demo.Model.OrderStatus;
 import com.example.bakingbuddy.demo.Model.User;
@@ -9,10 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @Controller
 public class OrderController {
@@ -45,6 +45,28 @@ public class OrderController {
         return "redirect:/orders/" + dbOrder.getId();
     }
 
+    @GetMapping("/orders")
+    public String showOrders(Model model){
+        model.addAttribute("orders",orderDao.findAll());
+        return "orders/orders";
+    }
+
+    @GetMapping("/orders/{id}/edit")
+    public String editOrderForm(@PathVariable long id, Model model){
+        model.addAttribute("order", orderDao.getOne(id));
+        return "orders/edit-order";
+    }
+
+
+
+    @PostMapping("/orders/{id}/edit")
+    public String submitOrderEdit(@ModelAttribute Order orderToBeEdited) {
+        User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        orderToBeEdited.setOwner(userDb);
+        orderToBeEdited.setStatus(OrderStatus.PENDING);
+        orderDao.save(orderToBeEdited);
+        return "redirect:/orders";
+    }
 
 
 

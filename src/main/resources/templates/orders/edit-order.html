@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head  th:replace="partials/bs-head :: head('Tools')">
+    <meta charset="UTF-8">
+    <title>Orders</title>
+</head>
+<nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
+<h1>Edit Order</h1>
+<body>
+<main class="container">
+    <div>
+        <p>Current Description : <span th:text="${order.description}"></span></p>
+        <p>Current Request by date : <span th:text="${order.date}"></span></p>
+    </div>
+    <form th:action="@{/orders/{id}/edit(id=${order.id})}" th:method="post" th:object="${order}">
+        New Description:
+        <input type="textarea" name="description" id="description" th:field="*{description}">
+        <br>
+        New Request by date (yyyy-MM-dd):
+        <input type="text" name="date" id="date" th:field="*{date}">
+        <br>
+        <input type="submit">
+    </form>
+</main>
+</body>
+</html>

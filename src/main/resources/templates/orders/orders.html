@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="partials/bs-head :: head('Orders')">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Orders</title>
 </head>
 <body>
-    <main>
-        <div>
-
-        </div>
-    </main>
+<nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
+<h1>Orders</h1>
+<br>
+<a th:href="@{/orders/create}" class="btn btn-primary">Create Order</a>
+<main class="container">
+    <div th:each="order : ${orders}" class="col-sm-6">
+        <h4 th:text="${order.date}" class="card-title"></h4>
+        <p th:text="${order.description}" class="card-text"></p>
+        <a th:href="@{/orders/{id}/edit(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">EDIT</a>
+    </div>
+</main>
 </body>
 </html>

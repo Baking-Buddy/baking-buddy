@@ -4,6 +4,7 @@ import com.example.bakingbuddy.demo.Model.Consumable;
 import com.example.bakingbuddy.demo.Model.Tool;
 import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Repos.ConsumableRepository;
+import com.example.bakingbuddy.demo.Repos.RecipeRepository;
 import com.example.bakingbuddy.demo.Repos.ToolRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class InventoryController {
 
     @Autowired
     private UserRepository userDao;
+
 
     @GetMapping("/inventory/tools")
     public String userTools(Model model){

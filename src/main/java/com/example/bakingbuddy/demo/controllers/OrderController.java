@@ -57,13 +57,14 @@ public class OrderController {
         return "orders/edit-order";
     }
 
+
+
     @PostMapping("/orders/{id}/edit")
-    public String submitOrderEdit(@PathVariable long id, @RequestParam(name = "description") String newDescription, @RequestParam(name = "date") Date newDate) {
-        Order order = orderDao.getOne(id);
-//        Date convertedDate = newDate;
-        order.setDescription(newDescription);
-        order.setDate(newDate);
-        orderDao.save(order);
+    public String submitOrderEdit(@ModelAttribute Order orderToBeEdited) {
+        User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        orderToBeEdited.setOwner(userDb);
+        orderToBeEdited.setStatus(OrderStatus.PENDING);
+        orderDao.save(orderToBeEdited);
         return "redirect:/orders";
     }
 

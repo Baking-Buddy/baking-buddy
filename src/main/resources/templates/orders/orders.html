@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="partials/bs-head :: head('Orders')">
     <meta charset="UTF-8">
     <title>Orders</title>
@@ -13,7 +13,7 @@
     <div th:each="order : ${orders}" class="col-sm-6">
         <h4 th:text="${order.date}" class="card-title"></h4>
         <p th:text="${order.description}" class="card-text"></p>
-        <a th:href="@{/orders/{id}/edit(id=${order.id})}" class="btn btn-primary">EDIT</a>
+        <a th:href="@{/orders/{id}/edit(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">EDIT</a>
     </div>
 </main>
 </body>

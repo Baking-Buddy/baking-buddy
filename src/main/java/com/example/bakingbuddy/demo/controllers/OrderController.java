@@ -1,5 +1,6 @@
 package com.example.bakingbuddy.demo.controllers;
 
+import com.example.bakingbuddy.demo.Model.Consumable;
 import com.example.bakingbuddy.demo.Model.Order;
 import com.example.bakingbuddy.demo.Model.OrderStatus;
 import com.example.bakingbuddy.demo.Model.User;
@@ -9,10 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @Controller
 public class OrderController {
@@ -50,6 +50,23 @@ public class OrderController {
         model.addAttribute("orders",orderDao.findAll());
         return "orders/orders";
     }
+
+    @GetMapping("/orders/{id}/edit")
+    public String editOrderForm(@PathVariable long id, Model model){
+        model.addAttribute("order", orderDao.getOne(id));
+        return "orders/edit-order";
+    }
+
+    @PostMapping("/orders/{id}/edit")
+    public String submitOrderEdit(@PathVariable long id, @RequestParam(name = "description") String newDescription, @RequestParam(name = "date") Date newDate) {
+        Order order = orderDao.getOne(id);
+//        Date convertedDate = newDate;
+        order.setDescription(newDescription);
+        order.setDate(newDate);
+        orderDao.save(order);
+        return "redirect:/orders";
+    }
+
 
 
 }

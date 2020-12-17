@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/bs-head :: head('Search Results')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
+<h1>Search Results</h1>
+<br>
+<main class="container">
+    <div th:each="user : ${userResults}">
+        <h4 th:text="${user.username}"></h4>
+    </div>
+</main>
+</body>
+</html>

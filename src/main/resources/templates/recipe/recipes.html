@@ -16,6 +16,9 @@
         <ul class="card-text" th:each="consumable : ${recipe.consumables}" >
             <li th:text="${consumable.type}"></li>
         </ul>
+        <form th:action="@{'recipe/' + ${recipe.id} + '/edit'}" th:method="get">
+            <button>Edit</button>
+        </form>
     </div>
 </main>
 

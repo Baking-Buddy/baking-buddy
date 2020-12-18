@@ -33,8 +33,6 @@ public class RecipeController {
     public String showRecipes(Model model){
         User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user", userDao.getOne(userDb.getId()));
-        model.addAttribute("recipe", recipeDao.findAll());
-        model.addAttribute("consumables", consumableDao.findAll());
         return "recipe/recipes";
     }
 
@@ -49,10 +47,14 @@ public class RecipeController {
 
     @PostMapping("/recipe/create")
     public String createdRecipe(@ModelAttribute Recipe recipeToBeSaved,
-                                @RequestParam(name= "consumables")List<Consumable> consumables){
+                                @RequestParam("consumables")List<Consumable> consumables){
         User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         recipeToBeSaved.setOwner(userDb);
+        System.out.println(consumables);
         recipeToBeSaved.setConsumables(consumables);
+//        List <Recipe> recipeList = new L
+//        consumables.get(0).setRecipes();
+//        consumables.get(1).getRecipes().add(recipeToBeSaved);
         recipeDao.save(recipeToBeSaved);
         return "redirect:/recipe";
     }

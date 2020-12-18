@@ -74,4 +74,14 @@ public class RecipeController {
         recipeDao.save(recipeToEdit);
         return "redirect:/recipe";
     }
+
+    @PostMapping("/recipe/{id}/delete")
+    public String deleteRecipe(@PathVariable long id
+                               ){
+        Recipe recipe = recipeDao.getOne(id);
+        recipe.setConsumables(null);
+        recipeDao.save(recipe);
+        recipeDao.deleteById(id);
+        return "redirect:/recipe";
+    }
 }

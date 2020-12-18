@@ -43,17 +43,22 @@ public class OrderController {
     }
 
     @GetMapping("/orders/create")
-    public String showOrderForm(Model viewModel){
+    public String showOrderForm(Model viewModel, @RequestParam(name="baker-id") String bakerID){
         viewModel.addAttribute("order", new Order());
+        viewModel.addAttribute("baker-id", bakerID);
         return "orders/create";
     }
 
     @PostMapping("/orders/create")
-    public String createOrder(@ModelAttribute Order orderToBeSaved, @RequestParam(name="uploadedImage") String uploadedImage){
-        User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public String createOrder(@ModelAttribute Order orderToBeSaved, @RequestParam(name="uploadedImage") String uploadedImage, @RequestParam(name="baker-id") String bakerID){
+        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userDb = userDao.getOne(sessionUser.getId());
+        long longBakerId = Long.parseLong(bakerID);
+        orderToBeSaved.setBaker(userDao.getOne(longBakerId));
         orderToBeSaved.setOwner(userDb);
         orderToBeSaved.setStatus(OrderStatus.PENDING);
         Order dbOrder = orderDao.save(orderToBeSaved);
+
         OrderImage orderImage = new OrderImage(uploadedImage, dbOrder);
         orderImageDao.save(orderImage);
         return "redirect:/orders/" + dbOrder.getId();

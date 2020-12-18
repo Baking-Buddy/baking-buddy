@@ -8,7 +8,6 @@
 <nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
 <h1>Orders</h1>
 <br>
-<a th:href="@{/orders/create}" class="btn btn-primary">Create Order</a>
 <main class="container">
     <div th:each="order : ${orders}" class="col-sm-6">
         <h4 th:text="${order.date}" class="card-title"></h4>

@@ -19,6 +19,9 @@
         <form th:action="@{'recipe/' + ${recipe.id} + '/edit'}" th:method="get">
             <button>Edit</button>
         </form>
+        <form th:action="@{'recipe/' + ${recipe.id} + '/delete'}" th:method="post">
+            <button>Delete</button>
+        </form>
     </div>
 </main>
 

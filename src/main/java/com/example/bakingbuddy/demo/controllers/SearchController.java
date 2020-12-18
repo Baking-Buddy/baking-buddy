@@ -25,14 +25,8 @@ public class SearchController {
 
     @GetMapping("/search-results")
     public String bakerSearchResults(@RequestParam(name = "query") String query, Model model){
-        List<User> userResults = usersDao.findByUsernameLike("%" + query + "%");
-        List<User> refinedUserResults = new ArrayList<>();
-        for (User baker : userResults){
-          if (baker.isBaker()){
-              refinedUserResults.add(baker);
-          }
-        }
-        model.addAttribute("userResults", refinedUserResults);
+        List<User> userResults = usersDao.findBakerByUsernameLike(query);
+        model.addAttribute("userResults", userResults);
         return "home/search-results";
     }
 }

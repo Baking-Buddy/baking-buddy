@@ -59,11 +59,6 @@ public class OrderController {
         return "redirect:/orders/" + dbOrder.getId();
     }
 
-    @GetMapping("/orders")
-    public String showOrders(Model model){
-        model.addAttribute("orders",orderDao.findAll());
-        return "orders/orders";
-    }
 
     @GetMapping("/orders/{id}/edit")
     public String editOrderForm(@PathVariable long id, Model model){

@@ -2,6 +2,7 @@ package com.example.bakingbuddy.demo.controllers;
 
 import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
+import com.example.bakingbuddy.demo.services.EmailService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserController {
     private UserRepository usersDao;
     private PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
-    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder) {
+    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService) {
 
         this.usersDao = usersDao;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
 
     @GetMapping("/register")
@@ -42,7 +45,8 @@ public class UserController {
         user.setBaker(isBaker);
         String hashPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashPassword);
-        usersDao.save(user);
+        User dbUser = usersDao.save(user);
+        emailService.userCreatedProfileEmail(dbUser, "Registration", "Congratulations on setting up your Baking Buddy profile!");
         return "redirect:/login";
     }
 

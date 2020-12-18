@@ -38,7 +38,9 @@ public class OrderController {
 
     @PostMapping("/orders/create")
     public String createOrder(@ModelAttribute Order orderToBeSaved){
-        User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        sessionUser is pulled and put within userDao to keep most updated information.
+        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userDb = userDao.getOne(sessionUser.getId());
         orderToBeSaved.setOwner(userDb);
         orderToBeSaved.setStatus(OrderStatus.PENDING);
         Order dbOrder = orderDao.save(orderToBeSaved);
@@ -58,7 +60,6 @@ public class OrderController {
     }
 
 
-
     @PostMapping("/orders/{id}/edit")
     public String submitOrderEdit(@ModelAttribute Order orderToBeEdited) {
         User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -67,6 +68,7 @@ public class OrderController {
         orderDao.save(orderToBeEdited);
         return "redirect:/orders";
     }
+
 
 
 

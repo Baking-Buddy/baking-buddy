@@ -13,6 +13,10 @@
     <div th:each="order : ${orders}" class="col-sm-6">
         <h4 th:text="${order.date}" class="card-title"></h4>
         <p th:text="${order.description}" class="card-text"></p>
+        <form th:action="@{/accept}" th:method="post">
+            <button type="submit" class="btn btn-outline-success my-2 my-sm-0"></button>
+        </form>
+<!--        <a th:href="@{/orders/{id}/accept(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">ACCEPT</a>-->
         <a th:href="@{/orders/{id}/edit(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">EDIT</a>
     </div>
 </main>

@@ -69,7 +69,16 @@ public class OrderController {
         return "redirect:/orders";
     }
 
-
+    @PostMapping("/accept")
+    public String acceptOrder(@ModelAttribute Order orderToBeAccepted){
+        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userDb = userDao.getOne(sessionUser.getId());
+        if(userDb.isBaker()){
+            orderToBeAccepted.setBaker(userDb);
+            orderToBeAccepted.setStatus(OrderStatus.ACCEPTED);
+        }
+        return "redirect:/orders";
+    }
 
 
 }

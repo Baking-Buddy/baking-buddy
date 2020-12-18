@@ -17,7 +17,12 @@ public class Recipe {
     @ManyToOne
     private User owner;
 
-    @OneToMany(mappedBy = "recipe")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name="recipes_consumables",
+            joinColumns = {@JoinColumn(name= "recipe_id")},
+            inverseJoinColumns ={@JoinColumn(name= "consumable_id")}
+    )
     private List<Consumable> consumables;
 
     public Recipe(){

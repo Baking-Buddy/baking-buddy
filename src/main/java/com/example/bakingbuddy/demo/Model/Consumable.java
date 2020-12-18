@@ -2,6 +2,7 @@ package com.example.bakingbuddy.demo.Model;
 
 import javax.annotation.Generated;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "consumables")
@@ -26,8 +27,10 @@ public class Consumable {
 //    @JoinColumn(name = "user_id")
     private User owner;
 
-    @ManyToOne
-    private Recipe recipe;
+    @ManyToMany(mappedBy = "consumables")
+    private List<Recipe> recipes;
+
+
 
     public Consumable() {}
 
@@ -96,11 +99,13 @@ public class Consumable {
         this.owner = owner;
     }
 
-    public Recipe getRecipe() {
-        return recipe;
+    public List<Recipe> getRecipes() {
+        return recipes;
     }
 
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
     }
 }
+
+

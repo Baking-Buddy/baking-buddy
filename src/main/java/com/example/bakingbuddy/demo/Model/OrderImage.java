@@ -9,7 +9,7 @@ public class OrderImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "text")
     private String imageURL;
 
     @ManyToOne

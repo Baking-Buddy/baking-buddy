@@ -1,0 +1,17 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/bs-head :: head('Baker Profile')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
+<!--    <header th:replace="partials/banner :: banner(${baker.username})"></header>-->
+
+    <div>
+        <h1><span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></h1>
+        <h2><span th:text="${user.city}"></span>, <span th:text="${user.state}"></span></h2>
+    </div>
+
+
+</body>
+</html>

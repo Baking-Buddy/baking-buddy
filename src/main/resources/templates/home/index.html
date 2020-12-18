@@ -8,14 +8,18 @@
     <nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
     <header th:replace="partials/banner :: banner('Welcome to Baking Buddy')"></header>
 
-    <main class="card" th:each="user : ${users}" th:if="${user.isBaker()}">
-        <div class="card-body">
-            <h2 class="card-title" th:text="${user.username}"></h2>
+    <main>
+        <div class="card" th:each="user : ${users}" th:if="${user.isBaker()}">
+            <div class="card-body">
+                <a th:href="@{|/baker-profile/${user.id}|}" class="card-title" th:text="${user.username}"></a>
                 <p class="card-text">
                     <span th:text="${user.city}"></span>,
                     <span th:text="${user.state}"></span>
                 </p>
+            </div>
         </div>
     </main>
+
+
 </body>
 </html>

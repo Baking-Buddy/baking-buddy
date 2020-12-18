@@ -6,6 +6,7 @@ import com.example.bakingbuddy.demo.Model.ToolImage;
 import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Repos.ConsumableRepository;
 import com.example.bakingbuddy.demo.Repos.ToolImageRepository;
+import com.example.bakingbuddy.demo.Repos.RecipeRepository;
 import com.example.bakingbuddy.demo.Repos.ToolRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,6 @@ public class InventoryController {
 
     @Autowired
     private ToolImageRepository toolImageDao;
-
 
     @GetMapping("/inventory/tools")
     public String userTools(Model model){

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="partials/bs-head :: head('Customer Orders')">
     <meta charset="UTF-8">
     <title>Orders</title>
 </head>
@@ -8,7 +8,8 @@
 <nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
 <main>
     <div>
-        <h1 th:text="${order.price}"></h1>
+        <h1>Requested by: </h1>
+        <h2 th:text="${order.date}"></h2>
         <p th:text="${order.description}"></p>
     </div>
 </main>

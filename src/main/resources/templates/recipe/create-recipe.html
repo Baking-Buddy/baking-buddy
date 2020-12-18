@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/bs-head :: head('Create Recipe')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
+<h1>Create a Recipe</h1>
+<br>
+<main class="container center-text">
+    <form th:action="@{/recipe/create}" th:method="post" th:object="${recipe}">
+        <label for="recipeName">Recipe Name:</label>
+        <input type="text" th:field="*{name}" id="recipeName">
+
+        <h2>Ingredients needed:</h2>
+        <div class="form-check" th:each="consumable : ${user.consumables}">
+            <input class="form-check-input" type="checkbox" name="consumables" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                <span th:text="${consumable.type}"></span>
+            </label>
+        </div>
+
+        <button>Create Recipe!</button>
+
+    </form>
+</main>
+
+</body>
+</html>

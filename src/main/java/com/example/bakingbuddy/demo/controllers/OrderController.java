@@ -81,7 +81,7 @@ public class OrderController {
     public String searchOrdersByOwner(@RequestParam(name = "query") String query, Model model){
         List<Order> orderResults = orderDao.findOwnerByNameLike(query);
         model.addAttribute("orderResults", orderResults);
-        return "orders/search-orders";
+        return "orders/orders";
     }
 
 

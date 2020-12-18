@@ -2,8 +2,10 @@ package com.example.bakingbuddy.demo.controllers;
 
 import com.example.bakingbuddy.demo.Model.Consumable;
 import com.example.bakingbuddy.demo.Model.Order;
+import com.example.bakingbuddy.demo.Model.OrderImage;
 import com.example.bakingbuddy.demo.Model.OrderStatus;
 import com.example.bakingbuddy.demo.Model.User;
+import com.example.bakingbuddy.demo.Repos.OrderImageRepository;
 import com.example.bakingbuddy.demo.Repos.OrderRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.Date;
 
@@ -23,11 +26,20 @@ public class OrderController {
     @Autowired
     private UserRepository userDao;
 
+    @Autowired
+    private OrderImageRepository orderImageDao;
+
 
     @GetMapping("/orders/{id}")
     public String order(@PathVariable long id, Model viewModel){
         viewModel.addAttribute("order", orderDao.getOne(id));
         return "orders/customer-order";
+    }
+
+    @GetMapping("/orders")
+    public String showOrders(Model vModel) {
+        vModel.addAttribute("orders", orderDao.findAll());
+        return "orders/orders";
     }
 
     @GetMapping("/orders/create")
@@ -37,11 +49,13 @@ public class OrderController {
     }
 
     @PostMapping("/orders/create")
-    public String createOrder(@ModelAttribute Order orderToBeSaved){
+    public String createOrder(@ModelAttribute Order orderToBeSaved, @RequestParam(name="uploadedImage") String uploadedImage){
         User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         orderToBeSaved.setOwner(userDb);
         orderToBeSaved.setStatus(OrderStatus.PENDING);
         Order dbOrder = orderDao.save(orderToBeSaved);
+        OrderImage orderImage = new OrderImage(uploadedImage, dbOrder);
+        orderImageDao.save(orderImage);
         return "redirect:/orders/" + dbOrder.getId();
     }
 

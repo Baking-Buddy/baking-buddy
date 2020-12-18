@@ -2,8 +2,10 @@ package com.example.bakingbuddy.demo.controllers;
 
 import com.example.bakingbuddy.demo.Model.Consumable;
 import com.example.bakingbuddy.demo.Model.Tool;
+import com.example.bakingbuddy.demo.Model.ToolImage;
 import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Repos.ConsumableRepository;
+import com.example.bakingbuddy.demo.Repos.ToolImageRepository;
 import com.example.bakingbuddy.demo.Repos.RecipeRepository;
 import com.example.bakingbuddy.demo.Repos.ToolRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
@@ -24,6 +26,8 @@ public class InventoryController {
     @Autowired
     private UserRepository userDao;
 
+    @Autowired
+    private ToolImageRepository toolImageDao;
 
     @GetMapping("/inventory/tools")
     public String userTools(Model model){
@@ -39,10 +43,12 @@ public class InventoryController {
     }
 
     @PostMapping("/inventory/tools/add")
-    public String newTool(@ModelAttribute Tool toolToBeSaved){
+    public String newTool(@ModelAttribute Tool toolToBeSaved, @RequestParam(name="uploadedImage") String uploadedImage){
         User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         toolToBeSaved.setOwner(userDb);
-        toolDao.save(toolToBeSaved);
+        Tool dbTool = toolDao.save(toolToBeSaved);
+        ToolImage toolImage = new ToolImage(uploadedImage, dbTool);
+        toolImageDao.save(toolImage);
         return "redirect:/inventory/tools";
     }
 

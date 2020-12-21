@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
+<nav th:replace="partials/navbar :: navbar"></nav>
 <h1>Add Consumable</h1>
 <form th:action="@{/inventory/consumables/add}" th:method="post" th:object="${consumable}">
     Brand Name:

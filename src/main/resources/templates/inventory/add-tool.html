@@ -5,7 +5,7 @@
     <title>Inventory</title>
 </head>
 <body>
-<nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
+<nav th:replace="partials/navbar :: navbar"></nav>
 <h1>Add Tool</h1>
     <form th:action="@{/inventory/tools/add}" th:method="post" th:object="${tool}">
         Tool Name:

@@ -5,7 +5,7 @@
     <title>Orders</title>
 </head>
 <body>
-<nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
+<nav th:replace="partials/navbar :: navbar"></nav>
 <h1>Orders</h1>
 <main class="container">
     <div th:each="order : ${orderResults}" class="col-sm-6">

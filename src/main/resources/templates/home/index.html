@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-    <nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
+    <nav th:replace="partials/navbar :: navbar"></nav>
     <header th:replace="partials/banner :: banner('Welcome to Baking Buddy')"></header>
 
     <main>
@@ -19,7 +19,6 @@
             </div>
         </div>
     </main>
-
-
+    <div th:replace="partials/scripts :: scripts"></div>
 </body>
 </html>

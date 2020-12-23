@@ -5,7 +5,6 @@ const options = {
     maxSize: 10 * 1024 * 1024,
     accept: 'image/*',
     uploadInBackground: false
-
 };
 const picker = client.picker(options);
 
@@ -28,13 +27,5 @@ function updateForm (result) {
     const fileData = result.filesUploaded[0];
     fileInput.value = fileData.url;
     document.querySelector("fileupload").value = fileData.url;
-
-    // Some ugly DOM code to show some data.
-    // const name = document.createTextNode('Selected: ' + fileData.filename);
-    // const url = document.createElement('a');
-    // url.href = fileData.url;
-    // url.appendChild(document.createTextNode(fileData.url));
-    // nameBox.appendChild(name);
-    // urlBox.appendChild(document.createTextNode('Uploaded to: '));
-    // urlBox.appendChild(url);
 };
+

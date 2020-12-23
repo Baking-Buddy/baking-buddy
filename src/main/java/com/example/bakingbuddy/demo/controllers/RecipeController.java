@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -50,12 +47,41 @@ public class RecipeController {
                                 @RequestParam("consumables")List<Consumable> consumables){
         User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         recipeToBeSaved.setOwner(userDb);
-        System.out.println(consumables);
         recipeToBeSaved.setConsumables(consumables);
-//        List <Recipe> recipeList = new L
-//        consumables.get(0).setRecipes();
-//        consumables.get(1).getRecipes().add(recipeToBeSaved);
         recipeDao.save(recipeToBeSaved);
+        return "redirect:/recipe";
+    }
+
+    @GetMapping("/recipe/{id}/edit")
+    public String showEditForm(@PathVariable long id, Model model){
+        User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", userDao.getOne(userDb.getId()));
+        model.addAttribute("consumable", consumableDao.findAll());
+        model.addAttribute("recipe", new Recipe());
+        model.addAttribute("recipeToEdit", recipeDao.getOne(id));
+        return "recipe/edit-recipe";
+    }
+
+    @PostMapping("/recipe/{id}/edit")
+    public String editRecipe(
+            @PathVariable long id,
+            @ModelAttribute Recipe recipeToEdit,
+            @RequestParam("consumables")List<Consumable> consumables
+    ){
+        User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        recipeToEdit.setOwner(userDb);
+        recipeToEdit.setConsumables(consumables);
+        recipeDao.save(recipeToEdit);
+        return "redirect:/recipe";
+    }
+
+    @PostMapping("/recipe/{id}/delete")
+    public String deleteRecipe(@PathVariable long id
+                               ){
+        Recipe recipe = recipeDao.getOne(id);
+        recipe.setConsumables(null);
+        recipeDao.save(recipe);
+        recipeDao.deleteById(id);
         return "redirect:/recipe";
     }
 }

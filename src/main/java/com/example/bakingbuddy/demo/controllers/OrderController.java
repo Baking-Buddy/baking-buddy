@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class OrderController {
@@ -36,32 +37,28 @@ public class OrderController {
         return "orders/customer-order";
     }
 
-    @GetMapping("/orders")
-    public String showOrders(Model vModel) {
-        vModel.addAttribute("orders", orderDao.findAll());
-        return "orders/orders";
-    }
 
     @GetMapping("/orders/create")
-    public String showOrderForm(Model viewModel, @RequestParam(name="baker-id") String bakerID){
+    public String showOrderForm(Model viewModel){
         viewModel.addAttribute("order", new Order());
-        viewModel.addAttribute("baker-id", bakerID);
         return "orders/create";
     }
 
     @PostMapping("/orders/create")
-    public String createOrder(@ModelAttribute Order orderToBeSaved, @RequestParam(name="uploadedImage") String uploadedImage, @RequestParam(name="baker-id") String bakerID){
-        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userDb = userDao.getOne(sessionUser.getId());
-        long longBakerId = Long.parseLong(bakerID);
-        orderToBeSaved.setBaker(userDao.getOne(longBakerId));
+    public String createOrder(@ModelAttribute Order orderToBeSaved, @RequestParam(name="uploadedImage") String uploadedImage){
+        User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         orderToBeSaved.setOwner(userDb);
         orderToBeSaved.setStatus(OrderStatus.PENDING);
         Order dbOrder = orderDao.save(orderToBeSaved);
-
         OrderImage orderImage = new OrderImage(uploadedImage, dbOrder);
         orderImageDao.save(orderImage);
         return "redirect:/orders/" + dbOrder.getId();
+    }
+
+    @GetMapping("/orders")
+    public String showOrders(Model model){
+        model.addAttribute("orders",orderDao.findAll());
+        return "orders/orders";
     }
 
     @GetMapping("/orders/{id}/edit")
@@ -69,6 +66,7 @@ public class OrderController {
         model.addAttribute("order", orderDao.getOne(id));
         return "orders/edit-order";
     }
+
 
 
     @PostMapping("/orders/{id}/edit")
@@ -90,6 +88,13 @@ public class OrderController {
         }
         return "redirect:/orders";
     }
+    @GetMapping("/search-orders")
+    public String searchOrdersByOwner(@RequestParam(name = "query") String query, Model model){
+        List<Order> orderResults = orderDao.findOwnerByNameLike(query);
+        model.addAttribute("orderResults", orderResults);
+        return "orders/orders";
+    }
+
 
 
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class OrderController {
@@ -59,7 +60,6 @@ public class OrderController {
         return "redirect:/orders/" + dbOrder.getId();
     }
 
-
     @GetMapping("/orders/{id}/edit")
     public String editOrderForm(@PathVariable long id, Model model){
         model.addAttribute("order", orderDao.getOne(id));
@@ -75,6 +75,13 @@ public class OrderController {
         orderToBeEdited.setStatus(OrderStatus.PENDING);
         orderDao.save(orderToBeEdited);
         return "redirect:/orders";
+    }
+
+    @GetMapping("/search-orders")
+    public String searchOrdersByOwner(@RequestParam(name = "query") String query, Model model){
+        List<Order> orderResults = orderDao.findOwnerByNameLike(query);
+        model.addAttribute("orderResults", orderResults);
+        return "orders/orders";
     }
 
 

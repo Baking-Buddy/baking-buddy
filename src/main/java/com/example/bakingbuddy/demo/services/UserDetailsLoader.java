@@ -2,6 +2,7 @@ package com.example.bakingbuddy.demo.services;
 
 import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Model.UserWithRoles;
+import com.example.bakingbuddy.demo.Repos.RolesRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import com.example.bakingbuddy.demo.Repos.Users;
 import org.springframework.security.core.userdetails.UserDetails;

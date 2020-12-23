@@ -8,7 +8,6 @@
 <nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
 <h1>Orders</h1>
 <br>
-<a th:href="@{/orders/create}" class="btn btn-primary">Create Order</a>
 <main class="container">
     <form th:action="@{/search-orders}" method="GET">
         <input class="form-control mr-sm-2" type="search" placeholder="Search Orders" name="query" aria-label="Search">
@@ -25,6 +24,10 @@
         <h4 th:text="${order.date}" class="card-title"></h4>
         <p><span th:text="${order.owner.firstName}"></span> <span th:text="${order.owner.lastName}"></span></p>
         <p th:text="${order.description}" class="card-text"></p>
+        <form th:action="@{/accept}" th:method="post">
+            <button type="submit" class="btn btn-outline-success my-2 my-sm-0"></button>
+        </form>
+<!--        <a th:href="@{/orders/{id}/accept(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">ACCEPT</a>-->
         <a th:href="@{/orders/{id}/edit(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">EDIT</a>
     </div>
 </main>

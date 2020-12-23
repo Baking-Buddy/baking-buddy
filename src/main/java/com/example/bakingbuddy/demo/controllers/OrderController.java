@@ -37,27 +37,33 @@ public class OrderController {
         return "orders/customer-order";
     }
 
-    @GetMapping("/orders")
-    public String showOrders(Model vModel) {
-        vModel.addAttribute("orders", orderDao.findAll());
-        return "orders/orders";
-    }
 
-    @GetMapping("/orders/create")
-    public String showOrderForm(Model viewModel){
+    @GetMapping("/orders/create/{id}")
+    public String showOrderForm(Model viewModel, @PathVariable long id){
         viewModel.addAttribute("order", new Order());
+        viewModel.addAttribute("bakerID", id);
         return "orders/create";
     }
 
-    @PostMapping("/orders/create")
-    public String createOrder(@ModelAttribute Order orderToBeSaved, @RequestParam(name="uploadedImage") String uploadedImage){
-        User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    @PostMapping("/orders/create/{id}")
+    public String createOrder(@ModelAttribute Order orderToBeSaved, @RequestParam(name="uploadedImage") String uploadedImage, @PathVariable long id){
+        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userDb = userDao.getOne(sessionUser.getId());
+
+        orderToBeSaved.setBaker(userDao.getOne(id));
         orderToBeSaved.setOwner(userDb);
         orderToBeSaved.setStatus(OrderStatus.PENDING);
         Order dbOrder = orderDao.save(orderToBeSaved);
+
         OrderImage orderImage = new OrderImage(uploadedImage, dbOrder);
         orderImageDao.save(orderImage);
         return "redirect:/orders/" + dbOrder.getId();
+    }
+
+    @GetMapping("/orders")
+    public String showOrders(Model model){
+        model.addAttribute("orders",orderDao.findAll());
+        return "orders/orders";
     }
 
     @GetMapping("/orders/{id}/edit")
@@ -77,6 +83,16 @@ public class OrderController {
         return "redirect:/orders";
     }
 
+    @PostMapping("/accept")
+    public String acceptOrder(@ModelAttribute Order orderToBeAccepted){
+        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userDb = userDao.getOne(sessionUser.getId());
+        if(userDb.isBaker()){
+            orderToBeAccepted.setBaker(userDb);
+            orderToBeAccepted.setStatus(OrderStatus.ACCEPTED);
+        }
+        return "redirect:/orders";
+    }
     @GetMapping("/search-orders")
     public String searchOrdersByOwner(@RequestParam(name = "query") String query, Model model){
         List<Order> orderResults = orderDao.findOwnerByNameLike(query);

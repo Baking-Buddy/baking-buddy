@@ -7,15 +7,11 @@
 <body>
 <nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
 <main class="container">
-<!--    <form th:action="@{/orders/create}" th:method="get" th:object="${user}">-->
-<!--        <h2 type="hidden" th:name="baker-id" th:value="${user.id}"></h2>-->
-<!--    </form>-->
-    <form th:action="@{/orders/create}" th:method="post" th:object="${order}">
+    <form th:action="@{|/orders/create/${bakerID}|}" th:method="post" th:object="${order}">
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">Expected Date</span>
             <input type="text" class="form-control" placeholder="yyyy-mm-dd" aria-label="Expected Date" aria-describedby="basic-addon1" th:field="*{date}">
         </div>
-<!--        <h2 type="hidden" th:name="baker-id" th:value="${user.id}"></h2>-->
         <div class="input-group">
             <span class="input-group-text">Description</span>
             <textarea class="form-control" aria-label="Description" th:field="*{description}"></textarea>

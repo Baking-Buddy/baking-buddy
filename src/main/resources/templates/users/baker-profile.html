@@ -4,7 +4,7 @@
     <title>Title</title>
 </head>
 <body>
-    <nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
+    <nav th:replace="partials/navbar :: navbar"></nav>
     <header th:replace="partials/banner :: banner(${user.username})"></header>
 
     <div>
@@ -14,6 +14,6 @@
         <a th:href="@{|/orders/create/${user.id}|}" class="btn btn-primary">Create Order</a>
     </div>
 
-
+    <div th:replace="partials/scripts :: scripts"></div>
 </body>
 </html>

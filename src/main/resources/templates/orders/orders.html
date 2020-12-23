@@ -5,10 +5,9 @@
     <title>Orders</title>
 </head>
 <body>
-<main>
+<main class="container">
 <h1>Orders</h1>
 <br>
-<main class="container">
     <form th:action="@{/search-orders}" method="GET">
         <input class="form-control mr-sm-2" type="search" placeholder="Search Orders" name="query" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -50,5 +49,6 @@
         </table>
     </div>
 </main>
+    <div th:replace="partials/scripts :: scripts"></div>
 </body>
 </html>

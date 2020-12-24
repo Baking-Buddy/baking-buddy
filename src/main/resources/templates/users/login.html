@@ -1,50 +1,52 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="partials/bs-head :: head('Login')">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
+<head th:replace="partials/bs-head :: head('Login')"></head>
 <body>
-<nav th:replace="partials/navbar :: navbar"></nav>
-<main class="container mt-5">
-    <div class="row">
-        <div class="col-md-6">
-            <h3 class="text-center pb-4">Login</h3>
-            <div th:if="${param.error}">-->
-                Invalid Username and Password.
-            </div>
-            <div th:if="${param.logout}">
-                You have been logged out.
-            </div>
-            <form th:action="@{/login}" method="post">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text"  class="form-control" name="username" id="username" >
+<div th:fragment="login">
+<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLable" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end py">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input id="password" class="form-control" name="password" type="password" />
+                <h3 class="text-center pb-4">Login</h3>
+                <div th:if="${param.error}">-->
+                    Invalid Username and Password.
                 </div>
-                <input type="submit" value="Log In" />
-            </form>
-            <div class="form-group pt-3">
-                <a href="#">Forget Password?</a>
+                <div th:if="${param.logout}">
+                    You have been logged out.
+                </div>
+                <form th:action="@{/login}" method="post">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text"  class="form-control" name="username" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input id="password" class="form-control" name="password" type="password" required>
+                    </div>
+                    <div class="py-2">
+                        <button class="btn-block btn-primary py-1" type="button">Sign in</button>
+                        <button class="btn-block btn-primary py-1" type="button">Sign in with Google</button>
+                    </div>
+                </form>
+                <div class="form-group pt-3">
+                    <a href="#">Forget Password?</a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                 <div class="mx-auto d-flex">
+                        <p class="text-center">Don't have an account? </p>
+                     <a href="#" class="pl-2" th:href="@{/register}">Sign up</a>
+                    </div>
+                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <h3 class="text-center pb-4">Don't have an account?</h3>
-            <div class="d-grid gap-2 text-center">
-                <div class="d-grid gap-2 col-6 mx-auto">
-                    <form th:action="@{/register}" method="GET">
-                        <button class="btn btn-primary" type="submit">Sign up</button>
-                    </form>
-                    <button class="btn btn-primary" type="submit">Sign up with Google</button>
-                </div>
-            </div>
+    </div>
+</div>
 
-        </div>
-    </div>
-    </div>
-</main>
-<div th:replace="partials/scripts :: scripts"></div>
+
+
+
 </body>

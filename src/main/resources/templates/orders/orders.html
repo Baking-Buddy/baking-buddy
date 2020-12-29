@@ -6,13 +6,35 @@
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
-<main class="container">
+<main class="container mt-8">
 <h1>Orders</h1>
 <br>
     <form th:action="@{/search-orders}" method="GET">
         <input class="form-control mr-sm-2" type="search" placeholder="Search Orders" name="query" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
+
+    <div th:if="${user.isBaker()}">
+        <h1>THIS IS BAKER VIEW</h1>
+        <div th:each="order : ${orders}" class="col-sm-6">
+            <h4 th:text="${order.date}" class="card-title"></h4>
+            <p><span th:text="${order.owner.firstName}"></span> <span th:text="${order.owner.lastName}"></span></p>
+            <p th:text="${order.description}" class="card-text"></p>
+            <a th:href="@{/orders/{id}/edit(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">EDIT</a>
+        </div>
+    </div>
+
+    <div th:if="${!user.isBaker()}">
+        <h1>THIS IS CUSTOMER VIEW</h1>
+        <div th:each="order : ${orders}" class="col-sm-6">
+            <h4 th:text="${order.date}" class="card-title"></h4>
+            <p><span th:text="${order.owner.firstName}"></span> <span th:text="${order.owner.lastName}"></span></p>
+            <p th:text="${order.description}" class="card-text"></p>
+            <a th:href="@{/orders/{id}/edit(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">EDIT</a>
+        </div>
+    </div>
+
+
     <div th:each="order : ${orders}" class="col-sm-6">
         <h4 th:text="${order.date}" class="card-title"></h4>
         <p><span th:text="${order.owner.firstName}"></span> <span th:text="${order.owner.lastName}"></span></p>

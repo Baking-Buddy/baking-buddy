@@ -70,8 +70,10 @@ public class OrderController {
         User userDb = userDao.getOne(sessionUser.getId());
         if(userDb.isBaker()){
             model.addAttribute("orders", orderDao.findAllByBaker(userDb));
+            model.addAttribute("user", userDb);
         }else if(!userDb.isBaker()){
             model.addAttribute("orders", orderDao.findAllByOwner(userDb));
+            model.addAttribute("user", userDb);
         }
 
 //        model.addAttribute("orders",orderDao.findAll());

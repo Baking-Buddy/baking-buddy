@@ -5,7 +5,7 @@
     <title></title>
 </head>
 <body>
-<nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
+<nav th:replace="partials/navbar :: navbar"></nav>
 <h1>Registration</h1>
 <div class="container mx-auto">
 <form th:action="@{/register}" th:method="POST" th:object="${user}">
@@ -41,5 +41,6 @@
 
 </form>
 </div>
+<div th:replace="partials/scripts :: scripts"></div>
 </body>
 </html>

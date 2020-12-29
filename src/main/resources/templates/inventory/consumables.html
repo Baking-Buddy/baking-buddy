@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="partials/bs-head :: head('Consumables')">
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:replace="partials/bs-head :: head('Consumables')"></head>
 <body>
-<nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
+<nav th:replace="partials/navbar :: navbar"></nav>
 <h1>Consumables</h1>
 <br>
 <a th:href="@{/inventory/consumables/add}" class="btn btn-primary">Add Consumable</a>
@@ -19,5 +16,6 @@
             </div>
         </div>
     </main>
+<div th:replace="partials/scripts :: scripts"></div>
 </body>
 </html>

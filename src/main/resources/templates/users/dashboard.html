@@ -1,38 +1,127 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head th:replace="partials/bs-head :: head('Dashboard')"></head>
-<body>
-    <nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
-    <div class="wrapper d-flex">
-        <div class="sideMenu">
-            <div class="sidebar d-flex align-items-center">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="material-icons icon">person</i>
-                            <span class="text">User Profile</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link"><i class="material-icons icon">insert_chart</i><span class="text">Tools</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link"><i class="material-icons icon">computer</i><span class="text">Consumables</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link"><i class="material-icons icon">settings</i><span class="text">Settings</span></a>
-                    </li>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/bs-head :: head('Dashboard')">
 
-                </ul>
-            </div>
-        </div>
-        <div class="content">
-            <main>
-                <div class="container-fluid">
+</head>
+
+<body>
+    <nav th:replace="partials/navbar :: navbar"></nav>
+
+<!--    container-->
+
+    <main class="container">
+        <div class="row">
+<!--            sidebar-->
+            <div class="col-md-2 d-none d-md-block sidebar">
+                <div class="sidebar-left">
+                    <ul class="nav flex-column sidebar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">My Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/orders}">Orders</a>
+                        </li>
+                        <li class="nav-item">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Inventory
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">My Pantry</a></li>
+                                <li><a class="dropdown-item" href="#">My Baking Tools</a></li>
+                            </ul>
+                        </li>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Settings</a>
+                        </li>
+                    </ul>
                 </div>
-            </main>
+            </div>
+<!--            -->
         </div>
-    </div>
+<!--        main content-->
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
+<!--            table-->
+            <h3 class="py-3">Current Orders</h3>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                </table>
+            </div>
+            <!--            -->
+
+<!--            grid-->
+            <h3 class="py-3">Everything Else</h3>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Special title treatment</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Special title treatment</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Special title treatment</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Special title treatment</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+    </main>
+    
     <div th:replace="partials/scripts :: scripts"></div>
 </body>
 </html>

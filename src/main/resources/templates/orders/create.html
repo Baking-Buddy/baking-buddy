@@ -5,9 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-<nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
+<nav th:replace="partials/navbar :: navbar"></nav>
 <main class="container">
-    <form th:action="@{/orders/create}" th:method="post" th:object="${order}">
+    <form th:action="@{|/orders/create/${bakerID}|}" th:method="post" th:object="${order}">
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">Expected Date</span>
             <input type="text" class="form-control" placeholder="yyyy-mm-dd" aria-label="Expected Date" aria-describedby="basic-addon1" th:field="*{date}">

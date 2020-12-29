@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
+<nav th:replace="partials/navbar :: navbar"></nav>
 <header th:replace="partials/banner :: banner('Recipes')"></header>
 
 <a th:href="@{/recipe/create}" class="btn btn-primary">Create a Recipe!</a>
@@ -24,6 +24,6 @@
         </form>
     </div>
 </main>
-
+<div th:replace="partials/scripts :: scripts"></div>
 </body>
 </html>

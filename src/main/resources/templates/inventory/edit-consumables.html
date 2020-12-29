@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8" th:replace="partials/bs-head :: head('Consumables')">
-    <title>Title</title>
-</head>
+<head th:replace="partials/bs-head :: head('Consumables')"></head>
 <body>
-<nav th:replace="partials/navbar :: navbar('Baking Buddy')"></nav>
+<nav th:replace="partials/navbar :: navbar"></nav>
 <h1>Edit Amount</h1>
 <main class="container">
     <div>
@@ -20,6 +17,6 @@
         <input type="submit">
     </form>
 </main>
-
+<div th:replace="partials/scripts :: scripts"></div>
 </body>
 </html>

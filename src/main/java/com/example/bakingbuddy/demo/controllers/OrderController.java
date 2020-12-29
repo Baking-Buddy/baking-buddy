@@ -10,6 +10,7 @@ import com.example.bakingbuddy.demo.Repos.OrderRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import com.example.bakingbuddy.demo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -99,8 +100,9 @@ public class OrderController {
     }
     @GetMapping("/search-orders")
     public String searchOrdersByOwner(@RequestParam(name = "query") String query, Model model){
-        List<Order> orderResults = orderDao.findOwnerByNameLike(query);
+        List<Order> orderResults = service.listAll(query);
         model.addAttribute("orderResults", orderResults);
+        model.addAttribute("query", query);
         return "orders/orders";
     }
 

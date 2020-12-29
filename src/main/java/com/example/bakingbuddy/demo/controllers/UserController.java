@@ -1,6 +1,8 @@
 package com.example.bakingbuddy.demo.controllers;
 
+import com.example.bakingbuddy.demo.Model.Image;
 import com.example.bakingbuddy.demo.Model.User;
+import com.example.bakingbuddy.demo.Repos.ImageRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import com.example.bakingbuddy.demo.services.EmailService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,14 +13,16 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UserController {
     private UserRepository usersDao;
+    private ImageRepository imageDao;
     private PasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
-    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService) {
+    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService, ImageRepository imageDao) {
 
         this.usersDao = usersDao;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
+        this.imageDao = imageDao;
     }
 
     @GetMapping("/register")
@@ -37,12 +41,16 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public String saveUser(@ModelAttribute User user,
-                           @RequestParam(required = false) boolean isBaker) {
-        user.setBaker(isBaker);
-        String hashPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(hashPassword);
-        User dbUser = usersDao.save(user);
+    public String saveUser(@ModelAttribute User userToBeSaved,
+                           @RequestParam(required = false) boolean isBaker,
+                           @RequestParam(name="uploadedImage") String uploadedImage
+    ) {
+        userToBeSaved.setBaker(isBaker);
+        String hashPassword = passwordEncoder.encode(userToBeSaved.getPassword());
+        userToBeSaved.setPassword(hashPassword);
+        User dbUser = usersDao.save(userToBeSaved);
+        Image profileImage = new Image(true, uploadedImage, dbUser);
+        imageDao.save(profileImage);
         emailService.userCreatedProfileEmail(dbUser, "Registration", "Congratulations on setting up your Baking Buddy profile!");
         return "redirect:/login";
     }

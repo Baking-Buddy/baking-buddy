@@ -8,6 +8,7 @@ import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Repos.OrderImageRepository;
 import com.example.bakingbuddy.demo.Repos.OrderRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
+import com.example.bakingbuddy.demo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,9 @@ public class OrderController {
 
     @Autowired
     private OrderImageRepository orderImageDao;
+
+    @Autowired
+    private ProductService service;
 
 
     @GetMapping("/orders/{id}")
@@ -95,8 +99,9 @@ public class OrderController {
     }
     @GetMapping("/search-orders")
     public String searchOrdersByOwner(@RequestParam(name = "query") String query, Model model){
-        List<Order> orderResults = orderDao.findOwnerByNameLike(query);
+        List<Order> orderResults = service.listAll(query);
         model.addAttribute("orderResults", orderResults);
+        model.addAttribute("query", query);
         return "orders/orders";
     }
 

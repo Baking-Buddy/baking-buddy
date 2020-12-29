@@ -6,7 +6,7 @@
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
-<main class="container">
+<main class="container mt-5">
     <form th:action="@{|/orders/create/${bakerID}|}" th:method="post" th:object="${order}">
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">Expected Date</span>

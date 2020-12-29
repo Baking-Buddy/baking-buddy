@@ -10,4 +10,7 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query(value = "FROM Order WHERE owner.firstName LIKE %:query% OR owner.lastName LIKE %:query%")
     List<Order> findOwnerByNameLike(String query);
+
+    List<Order> findAllByBaker(User user);
+    List<Order> findAllByOwner(User user);
 }

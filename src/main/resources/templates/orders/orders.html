@@ -5,7 +5,9 @@
     <title>Orders</title>
 </head>
 <body>
-<main class="container">
+<nav th:replace="partials/navbar :: navbar"></nav>
+<aside th:replace="partials/sidebar :: aside"></aside>
+<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
 <h1>Orders</h1>
     <form th:action="@{/orders}" method="GET">
         <div class="input-group mb-3 d-flex justify-content-end">

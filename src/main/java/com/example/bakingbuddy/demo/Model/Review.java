@@ -14,7 +14,7 @@ public class Review {
     private long id;
 
     @Column(nullable = false)
-    private int rating;
+    private float rating;
 
     @Column(nullable = false, length = 50)
     private String title;
@@ -47,7 +47,7 @@ public class Review {
         this.id = id;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 

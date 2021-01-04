@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/bs-head :: head('Create Review')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="partials/navbar :: navbar"></nav>
+<h1>Create a Review</h1>
+<br>
+<main class="container">
+    <form th:action="@{/review/create}" th:method="post" th:object="${review}">
+<!--        <label for="reviewRating"></label>-->
+<!--        <input value="0" type="hidden" th:field="*{rating}" id="reviewRating" data-glyphicon="0">-->
+        <label for="reviewTitle">Title:</label>
+        <input type="text" th:field="*{title}" id="reviewTitle">
+        <br>
+        <label for="reviewBody"></label>
+        <textarea rows="10" cols="60" th:field="*{body}" id="reviewBody"></textarea>
+        <br>
+        <button>Post Review</button>
+    </form>
+</main>
+<div th:replace="partials/scripts :: scripts"></div>
+</body>
+</html>

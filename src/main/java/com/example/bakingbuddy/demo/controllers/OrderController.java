@@ -97,16 +97,21 @@ public class OrderController {
         return "redirect:/orders";
     }
 
-    @PostMapping("/accept")
-    public String acceptOrder(@ModelAttribute Order orderToBeAccepted){
-        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userDb = userDao.getOne(sessionUser.getId());
-        if(userDb.isBaker()){
-            orderToBeAccepted.setBaker(userDb);
-            orderToBeAccepted.setStatus(OrderStatus.ACCEPTED);
-        }
+    @PostMapping("/accept/{id}")
+    public String acceptOrder(@PathVariable long id){
+        Order orderToAccept = orderDao.getOne(id);
+        orderToAccept.setStatus(OrderStatus.ACCEPTED);
+        orderDao.save(orderToAccept);
         return "redirect:/orders";
     }
+    @PostMapping("/reject/{id}")
+    public String rejectOrder(@PathVariable long id){
+        Order orderToReject = orderDao.getOne(id);
+        orderToReject.setStatus(OrderStatus.REJECTED);
+        orderDao.save(orderToReject);
+        return "redirect:/orders";
+    }
+
     @GetMapping("/search-orders")
     public String searchOrdersByOwner(@RequestParam(name = "query") String query, Model model){
         List<Order> orderResults = orderDao.findOwnerByNameLike(query);

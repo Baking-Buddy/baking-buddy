@@ -21,15 +21,15 @@
             <p><span th:text="${order.owner.firstName}"></span> <span th:text="${order.owner.lastName}"></span></p>
             <p th:text="${order.description}" class="card-text"></p>
             <a th:href="@{/orders/{id}/edit(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">EDIT</a>
-            <div th:switch="${order.status}">
+            <div th:switch="${T(com.example.bakingbuddy.demo.Model.Order).status}">
                 <p th:text="${order.status}"></p>
-                <form th:case="'REJECTED'" th:action="@{|/accept/${order.id}|}" th:method="post">
+                <form th:case="${T(com.example.bakingbuddy.demo.Model.Order).REJECTED}" th:action="@{|/accept/${order.id}|}" th:method="post">
                     <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Accept</button>
                 </form>
-                <form th:case="'ACCEPTED'" th:action="@{|/reject/${order.id}|}" th:method="post">
+                <form th:case="${T(com.example.bakingbuddy.demo.Model.Order).ACCEPTED}" th:action="@{|/reject/${order.id}|}" th:method="post">
                     <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Reject</button>
                 </form>
-                <div th:case="*">
+                <div th:case="${T(com.example.bakingbuddy.demo.Model.Order).PENDING}">
                     <form th:action="@{|/accept/${order.id}|}" th:method="post">
                         <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Accept</button>
                     </form>

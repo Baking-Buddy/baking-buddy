@@ -15,16 +15,23 @@ public class ProductService {
     @Autowired
     private OrderRepository orderDao;
 
-    public List<Order> listAll(String query) {
+    public List<Order> listAllBaker(String query, User user) {
         if(query != null) {
             return orderDao.findOwnerByNameLike(query);
         }
-        return orderDao.findAll();
+        return orderDao.findAllByBaker(user);
     }
 
 //    public List<Order> showRoleOrders(Iterable id){
 //        User baker = order.getBaker();
 //        return orderDao.findAllById(id);
 //    }
+
+    public List<Order> listAllOwner(String query, User user) {
+        if(query != null) {
+            return orderDao.findOwnerByNameLike(query);
+        }
+        return orderDao.findAllByOwner(user);
+    }
 
 }

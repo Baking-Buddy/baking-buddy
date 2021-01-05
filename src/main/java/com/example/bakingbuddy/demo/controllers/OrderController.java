@@ -65,11 +65,20 @@ public class OrderController {
         return "redirect:/orders/" + dbOrder.getId();
     }
 
-//    @GetMapping("/orders")
-//    public String showOrders(Model model){
-//        model.addAttribute("orders",orderDao.findAll());
-//        return "orders/orders";
-//    }
+@GetMapping("/orders")
+public String showOrders(@Param("query") String query, Model model){
+    User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    User userDb = userDao.getOne(sessionUser.getId());
+    if(userDb.isBaker()){
+        model.addAttribute("orders", service.listAllBaker(query, userDb));
+        model.addAttribute("user", userDb);
+    }else if(!userDb.isBaker()){
+        model.addAttribute("orders", service.listAllOwner(query, userDb));
+        model.addAttribute("user", userDb);
+    }
+
+    return "orders/orders";
+}
 
     @GetMapping("/orders/{id}/edit")
     public String editOrderForm(@PathVariable long id, Model model){
@@ -96,14 +105,4 @@ public class OrderController {
         }
         return "redirect:/orders";
     }
-    @GetMapping("/orders")
-    public String searchOrdersByOwner(@Param("query") String query, Model model){
-        List<Order> orderResults = service.listAll(query);
-        model.addAttribute("orderResults", orderResults);
-        model.addAttribute("query", query);
-        return "orders/orders";
-    }
-
-
-
 }

@@ -50,6 +50,9 @@ public class User {
     @OneToMany(mappedBy = "owner")
     private List<Recipe> recipes;
 
+    @OneToMany(mappedBy = "owner")
+    private List<Review> reviews;
+
     public User(){}
 
     public User(User copy) {
@@ -195,4 +198,13 @@ public class User {
     public void setRecipes(List<Recipe> recipes) {
         this.recipes = recipes;
     }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 }
+

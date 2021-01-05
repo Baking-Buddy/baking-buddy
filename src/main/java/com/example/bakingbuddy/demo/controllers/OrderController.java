@@ -32,8 +32,10 @@ public class OrderController {
     @Autowired
     private OrderImageRepository orderImageDao;
 
+
     @Autowired
     private ProductService service;
+
 
 
     @GetMapping("/orders/{id}")
@@ -65,11 +67,23 @@ public class OrderController {
         return "redirect:/orders/" + dbOrder.getId();
     }
 
-//    @GetMapping("/orders")
-//    public String showOrders(Model model){
+
+    @GetMapping("/orders")
+    public String showOrders(Model model){
+        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userDb = userDao.getOne(sessionUser.getId());
+        if(userDb.isBaker()){
+            model.addAttribute("orders", orderDao.findAllByBaker(userDb));
+            model.addAttribute("user", userDb);
+        }else if(!userDb.isBaker()){
+            model.addAttribute("orders", orderDao.findAllByOwner(userDb));
+            model.addAttribute("user", userDb);
+        }
+
 //        model.addAttribute("orders",orderDao.findAll());
-//        return "orders/orders";
-//    }
+        return "orders/orders";
+    }
+
 
     @GetMapping("/orders/{id}/edit")
     public String editOrderForm(@PathVariable long id, Model model){
@@ -86,23 +100,23 @@ public class OrderController {
         return "redirect:/orders";
     }
 
-    @PostMapping("/accept")
-    public String acceptOrder(@ModelAttribute Order orderToBeAccepted){
-        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userDb = userDao.getOne(sessionUser.getId());
-        if(userDb.isBaker()){
-            orderToBeAccepted.setBaker(userDb);
-            orderToBeAccepted.setStatus(OrderStatus.ACCEPTED);
-        }
+    @PostMapping("/accept/{id}")
+    public String acceptOrder(@PathVariable long id){
+        Order orderToAccept = orderDao.getOne(id);
+        orderToAccept.setStatus(OrderStatus.ACCEPTED);
+        orderDao.save(orderToAccept);
         return "redirect:/orders";
     }
-    @GetMapping("/orders")
-    public String searchOrdersByOwner(@Param("query") String query, Model model){
-        List<Order> orderResults = service.listAll(query);
-        model.addAttribute("orderResults", orderResults);
-        model.addAttribute("query", query);
-        return "orders/orders";
+
+    @PostMapping("/reject/{id}")
+    public String rejectOrder(@PathVariable long id){
+        Order orderToReject = orderDao.getOne(id);
+        orderToReject.setStatus(OrderStatus.REJECTED);
+        orderDao.save(orderToReject);
+        return "redirect:/orders";
     }
+
+   
 
 
 

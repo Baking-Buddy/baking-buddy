@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="partials/bs-head :: head('Create Review')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="partials/navbar :: navbar"></nav>
+
+<main class="container mt-5">
+    <a th:href="@{/review/create}" sec:authorize="isAuthenticated()" class="btn btn-primary">Post a Review</a>
+    <div class="card" th:each="review : ${user.reviews}" >
+    <div class="card-body">
+        <h2 class="card-title" th:text="${review.title}"></h2>
+        <p class="mt-5">Rating: <strong th:text="${review.rating}"></strong></p>
+        <p class="card-text" th:text="${review.body}"></p>
+    </div>
+    </div>
+</main>
+<div th:replace="partials/scripts :: scripts"></div>
+</body>
+</html>

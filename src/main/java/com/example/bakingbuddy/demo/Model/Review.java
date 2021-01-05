@@ -13,8 +13,8 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
-    private float rating;
+    @Column(nullable = false, length = 1)
+    private int rating;
 
     @Column(nullable = false, length = 50)
     private String title;
@@ -50,11 +50,11 @@ public class Review {
         this.id = id;
     }
 
-    public float getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(float rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 

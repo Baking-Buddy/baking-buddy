@@ -65,19 +65,17 @@ public class OrderController {
         return "redirect:/orders/" + dbOrder.getId();
     }
 
-    @GetMapping("/orders")
-    public String showOrders(Model model){
-        model.addAttribute("orders",orderDao.findAll());
-        return "orders/orders";
-    }
+//    @GetMapping("/orders")
+//    public String showOrders(Model model){
+//        model.addAttribute("orders",orderDao.findAll());
+//        return "orders/orders";
+//    }
 
     @GetMapping("/orders/{id}/edit")
     public String editOrderForm(@PathVariable long id, Model model){
         model.addAttribute("order", orderDao.getOne(id));
         return "orders/edit-order";
     }
-
-
 
     @PostMapping("/orders/{id}/edit")
     public String submitOrderEdit(@ModelAttribute Order orderToBeEdited) {
@@ -98,8 +96,8 @@ public class OrderController {
         }
         return "redirect:/orders";
     }
-    @GetMapping("/search-orders")
-    public String searchOrdersByOwner(@RequestParam(name = "query") String query, Model model){
+    @GetMapping("/orders")
+    public String searchOrdersByOwner(@Param("query") String query, Model model){
         List<Order> orderResults = service.listAll(query);
         model.addAttribute("orderResults", orderResults);
         model.addAttribute("query", query);

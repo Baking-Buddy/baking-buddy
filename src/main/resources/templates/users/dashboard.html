@@ -7,39 +7,9 @@
 <body>
     <nav th:replace="partials/navbar :: navbar"></nav>
 
-<!--    container-->
 
-    <main class="container">
-        <div class="row">
-<!--            sidebar-->
-            <div class="col-md-2 d-none d-md-block sidebar">
-                <div class="sidebar-left">
-                    <ul class="nav flex-column sidebar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">My Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/orders}">Orders</a>
-                        </li>
-                        <li class="nav-item">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Inventory
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="#">My Pantry</a></li>
-                                <li><a class="dropdown-item" href="#">My Baking Tools</a></li>
-                            </ul>
-                        </li>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Settings</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-<!--            -->
-        </div>
+
+    <aside th:replace="partials/sidebar :: aside"></aside>
 <!--        main content-->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
 <!--            table-->

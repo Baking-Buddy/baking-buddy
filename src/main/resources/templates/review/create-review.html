@@ -9,7 +9,7 @@
 <h1>Create a Review</h1>
 <br>
 <main class="container">
-    <form th:action="@{/review/create}" th:method="post" th:object="${review}">
+    <form th:action="@{|/review/create/${id}|}" th:method="post" th:object="${review}">
 <!--        <label for="reviewRating"></label>-->
 <!--        <input value="0" type="hidden" th:field="*{rating}" id="reviewRating" data-glyphicon="0">-->
         <label for="reviewTitle">Title:</label>

@@ -10,6 +10,7 @@ import com.example.bakingbuddy.demo.Repos.OrderRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import com.example.bakingbuddy.demo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,8 +32,10 @@ public class OrderController {
     @Autowired
     private OrderImageRepository orderImageDao;
 
-//    @Autowired
-//    private ProductService service;
+
+    @Autowired
+    private ProductService service;
+
 
 
     @GetMapping("/orders/{id}")
@@ -64,6 +67,7 @@ public class OrderController {
         return "redirect:/orders/" + dbOrder.getId();
     }
 
+
     @GetMapping("/orders")
     public String showOrders(Model model){
         User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -80,13 +84,12 @@ public class OrderController {
         return "orders/orders";
     }
 
+
     @GetMapping("/orders/{id}/edit")
     public String editOrderForm(@PathVariable long id, Model model){
         model.addAttribute("order", orderDao.getOne(id));
         return "orders/edit-order";
     }
-
-
 
     @PostMapping("/orders/{id}/edit")
     public String submitOrderEdit(@ModelAttribute Order orderToBeEdited) {
@@ -104,6 +107,7 @@ public class OrderController {
         orderDao.save(orderToAccept);
         return "redirect:/orders";
     }
+
     @PostMapping("/reject/{id}")
     public String rejectOrder(@PathVariable long id){
         Order orderToReject = orderDao.getOne(id);
@@ -112,12 +116,7 @@ public class OrderController {
         return "redirect:/orders";
     }
 
-    @GetMapping("/search-orders")
-    public String searchOrdersByOwner(@RequestParam(name = "query") String query, Model model){
-        List<Order> orderResults = orderDao.findOwnerByNameLike(query);
-        model.addAttribute("orderResults", orderResults);
-        return "orders/orders";
-    }
+   
 
 
 

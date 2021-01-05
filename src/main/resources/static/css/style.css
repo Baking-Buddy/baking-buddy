@@ -26,3 +26,15 @@
 .nav-dropdown {
     margin-left: auto;
 }
+
+body.modal-open div.modal-backdrop {
+    z-index: 0;
+}
+
+.modal-btn {
+    margin-left: auto;
+}
+
+.modal-header {
+    border: none;
+}

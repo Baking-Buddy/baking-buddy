@@ -1,6 +1,7 @@
 package com.example.bakingbuddy.demo.controllers;
 
 import com.example.bakingbuddy.demo.Model.User;
+import com.example.bakingbuddy.demo.Repos.ReviewRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import com.example.bakingbuddy.demo.services.EmailService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,17 +9,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class UserController {
     private UserRepository usersDao;
     private PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    private ReviewRepository reviewDao;
 
-    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService) {
+    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService, ReviewRepository reviewDao) {
 
         this.usersDao = usersDao;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
+        this.reviewDao = reviewDao;
     }
 
     @GetMapping("/register")
@@ -50,7 +55,9 @@ public class UserController {
 
     @GetMapping("/")
     public String showHomePage(Model model){
-        model.addAttribute("users", usersDao.findAll());
+        List users = usersDao.findAll();
+        model.addAttribute("users", users);
+//        model.addAttribute("reviews", reviewDao.findAllByBaker());
         return "home/index";
     }
 

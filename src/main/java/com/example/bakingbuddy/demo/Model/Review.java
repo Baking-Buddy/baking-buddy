@@ -7,14 +7,14 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name= "reviews")
+@Table(name="reviews")
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
-    private float rating;
+    @Column(nullable = false, length = 1)
+    private int rating;
 
     @Column(nullable = false, length = 50)
     private String title;
@@ -28,6 +28,9 @@ public class Review {
 
     @ManyToOne
     private User owner;
+
+    @ManyToOne
+    private User baker;
 
     public Review(){}
 
@@ -47,7 +50,7 @@ public class Review {
         this.id = id;
     }
 
-    public float getRating() {
+    public int getRating() {
         return rating;
     }
 
@@ -85,5 +88,13 @@ public class Review {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public User getBaker() {
+        return baker;
+    }
+
+    public void setBaker(User baker) {
+        this.baker = baker;
     }
 }

@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name= "reviews")
+@Table(name="reviews")
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,9 @@ public class Review {
 
     @ManyToOne
     private User owner;
+
+    @ManyToOne
+    private User baker;
 
     public Review(){}
 
@@ -51,7 +54,7 @@ public class Review {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
@@ -85,5 +88,13 @@ public class Review {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public User getBaker() {
+        return baker;
+    }
+
+    public void setBaker(User baker) {
+        this.baker = baker;
     }
 }

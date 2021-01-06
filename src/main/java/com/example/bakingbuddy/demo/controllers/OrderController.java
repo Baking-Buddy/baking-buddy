@@ -38,7 +38,10 @@ public class OrderController {
 
     @GetMapping("/orders/{id}")
     public String order(@PathVariable long id, Model viewModel){
+        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userDb = userDao.getOne(sessionUser.getId());
         viewModel.addAttribute("order", orderDao.getOne(id));
+        viewModel.addAttribute("user", userDb);
         return "orders/customer-order";
     }
 

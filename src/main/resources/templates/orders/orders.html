@@ -5,69 +5,45 @@
     <title>Orders</title>
 </head>
 <body>
-<nav th:replace="partials/navbar :: navbar"></nav>
-<aside th:replace="partials/sidebar :: aside"></aside>
-<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
-<h1>Orders</h1>
-    <form th:action="@{/orders}" method="GET">
-        <div class="input-group mb-3 d-flex justify-content-end">
-            <input type="text" class="form-control col-md-4" placeholder="Search Orders" aria-label="Recipient's username" name="query" th:value="${query}" aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
+    <nav th:replace="partials/navbar :: navbar"></nav>
+    <aside th:replace="partials/sidebar :: aside"></aside>
+    <main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
+    <h1>Orders</h1>
+        <form th:action="@{/orders}" method="GET">
+            <div class="input-group mb-3 d-flex justify-content-end">
+                <input type="text" class="form-control col-md-4" placeholder="Search Orders" aria-label="Recipient's username" name="query" th:value="${query}" aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
+            </div>
+        </form>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <th scope="col">Expected Date</th>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Details</th>
+                </thead>
+                <tbody>
+    <!--                THIS IS CUSTOMER VIEW-->
+                    <tr th:if="${!user.isBaker()}" th:each="order : ${orders}">
+                            <td th:text="${order.date}" class="card-title"></td>
+                            <td><span th:text="${order.baker.firstName}"></span> <span th:text="${order.baker.lastName}"></span></td>
+                            <td th:text="${order.status}" class="card-text"></td>
+                            <td><a th:href="@{/orders/{id}(id=${order.id})}" class="btn btn-primary">More Details</a></td>
+                    </tr>
+    <!--    THIS IS BAKER VIEW<-->
+
+                    <tr th:if="${user.isBaker()}" th:each="order : ${orders}" class="col-sm-6">
+                        <td th:text="${order.date}" class="card-title"></td>
+                        <td><span th:text="${order.owner.firstName}"></span> <span th:text="${order.owner.lastName}"></span></td>
+                        <td th:text="${order.status}" class="card-text"></td>
+                        <td><a th:href="@{/orders/{id}(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">More Details</a></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </form>
-
-    <div th:if="${user.isBaker()}">
-        <h1>THIS IS BAKER VIEW</h1>
-        <div th:each="order : ${orders}" class="col-sm-6">
-            <h4 th:text="${order.date}" class="card-title"></h4>
-            <p><span th:text="${order.owner.firstName}"></span> <span th:text="${order.owner.lastName}"></span></p>
-            <p th:text="${order.description}" class="card-text"></p>
-            <a th:href="@{/orders/{id}/edit(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">EDIT</a>
-            <form th:if="${#strings.toString(order.status) == 'REJECTED'}" th:action="@{|/accept/${order.id}|}" th:method="post">
-                <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Accept</button>
-            </form>
-            <form th:if="${#strings.toString(order.status) == 'ACCEPTED'}" th:action="@{|/reject/${order.id}|}" th:method="post">
-                <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Reject</button>
-            </form>
-            <form th:if="${#strings.toString(order.status) == 'PENDING'}" th:action="@{|/accept/${order.id}|}" th:method="post">
-                <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Accept</button>
-            </form>
-            <form th:if="${#strings.toString(order.status) == 'PENDING'}" th:action="@{|/reject/${order.id}|}" th:method="post">
-                <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Reject</button>
-            </form>
-        </div>
-    </div>
-
-    <div th:if="${!user.isBaker()}">
-        <h1>THIS IS CUSTOMER VIEW</h1>
-        <div th:each="order : ${orders}" class="col-sm-6">
-            <h4 th:text="${order.date}" class="card-title"></h4>
-            <p><span th:text="${order.owner.firstName}"></span> <span th:text="${order.owner.lastName}"></span></p>
-            <p th:text="${order.description}" class="card-text"></p>
-            <a th:href="@{/orders/{id}/edit(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">EDIT</a>
-        </div>
-    </div>
-
-    <h3 class="py-3 mt-5">Current Orders</h3>
-
-    <div class="table-responsive">
-        <table class="table table-hover table-striped">
-            <thead>
-                <th scope="col">Expected Date</th>
-                <th scope="col">Customer Name</th>
-                <th scope="col">Status</th>
-                <th scope="col">Details</th>
-            </thead>
-            <tbody>
-            <tr th:each="order : ${orderResults}">
-                <td th:text="${order.date}"></td>
-                <td><span th:text="${order.owner.firstName}"></span> <span th:text="${order.owner.lastName}"></span></td>
-                <td>Otto</td>
-                <td><a th:href="@{/orders/{id}(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">More Details</a></td>
-            </tr>
-        </table>
-    </div>
-</main>
+    </main>
     <div th:replace="partials/scripts :: scripts"></div>
 </body>
 </html>

@@ -133,4 +133,18 @@ public class Order {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", date=" + date +
+                ", baker=" + baker +
+                ", owner=" + owner +
+                ", orderImages=" + orderImages +
+                ", status=" + status +
+                '}';
+    }
 }

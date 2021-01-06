@@ -17,6 +17,17 @@ public class Message {
     @OneToOne
     private User recipient;
 
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", recipient=" + recipient +
+                ", sender=" + sender +
+                ", body='" + body + '\'' +
+                ", date=" + date +
+                '}';
+    }
+
     @OneToOne
     private User sender;
 

@@ -9,15 +9,21 @@
     <main class="container mt-5">
         <h1>INBOX</h1>
         <div th:each="sender: ${senders}">
-            <a href="#" class="btn btn-primary" data-toggle="modal" th:value="${sender.username}"><span th:text="${sender.username}"></span></a>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" th:data-target="${'#modal' + sender.id}">
+                <span th:text="${sender.username}"></span>
+            </button>
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="modal fade" th:id="${sender.id}">
+                        <div class="modal fade" th:id="${'modal'+sender.id}">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h1 th:text="${sender.username} + ' aka ' +${sender.firstName} +' '+ ${sender.lastName}"></h1>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
                                     <div class="modal-body">
                                         <div th:each="message : ${messages}" th:if="${message.sender.id == sender.id || message.sender.id == user.id && message.recipient.id == sender.id}">
@@ -26,6 +32,10 @@
                                                 <br>
                                         </div>
                                     </div>
+                                    <form th:action="@{|/inbox/${sender.id}|}" th:method="post">
+                                        <textarea class="form-control" aria-label="body" name="body"></textarea>
+                                        <button class="btn btn-success" type="submit">Send</button>
+                                    </form>
                                     <div class="modal-footer">
                                         <input class="btn btn-primary" data-dismiss="modal" value="Close">
                                     </div>

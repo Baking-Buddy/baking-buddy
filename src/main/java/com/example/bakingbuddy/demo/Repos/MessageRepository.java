@@ -10,5 +10,5 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<Message, Long> {
     List<Message> findMessagesByRecipient(User recipient);
 
-    List<Message> findMessagesByRecipientOrSender(User user, User sameUser);
+    List<Message> findMessagesByRecipientOrSenderOrderByDateAsc(User user, User sameUser);
 }

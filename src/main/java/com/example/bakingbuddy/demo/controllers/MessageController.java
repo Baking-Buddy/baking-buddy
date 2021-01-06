@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -27,8 +28,7 @@ public class MessageController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User userdb = userDao.getOne(user.getId());
         List<User> senderList = new ArrayList<>();
-//        List<Message> userMessages = messagesDao.findMessagesByRecipient(userdb);
-        List<Message> userMessages = messagesDao.findMessagesByRecipientOrSender(userdb, userdb);
+        List<Message> userMessages = messagesDao.findMessagesByRecipientOrSenderOrderByDateAsc(userdb, userdb);
         for (Message message : userMessages){
             if (message.getSender().getId() == userdb.getId()){
                 continue;
@@ -43,8 +43,17 @@ public class MessageController {
         return "inbox/inbox";
     }
 
-    @PostMapping("/inbox/send_to_baker")
-    public String sendToBaker(){
-        return null;
+    @PostMapping("/inbox/{id}")
+    public String sendArbitrary(@PathVariable long id, @RequestParam(name = "body") String body){
+        Message messageToBeSaved = new Message();
+        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userDb = userDao.getOne(sessionUser.getId());
+        messageToBeSaved.setBody(body);
+        messageToBeSaved.setRecipient(userDao.getOne(id));
+        messageToBeSaved.setSender(userDb);
+        messageToBeSaved.setDate(new Date());
+
+        messagesDao.save(messageToBeSaved);
+        return "redirect:/inbox";
     }
 }

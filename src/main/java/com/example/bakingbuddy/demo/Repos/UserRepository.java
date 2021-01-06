@@ -14,4 +14,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "FROM User u WHERE u.isBaker = true AND u.username LIKE %:query%")
     List<User> findBakerByUsernameLike(String query);
 
+//    List<User> findAllByBake
 }

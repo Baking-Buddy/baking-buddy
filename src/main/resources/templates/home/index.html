@@ -16,8 +16,10 @@
                     <span th:text="${user.city}"></span>,
                     <span th:text="${user.state}"></span>
                 </p>
+                <a th:href="@{|/reviews/${user.id}|}" class="btn btn-primary">View Reviews</a>
             </div>
         </div>
+
     </main>
     <div th:replace="partials/scripts :: scripts"></div>
 </body>

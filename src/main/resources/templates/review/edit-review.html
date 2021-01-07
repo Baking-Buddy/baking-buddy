@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="partials/bs-head :: head('Create Review')">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:replace="partials/navbar :: navbar"></nav>
+<h1>Update Review</h1>
+<br>
+<main class="container">
+    <form th:action="@{|/review/${reviewToEdit.id}/edit|}" th:method="post" th:object="${reviewToEdit}">
+        <label for="reviewTitle">Title:</label>
+        <input type="text" th:field="*{title}" id="reviewTitle">
+        <br>
+        <label for="reviewRating">Rating:</label>
+        <input type="number" th:field="*{rating}" id="reviewRating" placeholder="Rate 1-5">
+        <br>
+        <label for="reviewBody"></label>
+        <textarea rows="10" cols="60" th:field="*{body}" id="reviewBody"></textarea>
+        <br>
+        <button>Update Review</button>
+    </form>
+</main>
+<div th:replace="partials/scripts :: scripts"></div>
+</body>
+</html>

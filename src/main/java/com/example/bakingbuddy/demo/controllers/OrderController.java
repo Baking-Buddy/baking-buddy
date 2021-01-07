@@ -8,6 +8,7 @@ import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Repos.OrderImageRepository;
 import com.example.bakingbuddy.demo.Repos.OrderRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
+import com.example.bakingbuddy.demo.services.EmailService;
 import com.example.bakingbuddy.demo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -35,10 +36,11 @@ public class OrderController {
     @Autowired
     private OrderImageRepository orderImageDao;
 
-
     @Autowired
     private ProductService service;
 
+    @Autowired
+    private EmailService emailService;
 
 
     @GetMapping("/orders/{id}")
@@ -67,6 +69,11 @@ public class OrderController {
 
         OrderImage orderImage = new OrderImage(uploadedImage, dbOrder);
         orderImageDao.save(orderImage);
+
+        User emailReciever = userDao.getOne(id);
+        String emailSubject = "Order Recieved from: " + userDb.getFirstName() + " " + userDb.getLastName();
+        String emailBody = dbOrder.getDescription();
+        emailService.orderCreatedEmail(emailReciever, emailSubject, emailBody);
         return "redirect:/orders/" + dbOrder.getId();
     }
 

@@ -34,12 +34,11 @@
     <label for="password">Password:</label>
     <input id="password" th:type="password" th:field="*{password}">
     <br>
-<!--    <label for="confirmPass">Confirm Password:</label>-->
-<!--    <input id="confirmPass" th:type="password"></input>-->
+    <label for="confirmPass">Confirm Password:</label>
+    <input id="confirmPass" th:type="password">
     <button class="button" type="button" id="picker">Pick file</button>
-    <input type="hidden" id="fileupload" value="https://images.app.goo.gl/nWUWT1kYacCaXSgM7" name="uploadedImage">
-    <button>Submit</button>
-
+    <input type="hidden" id="fileupload" value="https://images.app.goo.gl/vpCB8ktBEkRWnYdq5" name="uploadedImage">
+    <button type="submit">Sign Up</button>
 </form>
 </div>
 <div th:replace="partials/scripts :: scripts"></div>

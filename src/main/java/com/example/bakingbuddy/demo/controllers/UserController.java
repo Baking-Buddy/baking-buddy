@@ -6,6 +6,8 @@ import com.example.bakingbuddy.demo.Repos.ReviewRepository;
 import com.example.bakingbuddy.demo.Repos.ImageRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import com.example.bakingbuddy.demo.services.EmailService;
+import com.example.bakingbuddy.demo.services.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,12 +21,14 @@ public class UserController {
     private ImageRepository imageDao;
     private PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    private final UserService userService;
     private ReviewRepository reviewDao;
 
-    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService, ImageRepository imageDao, ReviewRepository reviewDao) {
+    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService, UserService userService, ImageRepository imageDao, ReviewRepository reviewDao) {
         this.usersDao = usersDao;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
+        this.userService = userService;
         this.reviewDao = reviewDao;
         this.imageDao = imageDao;
     }
@@ -62,7 +66,8 @@ public class UserController {
 
     @GetMapping("/")
     public String showHomePage(Model model){
-        List users = usersDao.findAll();
+
+        List<User> users = usersDao.findAll();
         model.addAttribute("users", users);
 //        model.addAttribute("reviews", reviewDao.findAllByBaker());
         return "home/index";
@@ -72,8 +77,18 @@ public class UserController {
     @GetMapping("/baker-profile/{id}")
     public String showBakerProfile(@PathVariable long id, Model model){
         User user = usersDao.getOne(id);
+        if (userService.isLoggedIn()){
+            User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            boolean sendMessage = false;
+            if (sessionUser != null && (user.getId() != sessionUser.getId())){
+                sendMessage = true;
+                model.addAttribute("sendMessage", sendMessage);
+            }
+        }
+        model.addAttribute("isAnonymous", userService.isLoggedIn());
         model.addAttribute("user", user);
         return "users/baker-profile";
+
     }
 
 

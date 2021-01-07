@@ -87,20 +87,6 @@ public String showOrders(@Param("query") String query, Model model) {
 }
 
 
-    @GetMapping("/orders")
-    public String showOrders(Model model){
-        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userDb = userDao.getOne(sessionUser.getId());
-        if(userDb.isBaker()){
-            model.addAttribute("orders", orderDao.findAllByBaker(userDb));
-            model.addAttribute("user", userDb);
-        }else if(!userDb.isBaker()){
-            model.addAttribute("orders", orderDao.findAllByOwner(userDb));
-            model.addAttribute("user", userDb);
-        }
-        return "orders/orders";
-    }
-
     @GetMapping("/orders/{id}/edit")
     public String editOrderForm(@PathVariable long id, Model model){
         model.addAttribute("order", orderDao.getOne(id));
@@ -139,9 +125,5 @@ public String showOrders(@Param("query") String query, Model model) {
         orderDao.save(orderToReject);
         return "redirect:/orders";
     }
-
-   
-
-
 
 }

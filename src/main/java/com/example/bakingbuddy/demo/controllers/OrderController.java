@@ -17,6 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -79,11 +82,8 @@ public class OrderController {
             model.addAttribute("orders", orderDao.findAllByOwner(userDb));
             model.addAttribute("user", userDb);
         }
-
-//        model.addAttribute("orders",orderDao.findAll());
         return "orders/orders";
     }
-
 
     @GetMapping("/orders/{id}/edit")
     public String editOrderForm(@PathVariable long id, Model model){
@@ -92,10 +92,12 @@ public class OrderController {
     }
 
     @PostMapping("/orders/{id}/edit")
-    public String submitOrderEdit(@ModelAttribute Order orderToBeEdited) {
-        User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        orderToBeEdited.setOwner(userDb);
-        orderToBeEdited.setStatus(OrderStatus.PENDING);
+    public String submitOrderEdit(@PathVariable long id, @RequestParam(name="description") String description, @RequestParam(name="date") String date) throws ParseException {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date convertedDate =df.parse(date);
+        Order orderToBeEdited = orderDao.getOne(id);
+        orderToBeEdited.setDescription(description);
+        orderToBeEdited.setDate(convertedDate);
         orderDao.save(orderToBeEdited);
         return "redirect:/orders";
     }

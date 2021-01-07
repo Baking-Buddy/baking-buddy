@@ -17,6 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -32,8 +35,10 @@ public class OrderController {
     @Autowired
     private OrderImageRepository orderImageDao;
 
+
     @Autowired
     private ProductService service;
+
 
 
     @GetMapping("/orders/{id}")
@@ -78,6 +83,19 @@ public String showOrders(@Param("query") String query, Model model){
     }else if(!userDb.isBaker()){
         model.addAttribute("orders", service.listAllOwner(query, userDb));
         model.addAttribute("user", userDb);
+
+    @GetMapping("/orders")
+    public String showOrders(Model model){
+        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userDb = userDao.getOne(sessionUser.getId());
+        if(userDb.isBaker()){
+            model.addAttribute("orders", orderDao.findAllByBaker(userDb));
+            model.addAttribute("user", userDb);
+        }else if(!userDb.isBaker()){
+            model.addAttribute("orders", orderDao.findAllByOwner(userDb));
+            model.addAttribute("user", userDb);
+        }
+        return "orders/orders";
     }
 
     return "orders/orders";
@@ -90,10 +108,12 @@ public String showOrders(@Param("query") String query, Model model){
     }
 
     @PostMapping("/orders/{id}/edit")
-    public String submitOrderEdit(@ModelAttribute Order orderToBeEdited) {
-        User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        orderToBeEdited.setOwner(userDb);
-        orderToBeEdited.setStatus(OrderStatus.PENDING);
+    public String submitOrderEdit(@PathVariable long id, @RequestParam(name="description") String description, @RequestParam(name="date") String date) throws ParseException {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date convertedDate =df.parse(date);
+        Order orderToBeEdited = orderDao.getOne(id);
+        orderToBeEdited.setDescription(description);
+        orderToBeEdited.setDate(convertedDate);
         orderDao.save(orderToBeEdited);
         return "redirect:/orders";
     }
@@ -108,4 +128,17 @@ public String showOrders(@Param("query") String query, Model model){
         }
         return "redirect:/orders";
     }
+
+    @PostMapping("/reject/{id}")
+    public String rejectOrder(@PathVariable long id){
+        Order orderToReject = orderDao.getOne(id);
+        orderToReject.setStatus(OrderStatus.REJECTED);
+        orderDao.save(orderToReject);
+        return "redirect:/orders";
+    }
+
+   
+
+
+
 }

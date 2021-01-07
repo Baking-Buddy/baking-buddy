@@ -2,6 +2,7 @@ package com.example.bakingbuddy.demo.controllers;
 
 import com.example.bakingbuddy.demo.Model.Image;
 import com.example.bakingbuddy.demo.Model.User;
+import com.example.bakingbuddy.demo.Repos.ReviewRepository;
 import com.example.bakingbuddy.demo.Repos.ImageRepository;
 import com.example.bakingbuddy.demo.Repos.OrderRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
@@ -12,19 +13,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class UserController {
     private UserRepository userDao;
     private ImageRepository imageDao;
     private PasswordEncoder passwordEncoder;
     private final EmailService emailService;
-    private OrderRepository orderDao;
+    private ReviewRepository reviewDao;
 
-    public UserController(UserRepository userDao, PasswordEncoder passwordEncoder, EmailService emailService, ImageRepository imageDao, OrderRepository orderDao) {
-
-        this.userDao = userDao;
+    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService, ImageRepository imageDao, ReviewRepository reviewDao) {
+        this.usersDao = usersDao;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
+        this.reviewDao = reviewDao;
         this.imageDao = imageDao;
         this.orderDao = orderDao;
     }
@@ -77,7 +80,9 @@ public class UserController {
 
     @GetMapping("/")
     public String showHomePage(Model model){
-        model.addAttribute("users", userDao.findAll());
+        List users = usersDao.findAll();
+        model.addAttribute("users", users);
+//        model.addAttribute("reviews", reviewDao.findAllByBaker());
         return "home/index";
     }
 

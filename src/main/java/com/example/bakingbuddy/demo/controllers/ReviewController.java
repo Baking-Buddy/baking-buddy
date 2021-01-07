@@ -30,7 +30,7 @@ public class ReviewController {
         return "review/review";
     }
 
-    @GetMapping("/review/create/{id}")
+    @GetMapping("/review/{id}/create")
     public String showCreateReview(Model model,
                                    @PathVariable long id){
         model.addAttribute("review", new Review());
@@ -38,7 +38,7 @@ public class ReviewController {
         return "review/create-review";
     }
 
-    @PostMapping("/review/create/{id}")
+    @PostMapping("/review/{id}/create")
     public String createReview(@ModelAttribute Review reviewToBeSaved,
                                @PathVariable long id){
         User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -58,5 +58,32 @@ public class ReviewController {
         model.addAttribute("reviews", reviewDao.findAllByBaker(baker));
         return "review/review";
     }
+
+    @GetMapping("/review/{id}/edit")
+        public String showEditForm(@PathVariable long id,
+                                   Model model){
+
+        model.addAttribute("reviewToEdit", reviewDao.getOne(id));
+
+        return "review/edit-review";
+        }
+
+        @PostMapping("/review/{id}/edit")
+    public String updateReview(@PathVariable long id,
+                               @ModelAttribute Review reviewToEdit){
+            User userDb = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            reviewToEdit.setOwner(userDb);
+            reviewToEdit.setBaker(userDao.getOne(id));
+            reviewToEdit.setDate(new Date());
+            reviewDao.save(reviewToEdit);
+        return "redirect:/review/{id}";
+        }
+
+        @PostMapping("/review/{id}/delete")
+    public String deleteReview(@PathVariable long id){
+
+        reviewDao.deleteById(id);
+        return"redirect:/reviews/{id}";
+        }
 
 }

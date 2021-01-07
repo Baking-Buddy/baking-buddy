@@ -63,6 +63,17 @@ public class UserController {
         return "redirect:/login";
     }
 
+    @GetMapping("/users/{id}/edit")
+    public String showEditUserForm(@PathVariable long id, Model model) {
+        model.addAttribute("user", userDao.getOne(id));
+        model.addAttribute("profileImage", imageDao.getOne(id));
+        return "users/user-profile";
+    }
+
+//    @PostMapping("/user/{}/edit")
+//    public String editUser(@ModelAttribute User userToBeEdited) {
+//
+//    }
 
     @GetMapping("/")
     public String showHomePage(Model model){

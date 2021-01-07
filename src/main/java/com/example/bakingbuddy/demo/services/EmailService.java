@@ -29,4 +29,20 @@ public class EmailService {
             System.err.println(ex.getMessage());
         }
     }
+
+    public void orderCreatedEmail(User user, String subject, String body) {
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setFrom(from);
+        msg.setTo(user.getEmail());
+        msg.setSubject(subject);
+        msg.setText(body);
+
+        try{
+            this.emailSender.send(msg);
+        } catch (MailException ex){
+            System.err.println(ex.getMessage());
+        }
+    }
+
+
 }

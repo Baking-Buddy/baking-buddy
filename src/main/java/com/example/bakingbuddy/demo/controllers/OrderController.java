@@ -1,6 +1,5 @@
 package com.example.bakingbuddy.demo.controllers;
 
-import com.example.bakingbuddy.demo.Model.Consumable;
 import com.example.bakingbuddy.demo.Model.Order;
 import com.example.bakingbuddy.demo.Model.OrderImage;
 import com.example.bakingbuddy.demo.Model.OrderStatus;
@@ -74,18 +73,19 @@ public class OrderController {
     }
 
 @GetMapping("/orders")
-public String showOrders(@Param("query") String query, Model model){
+public String showOrders(@Param("query") String query, Model model) {
     User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     User userDb = userDao.getOne(sessionUser.getId());
-    if(userDb.isBaker()){
+    if (userDb.isBaker()) {
         model.addAttribute("orders", service.listAllBaker(query, userDb));
         model.addAttribute("user", userDb);
-    }else if(!userDb.isBaker()) {
+    } else if (!userDb.isBaker()) {
         model.addAttribute("orders", service.listAllOwner(query, userDb));
         model.addAttribute("user", userDb);
     }
-        return "orders/orders";
-    }
+    return "orders/orders";
+}
+
 
     @GetMapping("/orders")
     public String showOrders(Model model){
@@ -100,8 +100,6 @@ public String showOrders(@Param("query") String query, Model model){
         }
         return "orders/orders";
     }
-
-
 
     @GetMapping("/orders/{id}/edit")
     public String editOrderForm(@PathVariable long id, Model model){

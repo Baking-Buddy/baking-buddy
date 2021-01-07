@@ -81,7 +81,7 @@ public class UserController {
 
     @GetMapping("/")
     public String showHomePage(Model model){
-        List users = usersDao.findAll();
+        List users = userDao.findAll();
         model.addAttribute("users", users);
 //        model.addAttribute("reviews", reviewDao.findAllByBaker());
         return "home/index";

@@ -4,6 +4,7 @@ import com.example.bakingbuddy.demo.Model.Message;
 import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Repos.MessageRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
+import com.example.bakingbuddy.demo.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,12 @@ public class MessageController {
 
     @Autowired
     private UserRepository userDao;
+
+    private final EmailService emailService;
+
+    public MessageController(EmailService emailService){
+        this.emailService = emailService;
+    }
 
     @GetMapping("/inbox")
     public String inbox(Model model){
@@ -54,6 +61,11 @@ public class MessageController {
         messageToBeSaved.setDate(new Date());
 
         messagesDao.save(messageToBeSaved);
+
+        emailService.userCreatedProfileEmail(userDb,
+                "Inbox message from" + userDb.getUsername(),
+                messageToBeSaved.getSender().getFirstName() + " " + messageToBeSaved.getSender().getLastName() +
+                " said: " + messageToBeSaved.getBody());
         return "redirect:/inbox";
     }
 }

@@ -25,7 +25,7 @@ public class UserController {
     private ReviewRepository reviewDao;
 
     public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService, ImageRepository imageDao, OrderRepository orderDao, ReviewRepository reviewDao) {
-        this.usersDao = usersDao;
+        this.userDao = usersDao;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
         this.reviewDao = reviewDao;

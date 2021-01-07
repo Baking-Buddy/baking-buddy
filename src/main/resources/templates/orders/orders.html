@@ -20,23 +20,43 @@
 
     <div th:if="${user.isBaker()}">
         <h1>THIS IS BAKER VIEW</h1>
-        <div th:each="order : ${orders}" class="col-sm-6">
-            <h4 th:text="${order.date}" class="card-title"></h4>
-            <p><span th:text="${order.owner.firstName}"></span> <span th:text="${order.owner.lastName}"></span></p>
-            <p th:text="${order.description}" class="card-text"></p>
-            <a th:href="@{/orders/{id}/edit(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">EDIT</a>
-            <form th:if="${#strings.toString(order.status) == 'REJECTED'}" th:action="@{|/accept/${order.id}|}" th:method="post">
-                <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Accept</button>
-            </form>
-            <form th:if="${#strings.toString(order.status) == 'ACCEPTED'}" th:action="@{|/reject/${order.id}|}" th:method="post">
-                <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Reject</button>
-            </form>
-            <form th:if="${#strings.toString(order.status) == 'PENDING'}" th:action="@{|/accept/${order.id}|}" th:method="post">
-                <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Accept</button>
-            </form>
-            <form th:if="${#strings.toString(order.status) == 'PENDING'}" th:action="@{|/reject/${order.id}|}" th:method="post">
-                <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Reject</button>
-            </form>
+        <div th:each="order : ${orders}" class="col-sm-6 card">
+            <div class="card-body">
+                <h4 th:text="${order.date}" class="card-title"></h4>
+                <p><span th:text="${order.owner.firstName}"></span> <span th:text="${order.owner.lastName}"></span></p>
+                <p th:text="${order.description}" class="card-text"></p>
+                <a th:href="@{/orders/{id}/edit(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">EDIT</a>
+                <div th:if="${#strings.toString(order.status) == 'REJECTED'}">
+                    <div class="alert alert-danger" role="alert">
+                        Status:
+                        <h5 th:text="${order.status}"></h5>
+                    </div>
+                    <form th:action="@{|/accept/${order.id}|}" th:method="post">
+                        <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Accept</button>
+                    </form>
+                </div>
+                <div th:if="${#strings.toString(order.status) == 'ACCEPTED'}">
+                    <div class="alert alert-success" role="alert">
+                        Status:
+                        <h5 th:text="${order.status}"></h5>
+                    </div>
+                    <form th:action="@{|/reject/${order.id}|}" th:method="post">
+                        <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Reject</button>
+                    </form>
+                </div>
+                <div th:if="${#strings.toString(order.status) == 'PENDING'}">
+                    <div class="alert alert-warning" role="alert">
+                        Status:
+                        <h5 th:text="${order.status}"></h5>
+                    </div>
+                    <form th:action="@{|/accept/${order.id}|}" th:method="post">
+                        <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Accept</button>
+                    </form>
+                    <form th:action="@{|/reject/${order.id}|}" th:method="post">
+                        <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Reject</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 

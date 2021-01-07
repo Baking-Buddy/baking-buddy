@@ -17,13 +17,14 @@ import java.util.List;
 
 @Controller
 public class UserController {
-    private UserRepository userDao;
+    private UserRepository usersDao;
     private ImageRepository imageDao;
     private PasswordEncoder passwordEncoder;
+    private OrderRepository orderDao;
     private final EmailService emailService;
     private ReviewRepository reviewDao;
 
-    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService, ImageRepository imageDao, ReviewRepository reviewDao) {
+    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService, ImageRepository imageDao, OrderRepository orderDao, ReviewRepository reviewDao) {
         this.usersDao = usersDao;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
@@ -44,7 +45,7 @@ public class UserController {
     @GetMapping("/dashboard")
     public String showDashboard(Model model) {
         User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userDb = userDao.getOne(sessionUser.getId());
+        User userDb = usersDao.getOne(sessionUser.getId());
         model.addAttribute("pendingOrders", orderDao.findAll());
         model.addAttribute("user", userDb);
         return "users/dashboard";
@@ -59,7 +60,7 @@ public class UserController {
         userToBeSaved.setBaker(isBaker);
         String hashPassword = passwordEncoder.encode(userToBeSaved.getPassword());
         userToBeSaved.setPassword(hashPassword);
-        User dbUser = userDao.save(userToBeSaved);
+        User dbUser = usersDao.save(userToBeSaved);
         Image profileImage = new Image(true, uploadedImage, dbUser);
         imageDao.save(profileImage);
         emailService.userCreatedProfileEmail(dbUser, "Registration", "Congratulations on setting up your Baking Buddy profile!");
@@ -68,7 +69,7 @@ public class UserController {
 
     @GetMapping("/users/{id}/edit")
     public String showEditUserForm(@PathVariable long id, Model model) {
-        model.addAttribute("user", userDao.getOne(id));
+        model.addAttribute("user", usersDao.getOne(id));
         model.addAttribute("profileImage", imageDao.getOne(id));
         return "users/user-profile";
     }
@@ -89,7 +90,7 @@ public class UserController {
 
     @GetMapping("/baker-profile/{id}")
     public String showBakerProfile(@PathVariable long id, Model model){
-        User user = userDao.getOne(id);
+        User user = usersDao.getOne(id);
         model.addAttribute("user", user);
         return "users/baker-profile";
     }

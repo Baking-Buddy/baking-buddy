@@ -80,9 +80,12 @@ public String showOrders(@Param("query") String query, Model model){
     if(userDb.isBaker()){
         model.addAttribute("orders", service.listAllBaker(query, userDb));
         model.addAttribute("user", userDb);
-    }else if(!userDb.isBaker()){
+    }else if(!userDb.isBaker()) {
         model.addAttribute("orders", service.listAllOwner(query, userDb));
         model.addAttribute("user", userDb);
+    }
+        return "orders/orders";
+    }
 
     @GetMapping("/orders")
     public String showOrders(Model model){
@@ -98,8 +101,7 @@ public String showOrders(@Param("query") String query, Model model){
         return "orders/orders";
     }
 
-    return "orders/orders";
-}
+
 
     @GetMapping("/orders/{id}/edit")
     public String editOrderForm(@PathVariable long id, Model model){
@@ -108,7 +110,10 @@ public String showOrders(@Param("query") String query, Model model){
     }
 
     @PostMapping("/orders/{id}/edit")
-    public String submitOrderEdit(@PathVariable long id, @RequestParam(name="description") String description, @RequestParam(name="date") String date) throws ParseException {
+    public String submitOrderEdit(
+            @PathVariable long id,
+            @RequestParam(name="description") String description,
+            @RequestParam(name="date") String date) throws ParseException {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date convertedDate =df.parse(date);
         Order orderToBeEdited = orderDao.getOne(id);

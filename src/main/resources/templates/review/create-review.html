@@ -9,11 +9,13 @@
 <h1>Create a Review</h1>
 <br>
 <main class="container">
-    <form th:action="@{|/review/create/${bakerID}|}" th:method="post" th:object="${review}">
-        <label for="reviewRating">Rating:</label>
-        <input type="text" th:field="*{rating}" id="reviewRating">
+    <form th:action="@{|/review/${bakerID}/create|}" th:method="post" th:object="${review}">
+
         <label for="reviewTitle">Title:</label>
         <input type="text" th:field="*{title}" id="reviewTitle">
+        <br>
+        <label for="reviewRating">Rating:</label>
+        <input type="number" th:field="*{rating}" id="reviewRating" placeholder="Rate 1-5">
         <br>
         <label for="reviewBody"></label>
         <textarea rows="10" cols="60" th:field="*{body}" id="reviewBody"></textarea>

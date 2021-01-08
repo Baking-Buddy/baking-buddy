@@ -25,7 +25,7 @@
                     <tbody>
                     <tr th:if="${#strings.toString(order.status) == 'PENDING'}" th:each="order : ${pendingOrders}">
                         <td th:text="${order.date}"></td>
-                        <td><span th:text="${order.owner.firstName}"></span><span th:text="order.owner.lastName"></span></td>
+                        <td><span th:text="${order.owner.firstName}"></span><span th:text="${order.owner.lastName}"></span></td>
                         <td th:text="${order.status}"></td>
                         <td><a th:href="@{/orders/{id}(id=${order.id})}" class="btn btn-primary">More Details</a></td>
                     </tr>

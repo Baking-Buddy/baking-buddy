@@ -15,7 +15,7 @@
             <div class="form-row py-1">
                 <label for="username">Username:</label>
                 <input  id="username" class="form-control" th:field="*{username}" name="username" th:errorClass="is-invalid">
-                <div th:if="${#fields.hasErrors('username')}" th:errors="*{email}" class="invalid-feedback"></div>
+                <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="invalid-feedback"></div>
             </div>
             <div class="form-row py-1">
                 <label for="firstName">First Name:</label>
@@ -49,8 +49,8 @@
             </div>
             <div class="form-row py-1">
                 <label for="confirmPass">Confirm Password:</label>
-                <input id="confirmPass" class="form-control" th:type="password" name="rpassword" th:errorClass="is-invalid">
-                <div th:if="${#fields.hasErrors('rpassword')}" th:errors="*{rpassword}" class="invalid-feedback"></div>
+                <input id="confirmPass" class="form-control" th:type="password" name="rpassword">
+<!--                <div th:if="${#fields.hasErrors('rpassword')}" th:errors="*{rpassword}" class="invalid-feedback"></div>-->
             </div>
             <div class="form-row py-1">
                 <label for="isBaker">Are you a Baker? Check box if yes</label>

@@ -36,8 +36,8 @@ public class User {
     @Length(min = 6, message = "Password Must be at least 6 Characters")
     private String password;
 
-    @NotBlank(message = "re-enter your password")
-    private String rpassword;
+//    @NotBlank(message = "re-enter your password")
+//    private String rpassword;
 
     @Column(nullable = false)
     private boolean isBaker;
@@ -77,27 +77,25 @@ public class User {
         password = copy.password;
     }
 
-    public User(String firstName, String lastName, String username, String email, String password, String rpassword, boolean isBaker, String city, String state, List<Consumable> consumables) {
+    public User(String firstName, String lastName, String username, String email, String password, boolean isBaker, String city, String state, List<Consumable> consumables) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.rpassword = rpassword;
         this.isBaker = isBaker;
         this.city = city;
         this.state = state;
         this.consumables = consumables;
     }
 
-    public User(long id, String firstName, String lastName, String username, String email, String password, String rpassword, boolean isBaker, String city, String state, List<Consumable> consumables) {
+    public User(long id, String firstName, String lastName, String username, String email, String password, boolean isBaker, String city, String state, List<Consumable> consumables) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.rpassword = rpassword;
         this.isBaker = isBaker;
         this.city = city;
         this.state = state;
@@ -224,12 +222,7 @@ public class User {
         this.reviews = reviews;
     }
 
-    public String getRpassword() {
-        return rpassword;
-    }
 
-    public void setRpassword(String rpassword) {
-        this.rpassword = rpassword;
-    }
+
 }
 

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/bs-head :: head('Profile')"></head>
+<body>
+    <nav th:replace="partials/navbar :: navbar"></nav>
+    <aside th:replace="partials/sidebar ::  aside"></aside>
+    <div role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
+        <form th:action="@{/user/{id}/edit(id=${user.id})}" th:method="post" th:object="${user}">
+                <div class="image-stack">
+<!--                    <div class="image-stack__item&#45;&#45;top">-->
+<!--                        <img class="poi-img" th:src="${profileImage}" alt="profile image">-->
+<!--                    </div>-->
+                    <!--                        <div class="image-stack__item&#45;&#45;bottom">-->
+                    <!--                            <label for="newImage"><img class="poi-img" id="imagePreview" src="" alt=""></label>-->
+                    <!--                            <input class="profile-img-edit new-img" type="hidden" id="newImage" th:field="${}" th:value="${userToEdit.photo_url}" name="photo_url">-->
+                    <!--                        </div>-->
+
+                </div>
+
+                <div class="mb-3">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="firstName" th:field="*{firstName}" name="firstName">
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" th:field="*{lastName}" name="lastName">
+                </div>
+                <div class="mb-3">
+                    <label for="city" class="form-label">City</label>
+                    <input type="text" class="form-control" id="city" th:field="*{city}" name="city">
+                </div>
+                <div class="mb-3">
+                    <label for="state" class="form-label">State</label>
+                    <input type="text" class="form-control" id="state" th:field="*{state}" name="state">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" th:field="*{email}" name="email">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <form th:action="@{/user/{id}/edit(id=${user.id})}" th:method="post" th:object="${user}">
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="hidden" th:field="*{password}">
+                <input type="password" class="form-control" id="password" placeholder="Enter Password" name="password">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+
+    </div>
+
+    <div th:replace="partials/scripts :: scripts"></div>
+</body>
+</html>

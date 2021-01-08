@@ -1,52 +1,52 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="partials/bs-head :: head('Login')"></head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:replace="partials/bs-head :: head('Sign In')"></head>
 <body>
-<div th:fragment="login">
-<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLable" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="d-flex justify-content-end py">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <h3 class="text-center pb-4">Login</h3>
-                <div th:if="${param.error}">-->
-                    Invalid Username and Password.
-                </div>
-                <div th:if="${param.logout}">
-                    You have been logged out.
-                </div>
-                <form th:action="@{/login}" method="post">
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text"  class="form-control" name="username" id="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input id="password" class="form-control" name="password" type="password" required>
-                    </div>
-                    <div class="py-2">
-                        <button class="btn-block btn-primary py-1" type="submit">Sign in</button>
-                        <button class="btn-block btn-primary py-1" type="submit">Sign in with Google</button>
-                    </div>
-                </form>
-                <div class="form-group pt-3">
-                    <a href="#">Forget Password?</a>
-                </div>
-            </div>
-            <div class="modal-footer">
-                 <div class="mx-auto d-flex">
-                        <p class="text-center">Don't have an account? </p>
-                     <a href="#" class="pl-2" th:href="@{/register}">Sign up</a>
-                    </div>
-                 </div>
-            </div>
-        </div>
-    </div>
+<h3 class="text-center pb-4">Login</h3>
+<div th:if="${param.error}">-->
+    Invalid Username and Password.
+</div>
+<div th:if="${param.logout}">
+    You have been logged out.
 </div>
 
 
+<div class="row justify-content-center">
+    <div class="col-sm-6 col-md-5 text-center mt-5">
+<!--        <form th:action="@{/login}" th:method="POST" th:object="${user}">-->
+<!--            <h3>Sign In</h3>-->
+<!--            <div class="form-row py-1">-->
+<!--                <label for="email">Email:</label>-->
+<!--                <input id="email" class="form-control" th:field="*{email}" name="email" th:errorClass="is-invalid">-->
+<!--                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>-->
+<!--            </div>-->
+<!--            <div class="form-row py-1">-->
+<!--                <label for="password">Password:</label>-->
+<!--                <input id="password" class="form-control" th:type="password" th:field="*{password}" name="password" th:errorClass="is-invalid">-->
+<!--                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback"></div>-->
+<!--            </div>-->
 
-
+<!--            <button type="submit" class="btn btn-info btn-block">Sign In</button>-->
+        <form th:action="@{/login}" method="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" name="username" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input id="password" class="form-control" name="password" type="password" required>
+            </div>
+            <div class="py-2">
+                <button class="btn btn-info btn-block py-1" id="submit" type="submit">Sign in</button>
+                <button class="btn btn-info btn-block py-1" type="submit">Sign in with Google</button>
+            </div>
+        </form>
+        <div class="form-group pt-3">
+            <a href="#">Forget Password?</a>
+        </div>
+<!--        </form>-->
+        <p class="py-2">Don't have an account? <a th:href="@{/login}">Sign-In</a></p>
+    </div>
+</div>
 </body>
+</html>

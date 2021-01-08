@@ -33,8 +33,6 @@ public class UserController {
     private final EmailService emailService;
     private final UserService userService;
     private ReviewRepository reviewDao;
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
-    private final UserService userService;
 
 
     public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService, ImageRepository imageDao, OrderRepository orderDao, ReviewRepository reviewDao, UserService userService) {
@@ -45,7 +43,6 @@ public class UserController {
         this.reviewDao = reviewDao;
         this.imageDao = imageDao;
         this.orderDao = orderDao;
-        this.userService = userService;
     }
 
     @InitBinder

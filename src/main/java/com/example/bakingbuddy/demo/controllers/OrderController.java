@@ -113,14 +113,11 @@ public String showOrders(@Param("query") String query, Model model) {
         return "redirect:/orders";
     }
 
-    @PostMapping("/accept")
-    public String acceptOrder(@ModelAttribute Order orderToBeAccepted){
-        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userDb = userDao.getOne(sessionUser.getId());
-        if(userDb.isBaker()){
-            orderToBeAccepted.setBaker(userDb);
-            orderToBeAccepted.setStatus(OrderStatus.ACCEPTED);
-        }
+    @PostMapping("/accept/{id}")
+    public String acceptOrder(@PathVariable long id){
+        Order orderToAccept = orderDao.getOne(id);
+        orderToAccept.setStatus(OrderStatus.ACCEPTED);
+        orderDao.save(orderToAccept);
         return "redirect:/orders";
     }
 

@@ -39,15 +39,6 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-        <form th:action="@{/user/{id}/edit(id=${user.id})}" th:method="post" th:object="${user}">
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="hidden" th:field="*{password}">
-                <input type="password" class="form-control" id="password" placeholder="Enter Password" name="password">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </form>
-
     </div>
 
     <div th:replace="partials/scripts :: scripts"></div>

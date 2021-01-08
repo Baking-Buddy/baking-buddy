@@ -1,6 +1,5 @@
 package com.example.bakingbuddy.demo.controllers;
 
-import com.example.bakingbuddy.demo.Model.Consumable;
 import com.example.bakingbuddy.demo.Model.Order;
 import com.example.bakingbuddy.demo.Model.OrderImage;
 import com.example.bakingbuddy.demo.Model.OrderStatus;
@@ -45,7 +44,10 @@ public class OrderController {
 
     @GetMapping("/orders/{id}")
     public String order(@PathVariable long id, Model viewModel){
+        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userDb = userDao.getOne(sessionUser.getId());
         viewModel.addAttribute("order", orderDao.getOne(id));
+        viewModel.addAttribute("user", userDb);
         return "orders/customer-order";
     }
 
@@ -76,20 +78,20 @@ public class OrderController {
         return "redirect:/orders/" + dbOrder.getId();
     }
 
-
-    @GetMapping("/orders")
-    public String showOrders(Model model){
-        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userDb = userDao.getOne(sessionUser.getId());
-        if(userDb.isBaker()){
-            model.addAttribute("orders", orderDao.findAllByBaker(userDb));
-            model.addAttribute("user", userDb);
-        }else if(!userDb.isBaker()){
-            model.addAttribute("orders", orderDao.findAllByOwner(userDb));
-            model.addAttribute("user", userDb);
-        }
-        return "orders/orders";
+@GetMapping("/orders")
+public String showOrders(@Param("query") String query, Model model) {
+    User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    User userDb = userDao.getOne(sessionUser.getId());
+    if (userDb.isBaker()) {
+        model.addAttribute("orders", service.listAllBaker(query, userDb));
+        model.addAttribute("user", userDb);
+    } else if (!userDb.isBaker()) {
+        model.addAttribute("orders", service.listAllOwner(query, userDb));
+        model.addAttribute("user", userDb);
     }
+    return "orders/orders";
+}
+
 
     @GetMapping("/orders/{id}/edit")
     public String editOrderForm(@PathVariable long id, Model model){
@@ -98,7 +100,10 @@ public class OrderController {
     }
 
     @PostMapping("/orders/{id}/edit")
-    public String submitOrderEdit(@PathVariable long id, @RequestParam(name="description") String description, @RequestParam(name="date") String date) throws ParseException {
+    public String submitOrderEdit(
+            @PathVariable long id,
+            @RequestParam(name="description") String description,
+            @RequestParam(name="date") String date) throws ParseException {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date convertedDate =df.parse(date);
         Order orderToBeEdited = orderDao.getOne(id);
@@ -108,11 +113,14 @@ public class OrderController {
         return "redirect:/orders";
     }
 
-    @PostMapping("/accept/{id}")
-    public String acceptOrder(@PathVariable long id){
-        Order orderToAccept = orderDao.getOne(id);
-        orderToAccept.setStatus(OrderStatus.ACCEPTED);
-        orderDao.save(orderToAccept);
+    @PostMapping("/accept")
+    public String acceptOrder(@ModelAttribute Order orderToBeAccepted){
+        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userDb = userDao.getOne(sessionUser.getId());
+        if(userDb.isBaker()){
+            orderToBeAccepted.setBaker(userDb);
+            orderToBeAccepted.setStatus(OrderStatus.ACCEPTED);
+        }
         return "redirect:/orders";
     }
 
@@ -123,9 +131,5 @@ public class OrderController {
         orderDao.save(orderToReject);
         return "redirect:/orders";
     }
-
-   
-
-
 
 }

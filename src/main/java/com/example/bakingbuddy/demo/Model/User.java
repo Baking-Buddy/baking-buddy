@@ -1,6 +1,10 @@
 package com.example.bakingbuddy.demo.Model;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 
@@ -12,27 +16,38 @@ public class User {
     private long id;
 
     @Column(nullable = false, length = 100)
+    @NotBlank(message="Enter your first name")
     private String firstName;
 
     @Column(nullable = false, length = 100)
+    @NotBlank(message = "enter your last name")
     private String lastName;
 
     @Column(nullable = true, length = 100)
     private String username;
 
     @Column(nullable = false, length = 100)
+    @NotBlank(message = "Enter your email")
+    @Email(message = "enter a valid email Address")
     private String email;
 
     @Column(nullable = false, length = 100)
+    @NotBlank(message = "Enter your password")
+    @Length(min = 6, message = "Password Must be at least 6 Characters")
     private String password;
+
+    @NotBlank(message = "re-enter your password")
+    private String rpassword;
 
     @Column(nullable = false)
     private boolean isBaker;
 
     @Column(nullable = false, length = 100)
+    @NotBlank(message = "Enter your city")
     private String city;
 
     @Column(nullable = false, length = 100)
+    @NotBlank(message = "enter your state")
     private String state;
 
     @OneToMany(mappedBy = "owner")
@@ -62,25 +77,27 @@ public class User {
         password = copy.password;
     }
 
-    public User(String firstName, String lastName, String username, String email, String password, boolean isBaker, String city, String state, List<Consumable> consumables) {
+    public User(String firstName, String lastName, String username, String email, String password, String rpassword, boolean isBaker, String city, String state, List<Consumable> consumables) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.rpassword = rpassword;
         this.isBaker = isBaker;
         this.city = city;
         this.state = state;
         this.consumables = consumables;
     }
 
-    public User(long id, String firstName, String lastName, String username, String email, String password, boolean isBaker, String city, String state, List<Consumable> consumables) {
+    public User(long id, String firstName, String lastName, String username, String email, String password, String rpassword, boolean isBaker, String city, String state, List<Consumable> consumables) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.rpassword = rpassword;
         this.isBaker = isBaker;
         this.city = city;
         this.state = state;
@@ -205,6 +222,14 @@ public class User {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public String getRpassword() {
+        return rpassword;
+    }
+
+    public void setRpassword(String rpassword) {
+        this.rpassword = rpassword;
     }
 }
 

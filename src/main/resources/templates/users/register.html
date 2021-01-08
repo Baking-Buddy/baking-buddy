@@ -6,41 +6,66 @@
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
-<h1>Registration</h1>
-<div class="container mx-auto">
-<form th:action="@{/register}" th:method="POST" th:object="${user}">
 
-    <label for="isBaker">Are you a Baker? Check box if yes</label>
-    <input id="isBaker" name="isBaker" th:type="checkbox" th:checked="${is_baker}">
-    <br>
-    <label for="username">Username:</label>
-    <input class="bg-white" id="username" th:field="*{username}">
-    <br>
-    <label for="firstName">First Name:</label>
-    <input id="firstName" th:field="*{firstName}">
-    <br>
-    <label for="lastName">Last Name:</label>
-    <input id="lastName" th:field="*{lastName}">
-    <br>
-    <label for="city">City:</label>
-    <input id="city" th:field="*{city}">
-    <br>
-    <label for="state">State:</label>
-    <input id="state" th:field="*{state}">
-    <br>
-    <label for="email">Email:</label>
-    <input id="email" th:field="*{email}">
-    <br>
-    <label for="password">Password:</label>
-    <input id="password" th:type="password" th:field="*{password}">
-    <br>
-<!--    <label for="confirmPass">Confirm Password:</label>-->
-<!--    <input id="confirmPass" th:type="password"></input>-->
+<div class="container-fluid justify-content-center">
+    <div class="col-sm-6 col-md-5 text-center mt-5">
 
-    <button>Submit</button>
-
-</form>
+        <form th:action="@{/register}" th:method="POST" th:object="${user}">
+            <h3>Sign Up</h3>
+            <div class="form-row py-1">
+                <label for="username">Username:</label>
+                <input  id="username" class="form-control" th:field="*{username}" name="username" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('username')}" th:errors="*{email}" class="invalid-feedback"></div>
+            </div>
+            <div class="form-row py-1">
+                <label for="firstName">First Name:</label>
+                <input id="firstName" class="form-control" th:field="*{firstName}" name="firstname" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="invalid-feedback"></div>
+            </div>
+            <div class="form-row py-1">
+                <label for="lastName">Last Name:</label>
+                <input id="lastName" class="form-control" th:field="*{lastName}" name="lastname" th:errorClass="is-invalid" >
+                <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="invalid-feedback"></div>
+            </div>
+            <div class="form-row py-1">
+                <label for="city">City:</label>
+                <input id="city" class="form-control" th:field="*{city}" name="city" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="invalid-feedback"></div>
+            </div>
+            <div class="form-row py-1">
+                <label for="state">State:</label>
+                <input id="state" class="form-control" th:field="*{state}" name="state" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('state')}" th:errors="*{state}" class="invalid-feedback"></div>
+            </div>
+            <div class="form-row py-1">
+                <label for="email">Email:</label>
+                <input id="email" class="form-control" th:field="*{email}" name="email" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
+            </div>
+            <div class="form-row py-1">
+                <label for="password">Password:</label>
+                <input id="password" class="form-control" th:type="password" th:field="*{password}" name="password" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback"></div>
+            </div>
+            <div class="form-row py-1">
+                <label for="confirmPass">Confirm Password:</label>
+                <input id="confirmPass" class="form-control" th:type="password" name="rpassword" th:errorClass="is-invalid">
+                <div th:if="${#fields.hasErrors('rpassword')}" th:errors="*{rpassword}" class="invalid-feedback"></div>
+            </div>
+            <div class="form-row py-1">
+                <label for="isBaker">Are you a Baker? Check box if yes</label>
+                <input id="isBaker" name="isBaker" th:type="checkbox" th:checked="${is_baker}">
+            </div>
+            <button class="button" type="button" id="picker">Profile Picture</button>
+            <input type="hidden" id="fileupload" value="https://images.app.goo.gl/vpCB8ktBEkRWnYdq5" name="uploadedImage">
+            <button type="submit" class="btn btn-info btn-block">Create your account</button>
+        </form>
+        <p class="py-2">Already have an account? <a th:href="@{/login}">Sign-In</a></p>
+    </div>
 </div>
 <div th:replace="partials/scripts :: scripts"></div>
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+<script src="/js/keys.js"></script>
+<script src="/js/main.js"></script>
 </body>
 </html>

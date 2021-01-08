@@ -7,11 +7,24 @@
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 <main>
-    <div>
         <h1>Requested by: </h1>
         <h2 th:text="${order.date}"></h2>
         <p th:text="${order.description}"></p>
         <a th:href="@{/orders/{id}/edit(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">EDIT</a>
+        <div th:if="${user.isBaker()}">
+            <form th:if="${#strings.toString(order.status) == 'REJECTED'}" th:action="@{|/accept/${order.id}|}" th:method="post">
+                <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Accept</button>
+            </form>
+            <form th:if="${#strings.toString(order.status) == 'ACCEPTED'}" th:action="@{|/reject/${order.id}|}" th:method="post">
+                <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Reject</button>
+            </form>
+            <form th:if="${#strings.toString(order.status) == 'PENDING'}" th:action="@{|/accept/${order.id}|}" th:method="post">
+                <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Accept</button>
+            </form>
+            <form th:if="${#strings.toString(order.status) == 'PENDING'}" th:action="@{|/reject/${order.id}|}" th:method="post">
+                <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Reject</button>
+            </form>
+        </div>
     </div>
 </main>
 <div th:replace="partials/scripts :: scripts"></div>

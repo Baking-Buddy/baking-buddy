@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
+    User findUserByEmail(String email);
     User findByUsername(String username);
     List<User> findByUsernameLike(String username);
     List<User> findAllByUsernameIsLike(String query);

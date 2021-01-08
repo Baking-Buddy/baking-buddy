@@ -160,7 +160,11 @@ public class UserController {
 
     @GetMapping("/")
     public String showHomePage(Model model){
-
+        if (userService.isLoggedIn()){
+           User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+           User userDb = usersDao.getOne(sessionUser.getId());
+            model.addAttribute("user", userDb);
+        }
         List<User> users = usersDao.findAll();
         model.addAttribute("users", users);
 //        model.addAttribute("reviews", reviewDao.findAllByBaker());
@@ -173,8 +177,9 @@ public class UserController {
         User user = usersDao.getOne(id);
         if (userService.isLoggedIn()){
             User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User userDb = usersDao.getOne(sessionUser.getId());
             boolean sendMessage = false;
-            if (sessionUser != null && (user.getId() != sessionUser.getId())){
+            if ((user.getId() != userDb.getId())){
                 sendMessage = true;
                 model.addAttribute("sendMessage", sendMessage);
             }

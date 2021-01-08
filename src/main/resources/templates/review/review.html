@@ -26,7 +26,10 @@
             </form>
         </div>
     </div>
-    <a th:href="@{/}">Go Back</a>
+    <a th:href="@{/}" class="btn btn-danger">Go Back</a>
+    <div>
+        <a th:href="@{|/review/${user.id}/create|}" sec:authorize="isAuthenticated()" class="btn btn-primary">Post a Review</a>
+    </div>
 </main>
 <div th:replace="partials/scripts :: scripts"></div>
 </body>

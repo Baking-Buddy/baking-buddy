@@ -4,11 +4,13 @@ import com.example.bakingbuddy.demo.Model.Review;
 import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Repos.ReviewRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
+import com.example.bakingbuddy.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.Date;
 
@@ -20,8 +22,11 @@ public class ReviewController {
     @Autowired
     private UserRepository userDao;
 
+    private final UserService userService;
 
-
+    public ReviewController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/review/{id}")
     public String showReview(@PathVariable long id, Model model){
@@ -58,8 +63,11 @@ public class ReviewController {
     @GetMapping("/reviews/{id}")
     public String showBakersReviews(Model model, @PathVariable long id){
         User baker = userDao.getOne(id);
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("user", userDao.getOne(user.getId()));
+        if (userService.isLoggedIn()){
+            User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User userDb = userDao.getOne(sessionUser.getId());
+            model.addAttribute("user", userDb);
+        }
         model.addAttribute("baker", baker);
         model.addAttribute("reviews", reviewDao.findAllByBaker(baker));
         return "review/review";

@@ -59,7 +59,6 @@ public class UserController {
         return"users/register";
     }
 
-
     @GetMapping("/dashboard")
     public String showDashboard(Model model) {
         User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -107,13 +106,41 @@ public class UserController {
     public String showEditUserForm(@PathVariable long id, Model model) {
         model.addAttribute("user", usersDao.getOne(id));
         model.addAttribute("profileImage", imageDao.getOne(id));
-        return "users/user-profile";
+        return "users/edit-profile";
     }
 
 //    @PostMapping("/user/{}/edit")
 //    public String editUser(@ModelAttribute User userToBeEdited) {
 //
 //    }
+    @PostMapping("/users/{id}/reset")
+    public String resetPassword(
+            @PathVariable long id,
+            @Valid User userToBeSaved,
+            BindingResult bindingResult,
+            RedirectAttributes ra,
+            @RequestParam(name="password") String password,
+            @RequestParam(name="rpassword") String rpassword) {
+        User userPasswordToBeSaved = usersDao.getOne(id);
+        if (userToBeSaved.getPassword() != null && userToBeSaved.getRpassword() != null) {
+            if (!userToBeSaved.getPassword().equals(userToBeSaved.getRpassword())) {
+                bindingResult.addError(new FieldError("user", "rpassword", "Passwords must match"));
+            }
+        }
+        if (bindingResult.hasErrors()) {
+            return "users/"+ id +"/edit";
+
+        }
+
+        userPasswordToBeSaved.setPassword(password);
+        userPasswordToBeSaved.setRpassword(rpassword);
+        String hashPassword = passwordEncoder.encode(userPasswordToBeSaved.getPassword());
+        userPasswordToBeSaved.setPassword(hashPassword);
+        String hashRPassword = passwordEncoder.encode(userPasswordToBeSaved.getRpassword());
+        userPasswordToBeSaved.setRpassword(hashRPassword);
+        return "redirect:/dashboard";
+    }
+
 
     @GetMapping("/")
     public String showHomePage(Model model){

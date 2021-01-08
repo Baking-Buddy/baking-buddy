@@ -98,7 +98,7 @@ public class UserController {
         Image profileImage = new Image(true, uploadedImage, dbUser);
         imageDao.save(profileImage);
         emailService.userCreatedProfileEmail(dbUser, "Registration", "Congratulations on setting up your Baking Buddy profile!");
-        return "redirect:/login";
+        return "redirect:/";
     }
 
     @GetMapping("/user/{id}/edit")

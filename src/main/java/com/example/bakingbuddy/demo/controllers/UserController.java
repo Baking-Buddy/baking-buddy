@@ -101,7 +101,7 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/users/{id}/edit")
+    @GetMapping("/user/{id}/edit")
     public String showEditUserForm(@PathVariable long id, Model model) {
         model.addAttribute("user", usersDao.getOne(id));
 //        model.addAttribute("profileImage", imageDao.getOne(id));

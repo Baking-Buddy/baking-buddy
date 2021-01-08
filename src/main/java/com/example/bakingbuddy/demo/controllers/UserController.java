@@ -127,7 +127,7 @@ public class UserController {
         return "users/edit-profile";
     }
 
-    @PostMapping("/users/{id}/edit")
+    @PostMapping("/user/{id}/edit")
     public String editUser(
             @PathVariable long id,
             @RequestParam(name="firstName") String firstName,

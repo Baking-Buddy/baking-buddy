@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -72,28 +73,46 @@ public class UserController {
     public String saveUser(@Valid User userToBeSaved,
                            BindingResult bindingResult,
                            RedirectAttributes ra,
+                           Errors validation,
                            @RequestParam(required = false) boolean isBaker,
-                           @RequestParam(name="uploadedImage") String uploadedImage
+                           @RequestParam(name="uploadedImage") String uploadedImage,
+                           @RequestParam(name="rpassword") String rpassword,
+                           Model model
     ) {
 
         if(userService.userExists(userToBeSaved.getEmail())) {
             bindingResult.addError(new FieldError("user", "email", "Email address already in use"));
         }
-        if(userToBeSaved.getPassword() != null && userToBeSaved.getRpassword() != null) {
-            if(!userToBeSaved.getPassword().equals(userToBeSaved.getRpassword())) {
+        if(userToBeSaved.getPassword() != null && rpassword != null) {
+            if(!userToBeSaved.getPassword().equals(rpassword)) {
                 bindingResult.addError(new FieldError("user", "rpassword", "Passwords must match"));
             }
         }
         if(bindingResult.hasErrors()){
             return "users/register";
         }
+//        if(userService.userExists(userToBeSaved.getEmail())) {
+//            validation.rejectValue("email", "userToBeSaved.email", "Enter a valid email address");
+//        }
+//
+//        if(userToBeSaved.getPassword() !=null && rpassword !=null) {
+//            if(!userToBeSaved.getPassword().equals(rpassword)) {
+//                validation.rejectValue("password", "userToBeSaved.password", "Password must match");
+//            }
+//        }
+//
+//        if(validation.hasErrors()) {
+//            model.addAttribute("error", validation);
+//            model.addAttribute("user", userToBeSaved);
+//            return "us"
+//        }
+
+
 
         ra.addFlashAttribute("message", "Account has been created");
         userToBeSaved.setBaker(isBaker);
         String hashPassword = passwordEncoder.encode(userToBeSaved.getPassword());
         userToBeSaved.setPassword(hashPassword);
-        String hashRPassword = passwordEncoder.encode(userToBeSaved.getRpassword());
-        userToBeSaved.setRpassword(hashRPassword);
         User dbUser = usersDao.save(userToBeSaved);
         Image profileImage = new Image(true, uploadedImage, dbUser);
         imageDao.save(profileImage);
@@ -108,7 +127,7 @@ public class UserController {
         return "users/edit-profile";
     }
 
-    @PostMapping("/user/{id}/edit")
+    @PostMapping("/users/{id}/edit")
     public String editUser(
             @PathVariable long id,
             @RequestParam(name="firstName") String firstName,
@@ -127,36 +146,6 @@ public class UserController {
         return "redirect:/dashboard";
 
     }
-
-
-//    @PostMapping("/users/{id}/reset")
-//    public String resetPassword(
-//            @PathVariable long id,
-//            @Valid User userToBeSaved,
-//            BindingResult bindingResult,
-//            RedirectAttributes ra,
-//            @RequestParam(name="password") String password,
-//            @RequestParam(name="rpassword") String rpassword) {
-//        User userPasswordToBeSaved = usersDao.getOne(id);
-//        if (userToBeSaved.getPassword() != null && userToBeSaved.getRpassword() != null) {
-//            if (!userToBeSaved.getPassword().equals(userToBeSaved.getRpassword())) {
-//                bindingResult.addError(new FieldError("user", "rpassword", "Passwords must match"));
-//            }
-//        }
-//        if (bindingResult.hasErrors()) {
-//            return "users/"+ id +"/edit";
-//
-//        }
-
-//        userPasswordToBeSaved.setPassword(password);
-//        userPasswordToBeSaved.setRpassword(rpassword);
-//        String hashPassword = passwordEncoder.encode(userPasswordToBeSaved.getPassword());
-//        userPasswordToBeSaved.setPassword(hashPassword);
-//        String hashRPassword = passwordEncoder.encode(userPasswordToBeSaved.getRpassword());
-//        userPasswordToBeSaved.setRpassword(hashRPassword);
-//        return "redirect:/dashboard";
-//    }
-
 
     @GetMapping("/")
     public String showHomePage(Model model){

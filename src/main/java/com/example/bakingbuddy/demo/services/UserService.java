@@ -1,18 +1,18 @@
 package com.example.bakingbuddy.demo.services;
-
 import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
 public class UserService {
-    private UserRepository userDao;
+    private final UserRepository userDao;
 
-    @Autowired
     public UserService(UserRepository userDao) {
         this.userDao = userDao;
     }
@@ -27,5 +27,9 @@ public class UserService {
         return findUserByEmail(email).isPresent();
     }
 
-
+    public boolean isLoggedIn(){
+        boolean isAnonymousUser = SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken;
+        return !isAnonymousUser;
+    }
 }
+

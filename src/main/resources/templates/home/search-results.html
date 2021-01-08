@@ -9,9 +9,13 @@
 <h1>Search Results</h1>
 <br>
 <main class="container">
-    <div th:each="user : ${userResults}">
-        <h4 th:text="${user.username}"></h4>
+    <div class="card" th:each="user : ${userResults}">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${user.username}"></h5>
+            <a th:href="@{|/baker-profile/${user.id}|}" class="btn btn-primary"> View Profile</a>
+        </div>
     </div>
+    <div th:replace="partials/scripts :: scripts"></div>
 </main>
 </body>
 </html>

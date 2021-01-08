@@ -9,7 +9,7 @@
 <h1>Edit the Recipe</h1>
 
 <main class="container center-text">
-    <form th:action="@{'/recipe/' + ${recipeToEdit.id} + '/edit'}" th:method="post" th:object="${recipeToEdit}">
+    <form th:action="@{|/recipe/${recipeToEdit.id}/edit|}" th:method="post" th:object="${recipeToEdit}">
         <label for="recipeName">Recipe Name:</label>
         <input type="text" th:field="*{name}" id="recipeName">
 

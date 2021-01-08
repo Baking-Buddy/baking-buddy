@@ -27,10 +27,10 @@ public class ReviewController {
     public String showReview(@PathVariable long id, Model model){
 
         model.addAttribute("reviews", reviewDao.getOne(id));
-        return "review/review";
+        return "review/show-review";
     }
 
-    @GetMapping("/review/create/{id}")
+    @GetMapping("/review/{id}/create")
     public String showCreateReview(Model model,
                                    @PathVariable long id){
         model.addAttribute("review", new Review());
@@ -38,7 +38,7 @@ public class ReviewController {
         return "review/create-review";
     }
 
-    @PostMapping("/review/create/{id}")
+    @PostMapping("/review/{id}/create")
     public String createReview(@ModelAttribute Review reviewToBeSaved,
                                @PathVariable long id){
         User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -58,5 +58,38 @@ public class ReviewController {
         model.addAttribute("reviews", reviewDao.findAllByBaker(baker));
         return "review/review";
     }
+
+    @GetMapping("/review/{id}/edit/{reviewID}")
+        public String showEditForm(@PathVariable long reviewID,
+                                   @PathVariable long id,
+                                   Model model){
+        model.addAttribute("reviewToEdit", reviewDao.getOne(reviewID));
+        model.addAttribute("user", userDao.getOne(id));
+        return "review/edit-review";
+        }
+
+        @PostMapping("/review/{id}/edit/{reviewID}")
+    public String updateReview(@PathVariable long id,
+                               @PathVariable long reviewID,
+                               @RequestParam(name="title") String title,
+                               @RequestParam(name="rating") int rating,
+                               @RequestParam(name="body") String body){
+
+            Review reviewToEdit = reviewDao.getOne(reviewID);
+            reviewToEdit.setTitle(title);
+            reviewToEdit.setRating(rating);
+            reviewToEdit.setBody(body);
+            reviewToEdit.setDate(new Date());
+            reviewDao.save(reviewToEdit);
+        return "redirect:/reviews/{id}";
+        }
+
+        @PostMapping("/review/{id}/delete/{reviewID}")
+    public String deleteReview(@PathVariable long id,
+                               @PathVariable long reviewID){
+
+        reviewDao.deleteById(reviewID);
+        return"redirect:/reviews/{id}";
+        }
 
 }

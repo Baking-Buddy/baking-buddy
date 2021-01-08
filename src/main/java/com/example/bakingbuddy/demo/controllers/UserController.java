@@ -31,14 +31,17 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
     private OrderRepository orderDao;
     private final EmailService emailService;
+    private final UserService userService;
     private ReviewRepository reviewDao;
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
+
 
     public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService, ImageRepository imageDao, OrderRepository orderDao, ReviewRepository reviewDao, UserService userService) {
         this.usersDao = usersDao;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
+        this.userService = userService;
         this.reviewDao = reviewDao;
         this.imageDao = imageDao;
         this.orderDao = orderDao;
@@ -144,7 +147,8 @@ public class UserController {
 
     @GetMapping("/")
     public String showHomePage(Model model){
-        List users = usersDao.findAll();
+
+        List<User> users = usersDao.findAll();
         model.addAttribute("users", users);
 //        model.addAttribute("reviews", reviewDao.findAllByBaker());
         return "home/index";
@@ -154,8 +158,18 @@ public class UserController {
     @GetMapping("/baker-profile/{id}")
     public String showBakerProfile(@PathVariable long id, Model model){
         User user = usersDao.getOne(id);
+        if (userService.isLoggedIn()){
+            User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            boolean sendMessage = false;
+            if (sessionUser != null && (user.getId() != sessionUser.getId())){
+                sendMessage = true;
+                model.addAttribute("sendMessage", sendMessage);
+            }
+        }
+        model.addAttribute("isAnonymous", userService.isLoggedIn());
         model.addAttribute("user", user);
         return "users/baker-profile";
+
     }
 
 

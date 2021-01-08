@@ -14,8 +14,19 @@
             <h2 class="card-title" th:text="${review.title}"></h2>
             <p class="mt-5">Rating: <strong th:text="${review.rating}"></strong></p>
             <p class="card-text" th:text="${review.body}"></p>
+            <p>Created by: <span th:text="${review.getOwner().getUsername()}"></span></p>
+            <p th:text="${review.date}"></p>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+        <form th:if="${#authentication.principal.id == review.owner.id}" th:action="@{|/review/${user.id}/edit/${review.id}|}" th:method="get">
+            <button>Edit</button>
+        </form>
+            <form th:if="${#authentication.principal.id == review.owner.id}" th:action="@{|/review/${user.id}/delete/${review.id}|}" th:method="post">
+                <button>Delete</button>
+            </form>
         </div>
     </div>
+    <a th:href="@{/}">Go Back</a>
 </main>
 <div th:replace="partials/scripts :: scripts"></div>
 </body>

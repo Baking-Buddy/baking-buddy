@@ -54,6 +54,8 @@ public class OrderController {
 
     @GetMapping("/orders/create/{id}")
     public String showOrderForm(Model viewModel, @PathVariable long id){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        viewModel.addAttribute("user", userDao.getOne(user.getId()));
         viewModel.addAttribute("order", new Order());
         viewModel.addAttribute("bakerID", id);
         return "orders/create";
@@ -95,6 +97,8 @@ public String showOrders(@Param("query") String query, Model model) {
 
     @GetMapping("/orders/{id}/edit")
     public String editOrderForm(@PathVariable long id, Model model){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", userDao.getOne(user.getId()));
         model.addAttribute("order", orderDao.getOne(id));
         return "orders/edit-order";
     }

@@ -25,6 +25,8 @@ public class ReviewController {
 
     @GetMapping("/review/{id}")
     public String showReview(@PathVariable long id, Model model){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", userDao.getOne(user.getId()));
 
         model.addAttribute("reviews", reviewDao.getOne(id));
         return "review/show-review";
@@ -35,6 +37,8 @@ public class ReviewController {
                                    @PathVariable long id){
         model.addAttribute("review", new Review());
         model.addAttribute("bakerID", id);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", userDao.getOne(user.getId()));
         return "review/create-review";
     }
 
@@ -54,7 +58,9 @@ public class ReviewController {
     @GetMapping("/reviews/{id}")
     public String showBakersReviews(Model model, @PathVariable long id){
         User baker = userDao.getOne(id);
-        model.addAttribute("user", baker);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", userDao.getOne(user.getId()));
+        model.addAttribute("baker", baker);
         model.addAttribute("reviews", reviewDao.findAllByBaker(baker));
         return "review/review";
     }

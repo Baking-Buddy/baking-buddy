@@ -38,6 +38,8 @@ public class InventoryController {
 
     @GetMapping("/inventory/tools/add")
     public String newToolForm(Model model){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", userDao.getOne(user.getId()));
         model.addAttribute("tool", new Tool());
         return "inventory/add-tool";
     }
@@ -61,6 +63,8 @@ public class InventoryController {
 
     @GetMapping("/inventory/consumables/add")
     public String newConsumbaleForm(Model model){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", userDao.getOne(user.getId()));
         model.addAttribute("consumable", new Consumable());
         return "inventory/add-consumable";
     }
@@ -75,6 +79,8 @@ public class InventoryController {
 
     @GetMapping("/inventory/consumables/{id}/edit")
     public String editConsumablesForm(@PathVariable long id, Model model){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", userDao.getOne(user.getId()));
         model.addAttribute("consumable", consumableDao.getOne(id));
         return "inventory/edit-consumables";
     }
@@ -89,6 +95,8 @@ public class InventoryController {
 
     @GetMapping("inventory/tools/{id}/edit")
     public String editToolsForm(@PathVariable long id, Model model){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", userDao.getOne(user.getId()));
         model.addAttribute("tool", toolDao.getOne(id));
         return "inventory/edit-tools";
     }

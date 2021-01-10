@@ -50,7 +50,7 @@
             <div class="form-row py-1">
                 <label for="confirmPass">Confirm Password:</label>
                 <input id="confirmPass" class="form-control" th:type="password" name="rpassword">
-<!--                <div th:if="${#fields.hasErrors('rpassword')}" th:errors="*{rpassword}" class="invalid-feedback"></div>-->
+                <div th:if="${#fields.hasErrors('rpassword')}" class="invalid-feedback"><p>Passwords must match</p></div>
             </div>
             <div class="form-row py-1">
                 <label for="isBaker">Are you a Baker? Check box if yes</label>

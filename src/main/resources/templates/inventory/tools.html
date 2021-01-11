@@ -12,9 +12,10 @@
 <br>
 <a th:href="@{/inventory/tools/add}" class="btn btn-primary">Add Tool</a>
     <main class="container">
-        <div th:each="tool : ${user.tools}" class="col-sm-6">
+        <div th:each="tool : ${userTools}" class="col-sm-6">
             <h4 th:text="${tool.name}" class="card-title"></h4>
             <p th:text="${tool.description}" class="card-text"></p>
+            <img th:each="image : ${userToolImages}" th:if="${image.tool.id == tool.id}" th:src="${image.imageUrl}" alt="">
             <a th:href="@{/inventory/tools/{id}/edit(id=${tool.id})}" class="btn btn-primary">EDIT</a>
         </div>
     </main>

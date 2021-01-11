@@ -10,23 +10,24 @@
 <!--          corrected nav-->
                 <div class="container-fluid">
                     <a th:href="@{/}" class="navbar-brand" href="#">Baking Buddy</a>
+                    <form class="form-inline my-2 my-lg-0" th:action="@{/search-results}" th:method="get">
+<!--                        <input name="query" class="form-control mr-sm-2" type="search" placeholder="Find a Baker" aria-label="Search">-->
+<!--                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+                            <input type="text" class="form-control ml-3" placeholder="Find a Baker" aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="button-addon2">Search</button>
+                    </form>
+
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <form class="form-inline my-2 my-lg-0" th:action="@{/search-results}" th:method="get">
-                                    <input name="query" class="form-control mr-sm-2" type="search" placeholder="Find a Baker" aria-label="Search">
-                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                                </form>
-                            </li>
+                        <ul class="navbar-nav home mb-2 mb-lg-0">
                             <li class="nav-item">
                                 <a class="nav-link" th:href="@{/}">Home</a>
                             </li>
                             <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Dropdown
+                                    <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg" width="40" height="40" class="rounded-circle">
                                 </a>
                                 <ul class="dropdown-menu"  aria-labelledby="navbarDropdown">
                                     <li><a class="dropdown-item" th:href="@{/dashboard}">Dashboard</a></li>
@@ -44,7 +45,6 @@
                                 </ul>
                             </li>
                             <li class="nav-item" sec:authorize="!isAuthenticated()">
-
                                 <a class="nav-link" th:href="@{/login}">Login</a>
                             </li>
                             <li class="nav-item" sec:authorize="!isAuthenticated()">

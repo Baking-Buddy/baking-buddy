@@ -2,51 +2,62 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head th:replace="partials/bs-head :: head('Sign In')"></head>
 <body>
-<h3 class="text-center pb-4">Login</h3>
-<div th:if="${param.error}">-->
-    Invalid Username and Password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
 
 
-<div class="row justify-content-center">
-    <div class="col-sm-6 col-md-5 text-center mt-5">
-<!--        <form th:action="@{/login}" th:method="POST" th:object="${user}">-->
-<!--            <h3>Sign In</h3>-->
-<!--            <div class="form-row py-1">-->
-<!--                <label for="email">Email:</label>-->
-<!--                <input id="email" class="form-control" th:field="*{email}" name="email" th:errorClass="is-invalid">-->
-<!--                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>-->
-<!--            </div>-->
-<!--            <div class="form-row py-1">-->
-<!--                <label for="password">Password:</label>-->
-<!--                <input id="password" class="form-control" th:type="password" th:field="*{password}" name="password" th:errorClass="is-invalid">-->
-<!--                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback"></div>-->
-<!--            </div>-->
+<!--new sign-->
+<form th:action="@{/login}" th:method="POST" th:object="${user}">
+    <div class="content">
+        <div class="container">
+            <div class="row justify-content-center">
+<!--                &lt;!&ndash; <div class="col-md-6 order-md-2">-->
+<!--                  <img src="images/undraw_file_sync_ot38.svg" alt="Image" class="img-fluid">-->
+<!--                </div> &ndash;&gt;-->
+                <div class="col-md-6 contents">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <div class="form-block">
+                                <div class="mb-4">
+                                    <h3>Sign In</h3>
+                                    <div th:if="${param.error}">-->
+                                        Invalid Username or Password. Please try again
+                                    </div>
+                                    <div th:if="${param.logout}">
+                                        You have been logged out.
+                                    </div>
+                                </div>
+                                    <div class="form-group first">
+                                        <label for="username">Username</label>
+                                        <input type="text" class="form-control" id="username" name="username">
 
-<!--            <button type="submit" class="btn btn-info btn-block">Sign In</button>-->
-        <form th:action="@{/login}" method="post">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" name="username" id="username" required>
+                                    </div>
+                                    <div class="form-group last mb-4">
+                                        <label for="password">Password</label>
+                                        <input type="password" class="form-control" id="password" name="password">
+
+                                    </div>
+
+
+                                    <div class="d-flex mb-5 align-items-center">
+                                        <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>
+                                    </div>
+
+                                    <button class="btn btn-pill btn-info btn-block py-1" id="submit" type="submit">Sign in</button>
+
+                                    <span class="d-block text-center my-4 text-muted">Don't have an account? <a th:href="@{/register}">Sign up</a></span>
+<!--                                    <span class="d-block text-center my-4 text-muted"> or sign in with</span>-->
+<!--                                    <div class="social-login text-center">-->
+<!--                                        <a href="#" class="google">-->
+<!--                                            <span class="icon-google mr-3"></span>-->
+<!--                                        </a>-->
+<!--                                    </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input id="password" class="form-control" name="password" type="password" required>
-            </div>
-            <div class="py-2">
-                <button class="btn btn-info btn-block py-1" id="submit" type="submit">Sign in</button>
-                <button class="btn btn-info btn-block py-1" type="submit">Sign in with Google</button>
-            </div>
-        </form>
-        <div class="form-group pt-3">
-            <a href="#">Forget Password?</a>
         </div>
-<!--        </form>-->
-        <p class="py-2">Don't have an account? <a th:href="@{/login}">Sign-In</a></p>
     </div>
-</div>
+</form>
+<script th:replace="partials/scripts :: scripts"></script>
 </body>
 </html>

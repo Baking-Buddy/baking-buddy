@@ -85,7 +85,8 @@ public class UserController {
         }
         if(userToBeSaved.getPassword() != null && rpassword != null) {
             if(!userToBeSaved.getPassword().equals(rpassword)) {
-                bindingResult.addError(new FieldError("user", "rpassword", "Passwords must match"));
+//                bindingResult.addError(new FieldError("user", "rpassword", "Passwords must match"));
+                validation.reject("rpassword");
             }
         }
         if(bindingResult.hasErrors()){
@@ -123,7 +124,7 @@ public class UserController {
     @GetMapping("/user/{id}/edit")
     public String showEditUserForm(@PathVariable long id, Model model) {
         model.addAttribute("user", usersDao.getOne(id));
-//        model.addAttribute("profileImage", imageDao.getOne(id));
+        model.addAttribute("profileImage", imageDao.findByOwner(usersDao.getOne(id)));
         return "users/edit-profile";
     }
 
@@ -137,6 +138,7 @@ public class UserController {
             @RequestParam(name="email") String email) {
 
         User userToBeEdited = usersDao.getOne(id);
+//        Image imageToBeEdited = imageDao.findByOwner(userToBeEdited);
         userToBeEdited.setFirstName(firstName);
         userToBeEdited.setLastName(lastName);
         userToBeEdited.setCity(city);

@@ -32,8 +32,8 @@
                                 <ul class="dropdown-menu"  aria-labelledby="navbarDropdown">
                                     <li><a class="dropdown-item" th:href="@{/dashboard}">Dashboard</a></li>
                                     <li><a class="dropdown-item" th:href="@{/orders}">Orders</a></li>
-                                    <li><a class="dropdown-item" th:href="@{/inventory/consumables}">Pantry</a></li>
-                                    <li><a class="dropdown-item" th:href="@{/inventory/tools}">Tools</a></li>
+                                    <li th:if="${isBaker}"><a class="dropdown-item" th:href="@{/inventory/consumables}">Pantry</a></li>
+                                    <li th:if="${isBaker}"><a class="dropdown-item" th:href="@{/inventory/tools}">Tools</a></li>
                                     <li><a class="dropdown-item" th:href="@{/inbox}">Inbox</a></li>
                                     <li><a class="dropdown-item" th:href="@{/user/{id}/edit(id=${user.id})}">Settings</a></li>
                                     <li><hr class="dropdown-divider"></li>

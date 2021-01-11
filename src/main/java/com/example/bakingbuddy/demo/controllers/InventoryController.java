@@ -15,6 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class InventoryController {
     @Autowired
@@ -31,8 +34,16 @@ public class InventoryController {
 
     @GetMapping("/inventory/tools")
     public String userTools(Model model){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("user",userDao.getOne(user.getId()));
+        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userDb = userDao.getOne(sessionUser.getId());
+        List<Tool> userTools = toolDao.findToolByOwner(userDb);
+        List<ToolImage> userToolImages = new ArrayList<>();
+        for (int i = 0; i < userTools.size(); i++){
+            userToolImages.add(toolImageDao.findToolImageByTool(userTools.get(i)));
+        }
+        model.addAttribute("user",userDao.getOne(sessionUser.getId()));
+        model.addAttribute("userTools", userTools);
+        model.addAttribute("userToolImages", userToolImages);
         return "inventory/tools";
     }
 

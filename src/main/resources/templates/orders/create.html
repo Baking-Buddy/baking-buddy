@@ -7,14 +7,14 @@
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 <main class="container mt-5">
-    <form th:action="@{|/orders/create/${bakerID}|}" th:method="post" th:object="${order}">
+    <form th:action="@{|/orders/create/${bakerID}|}" th:method="post">
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">Expected Date</span>
-            <input type="text" class="form-control" placeholder="yyyy-mm-dd" aria-label="Expected Date" aria-describedby="basic-addon1" th:field="*{date}">
+            <input type="text" class="form-control" placeholder="yyyy-mm-dd" aria-label="Expected Date" aria-describedby="basic-addon1" name="date">
         </div>
         <div class="input-group">
             <span class="input-group-text">Description</span>
-            <textarea class="form-control" aria-label="Description" th:field="*{description}"></textarea>
+            <textarea class="form-control" name="description" aria-label="Description"></textarea>
         </div>
         <button class="button" type="button" id="picker">Pick file</button>
         <input type="hidden" id="fileupload" value="https://images.app.goo.gl/nWUWT1kYacCaXSgM7" name="uploadedImage">

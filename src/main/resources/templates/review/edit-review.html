@@ -14,12 +14,22 @@
         <input type="text" th:field="*{title}" id="reviewTitle" name="title">
         <br>
         <label for="reviewRating">Rating:</label>
-        <input type="number" th:field="*{rating}" id="reviewRating" placeholder="Rate 1-5" name="rating">
+        <input type="range" list="tickmarks" min="1" max="5" th:field="*{rating}" id="reviewRating"  name="rating">
+        <datalist id="tickmarks">
+            <option value="1"></option>
+            <option value="2"></option>
+            <option value="3"></option>
+            <option value="4"></option>
+            <option value="5"></option>
+        </datalist>
         <br>
         <label for="reviewBody"></label>
         <textarea rows="10" cols="60" th:field="*{body}" id="reviewBody" name="body"></textarea>
         <br>
         <button>Update Review</button>
+    </form>
+    <form th:action="@{/}">
+        <button>Cancel</button>
     </form>
 </main>
 <div th:replace="partials/scripts :: scripts"></div>

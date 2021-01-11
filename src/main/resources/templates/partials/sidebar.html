@@ -14,7 +14,7 @@
             <div class="sidebar-left">
                 <ul class="nav flex-column sidebar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="@{/dashboard}">Dashboard</a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/dashboard}">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">My Profile</a>
@@ -34,7 +34,7 @@
                     </li>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/users/{id}/edit(id=${user.id})}">Settings</a>
+                        <a class="nav-link" th:href="@{/user/{id}/edit(id=${user.id})}">Settings</a>
                     </li>
                 </ul>
             </div>

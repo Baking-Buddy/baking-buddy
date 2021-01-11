@@ -118,17 +118,17 @@ public class UserController {
         Image profileImage = new Image(true, uploadedImage, dbUser);
         imageDao.save(profileImage);
         emailService.userCreatedProfileEmail(dbUser, "Registration", "Congratulations on setting up your Baking Buddy profile!");
-        return "redirect:/login";
+        return "redirect:/";
     }
 
-    @GetMapping("/users/{id}/edit")
+    @GetMapping("/user/{id}/edit")
     public String showEditUserForm(@PathVariable long id, Model model) {
         model.addAttribute("user", usersDao.getOne(id));
         model.addAttribute("profileImage", imageDao.findByOwner(usersDao.getOne(id)));
         return "users/edit-profile";
     }
 
-    @PostMapping("/users/{id}/edit")
+    @PostMapping("/user/{id}/edit")
     public String editUser(
             @PathVariable long id,
             @RequestParam(name="firstName") String firstName,
@@ -151,7 +151,11 @@ public class UserController {
 
     @GetMapping("/")
     public String showHomePage(Model model){
-
+        if (userService.isLoggedIn()){
+           User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+           User userDb = usersDao.getOne(sessionUser.getId());
+            model.addAttribute("user", userDb);
+        }
         List<User> users = usersDao.findAll();
         model.addAttribute("users", users);
 //        model.addAttribute("reviews", reviewDao.findAllByBaker());
@@ -164,8 +168,9 @@ public class UserController {
         User user = usersDao.getOne(id);
         if (userService.isLoggedIn()){
             User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User userDb = usersDao.getOne(sessionUser.getId());
             boolean sendMessage = false;
-            if (sessionUser != null && (user.getId() != sessionUser.getId())){
+            if ((user.getId() != userDb.getId())){
                 sendMessage = true;
                 model.addAttribute("sendMessage", sendMessage);
             }

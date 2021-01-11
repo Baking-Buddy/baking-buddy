@@ -54,16 +54,26 @@ public class OrderController {
 
     @GetMapping("/orders/create/{id}")
     public String showOrderForm(Model viewModel, @PathVariable long id){
-        viewModel.addAttribute("order", new Order());
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        viewModel.addAttribute("user", userDao.getOne(user.getId()));
         viewModel.addAttribute("bakerID", id);
         return "orders/create";
     }
 
     @PostMapping("/orders/create/{id}")
-    public String createOrder(@ModelAttribute Order orderToBeSaved, @RequestParam(name="uploadedImage") String uploadedImage, @PathVariable long id){
+    public String createOrder(@RequestParam(name="uploadedImage") String uploadedImage,
+                              @RequestParam(name="date") String date,
+                              @RequestParam(name="description") String description,
+                              @PathVariable long id) throws ParseException {
+        Order orderToBeSaved = new Order();
         User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User userDb = userDao.getOne(sessionUser.getId());
 
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date convertedDate =df.parse(date);
+
+        orderToBeSaved.setDate(convertedDate);
+        orderToBeSaved.setDescription(description);
         orderToBeSaved.setBaker(userDao.getOne(id));
         orderToBeSaved.setOwner(userDb);
         orderToBeSaved.setStatus(OrderStatus.PENDING);
@@ -95,6 +105,8 @@ public String showOrders(@Param("query") String query, Model model) {
 
     @GetMapping("/orders/{id}/edit")
     public String editOrderForm(@PathVariable long id, Model model){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", userDao.getOne(user.getId()));
         model.addAttribute("order", orderDao.getOne(id));
         return "orders/edit-order";
     }

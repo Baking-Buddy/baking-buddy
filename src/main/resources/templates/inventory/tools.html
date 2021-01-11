@@ -6,6 +6,8 @@
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
+<aside th:replace="partials/sidebar :: aside"></aside>
+<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
 <h1>Tools</h1>
 <br>
 <a th:href="@{/inventory/tools/add}" class="btn btn-primary">Add Tool</a>
@@ -16,6 +18,7 @@
             <a th:href="@{/inventory/tools/{id}/edit(id=${tool.id})}" class="btn btn-primary">EDIT</a>
         </div>
     </main>
+</main>
   <div th:replace="partials/scripts :: scripts"></div>
 </body>
 </html>

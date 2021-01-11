@@ -8,8 +8,6 @@ import com.example.bakingbuddy.demo.Repos.OrderRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import com.example.bakingbuddy.demo.services.EmailService;
 import com.example.bakingbuddy.demo.services.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -107,10 +105,25 @@ public class UserController {
         return "redirect:/login";
     }
 
+    @GetMapping("/error")
+    public String error(){
+        return "/error";
+    }
+
     @GetMapping("/user/{id}/edit")
     public String showEditUserForm(@PathVariable long id, Model model) {
-        model.addAttribute("user", usersDao.getOne(id));
-        model.addAttribute("profileImage", imageDao.findByOwner(usersDao.getOne(id)));
+        if (!userService.isLoggedIn()){
+            return "redirect:/login";
+        }
+        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = usersDao.getOne(sessionUser.getId());
+        if (user.getId() == id){
+            model.addAttribute("user", usersDao.getOne(id));
+            model.addAttribute("profileImage", imageDao.findByOwner(usersDao.getOne(id)));
+        }
+        if (user.getId() != id){
+            return "redirect:/error";
+        }
         return "users/edit-profile";
     }
 
@@ -122,8 +135,8 @@ public class UserController {
             @RequestParam(name="city") String city,
             @RequestParam(name="state") String state,
             @RequestParam(name="email") String email) {
-
-        User userToBeEdited = usersDao.getOne(id);
+        User sessionuser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userToBeEdited = usersDao.getOne(sessionuser.getId());
 //        Image imageToBeEdited = imageDao.findByOwner(userToBeEdited);
         userToBeEdited.setFirstName(firstName);
         userToBeEdited.setLastName(lastName);

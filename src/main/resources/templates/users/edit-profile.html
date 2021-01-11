@@ -7,8 +7,8 @@
     <div role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
         <form th:action="@{/user/{id}/edit(id=${user.id})}" th:method="post" th:object="${user}">
                 <div class="image-stack">
-                    <div class="image-stack__item--top">
-                        <img class="poi-img" th:src="${profileImage.imageURL}" alt="profile image">
+                    <div>
+                        <img th:src="${profileImage.imageURL}" alt="profile image">
                     </div>
                     <!--                        <div class="image-stack__item&#45;&#45;bottom">-->
                     <!--                            <label for="newImage"><img class="poi-img" id="imagePreview" src="" alt=""></label>-->

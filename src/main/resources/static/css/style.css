@@ -1,5 +1,7 @@
 
-
+.home {
+    margin-left: auto;
+}
 p {
     color: #b3b3b3;
     font-weight: 300; }

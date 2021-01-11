@@ -8,6 +8,7 @@ import com.example.bakingbuddy.demo.Repos.OrderImageRepository;
 import com.example.bakingbuddy.demo.Repos.OrderRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import com.example.bakingbuddy.demo.services.EmailService;
+import com.example.bakingbuddy.demo.services.MailgunService;
 import com.example.bakingbuddy.demo.services.ProductService;
 import com.example.bakingbuddy.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,20 +44,16 @@ public class OrderController {
     private EmailService emailService;
 
     @Autowired
+    private MailgunService mailgunService;
+
+    @Autowired
     private UserService userService;
 
 
     @GetMapping("/orders/{id}")
     public String order(@PathVariable long id, Model viewModel){
-        if (!userService.isLoggedIn()){
-            return "redirect:/login";
-        }
         User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User userDb = userDao.getOne(sessionUser.getId());
-        Order orderDb = orderDao.getOne(id);
-        if (userDb != userDao.getOne(orderDb.getOwner().getId())){
-            return "redirect:/error";
-        }
         viewModel.addAttribute("order", orderDao.getOne(id));
         viewModel.addAttribute("user", userDb);
         return "orders/customer-order";
@@ -65,12 +62,8 @@ public class OrderController {
 
     @GetMapping("/orders/create/{id}")
     public String showOrderForm(Model viewModel, @PathVariable long id){
-        if (!userService.isLoggedIn()){
-            return "redirect:/login";
-        }
-        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userDb = userDao.getOne(sessionUser.getId());
-        viewModel.addAttribute("user", userDao.getOne(userDb.getId()));
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        viewModel.addAttribute("user", userDao.getOne(user.getId()));
         viewModel.addAttribute("bakerID", id);
         return "orders/create";
     }
@@ -99,15 +92,12 @@ public class OrderController {
 
         User emailReciever = userDao.getOne(id);
         String emailSubject = "Order Recieved from: " + userDb.getFirstName() + " " + userDb.getLastName();
-        emailService.orderCreatedEmail(emailReciever, emailSubject, dbOrder.getDescription());
+        mailgunService.sendSimpleMessage(emailReciever, emailSubject, dbOrder.getDescription());
         return "redirect:/orders/" + dbOrder.getId();
     }
 
 @GetMapping("/orders")
 public String showOrders(@Param("query") String query, Model model) {
-    if (!userService.isLoggedIn()){
-        return "redirect:/login";
-    }
     User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     User userDb = userDao.getOne(sessionUser.getId());
     if (userDb.isBaker()) {
@@ -123,17 +113,9 @@ public String showOrders(@Param("query") String query, Model model) {
 
     @GetMapping("/orders/{id}/edit")
     public String editOrderForm(@PathVariable long id, Model model){
-        if (!userService.isLoggedIn()){
-            return "redirect:/login";
-        }
-        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userDb = userDao.getOne(sessionUser.getId());
-        Order orderDb = orderDao.getOne(id);
-        if (userDb != userDao.getOne(orderDb.getOwner().getId())){
-            return "redirect:/error";
-        }
-        model.addAttribute("user", userDao.getOne(userDb.getId()));
-        model.addAttribute("order", orderDb);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", userDao.getOne(user.getId()));
+        model.addAttribute("order", orderDao.getOne(id));
         return "orders/edit-order";
     }
 

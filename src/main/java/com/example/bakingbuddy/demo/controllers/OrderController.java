@@ -10,6 +10,7 @@ import com.example.bakingbuddy.demo.Repos.UserRepository;
 import com.example.bakingbuddy.demo.services.EmailService;
 import com.example.bakingbuddy.demo.services.MailgunService;
 import com.example.bakingbuddy.demo.services.ProductService;
+import com.example.bakingbuddy.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,6 +45,10 @@ public class OrderController {
 
     @Autowired
     private MailgunService mailgunService;
+
+    @Autowired
+    private UserService userService;
+
 
     @GetMapping("/orders/{id}")
     public String order(@PathVariable long id, Model viewModel){
@@ -87,7 +92,7 @@ public class OrderController {
 
         User emailReciever = userDao.getOne(id);
         String emailSubject = "Order Recieved from: " + userDb.getFirstName() + " " + userDb.getLastName();
-        mailgunService.sendSimpleMessage(emailReciever, emailSubject, dbOrder.getDescription());
+        emailService.orderCreatedEmail(emailReciever, emailSubject, dbOrder.getDescription());
         return "redirect:/orders/" + dbOrder.getId();
     }
 

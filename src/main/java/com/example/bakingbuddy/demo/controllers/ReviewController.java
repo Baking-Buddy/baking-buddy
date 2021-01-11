@@ -40,11 +40,15 @@ public class ReviewController {
     @GetMapping("/review/{id}/create")
     public String showCreateReview(Model model,
                                    @PathVariable long id){
-        model.addAttribute("review", new Review());
-        model.addAttribute("bakerID", id);
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("user", userDao.getOne(user.getId()));
-        return "review/create-review";
+        if (userService.isLoggedIn()){
+            model.addAttribute("review", new Review());
+            model.addAttribute("bakerID", id);
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            model.addAttribute("user", userDao.getOne(user.getId()));
+            return "review/create-review";
+        } else {
+            return "redirect:/login";
+        }
     }
 
     @PostMapping("/review/{id}/create")
@@ -77,6 +81,14 @@ public class ReviewController {
         public String showEditForm(@PathVariable long reviewID,
                                    @PathVariable long id,
                                    Model model){
+        if (!userService.isLoggedIn()){
+            return "redirect:/login";
+        }
+        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userDb = userDao.getOne(sessionUser.getId());
+        if (userDb.getId() != reviewDao.getOne(reviewID).getOwner().getId()){
+            return  "redirect:/error";
+        }
         model.addAttribute("reviewToEdit", reviewDao.getOne(reviewID));
         model.addAttribute("user", userDao.getOne(id));
         return "review/edit-review";

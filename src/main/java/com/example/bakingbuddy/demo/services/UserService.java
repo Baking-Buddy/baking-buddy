@@ -23,6 +23,16 @@ public class UserService {
         return opt;
     }
 
+    @Transactional
+    public Optional<User> findUserByUsername(String username) {
+        Optional<User> opt = Optional.ofNullable(userDao.findByUsername(username));
+        return opt;
+    }
+
+    public boolean usernameExists(String username) {
+        return findUserByUsername(username).isPresent();
+    }
+
     public boolean userExists(String email) {
         return findUserByEmail(email).isPresent();
     }

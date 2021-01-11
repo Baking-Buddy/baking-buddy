@@ -7,6 +7,7 @@ import com.example.bakingbuddy.demo.Repos.ImageRepository;
 import com.example.bakingbuddy.demo.Repos.OrderRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import com.example.bakingbuddy.demo.services.EmailService;
+import com.example.bakingbuddy.demo.services.MailgunService;
 import com.example.bakingbuddy.demo.services.UserService;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,8 +33,9 @@ public class UserController {
     private final EmailService emailService;
     private final UserService userService;
     private ReviewRepository reviewDao;
+    private MailgunService mailgunService;
 
-    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService, ImageRepository imageDao, OrderRepository orderDao, ReviewRepository reviewDao, UserService userService) {
+    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService, ImageRepository imageDao, OrderRepository orderDao, ReviewRepository reviewDao, UserService userService, MailgunService mailgunService) {
         this.usersDao = usersDao;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
@@ -41,6 +43,7 @@ public class UserController {
         this.reviewDao = reviewDao;
         this.imageDao = imageDao;
         this.orderDao = orderDao;
+        this.mailgunService = mailgunService;
     }
 
     @InitBinder
@@ -101,7 +104,7 @@ public class UserController {
         User dbUser = usersDao.save(userToBeSaved);
         Image profileImage = new Image(true, uploadedImage, dbUser);
         imageDao.save(profileImage);
-        emailService.userCreatedProfileEmail(dbUser, "Registration", "Congratulations on setting up your Baking Buddy profile!");
+        mailgunService.sendSimpleMessage(dbUser, "Registration", "Congratulations "+ userToBeSaved.getFirstName()+"! Welcome to BakingBuddy!");
         return "redirect:/login";
     }
 

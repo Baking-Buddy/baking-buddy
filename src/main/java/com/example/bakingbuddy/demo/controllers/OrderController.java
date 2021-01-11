@@ -150,6 +150,10 @@ public String showOrders(@Param("query") String query, Model model) {
         Order orderToReject = orderDao.getOne(id);
         orderToReject.setStatus(OrderStatus.REJECTED);
         orderDao.save(orderToReject);
+
+        User emailReciever = orderToReject.getOwner();
+        String emailSubject = "Order status has been changed";
+        mailgunService.sendSimpleMessage(emailReciever, emailSubject, "Order has been " + orderToReject.getStatus());
         return "redirect:/orders";
     }
 

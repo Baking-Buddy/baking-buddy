@@ -92,7 +92,7 @@ public class OrderController {
 
         User emailReciever = userDao.getOne(id);
         String emailSubject = "Order Recieved from: " + userDb.getFirstName() + " " + userDb.getLastName();
-        emailService.orderCreatedEmail(emailReciever, emailSubject, dbOrder.getDescription());
+        mailgunService.sendSimpleMessage(emailReciever, emailSubject, dbOrder.getDescription());
         return "redirect:/orders/" + dbOrder.getId();
     }
 

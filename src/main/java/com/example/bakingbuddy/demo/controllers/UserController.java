@@ -141,6 +141,7 @@ public class UserController {
            User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
            User userDb = usersDao.getOne(sessionUser.getId());
             model.addAttribute("user", userDb);
+            model.addAttribute("isBaker", userDb.isBaker());
         }
         List<User> users = usersDao.findAll();
         model.addAttribute("users", users);

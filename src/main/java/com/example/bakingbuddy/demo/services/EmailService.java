@@ -1,6 +1,10 @@
 package com.example.bakingbuddy.demo.services;
 
 import com.example.bakingbuddy.demo.Model.User;
+import com.fasterxml.jackson.databind.JsonNode;
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
+import kong.unirest.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
@@ -43,6 +47,5 @@ public class EmailService {
             System.err.println(ex.getMessage());
         }
     }
-
 
 }

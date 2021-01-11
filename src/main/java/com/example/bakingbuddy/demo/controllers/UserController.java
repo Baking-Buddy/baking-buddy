@@ -83,6 +83,9 @@ public class UserController {
         if(userService.userExists(userToBeSaved.getEmail())) {
             bindingResult.addError(new FieldError("user", "email", "Email address already in use"));
         }
+        if(userService.usernameExists(userToBeSaved.getUsername())) {
+            bindingResult.addError(new FieldError("user", "username", "Username already in use"));
+        }
         if(userToBeSaved.getPassword() != null && rpassword != null) {
             if(!userToBeSaved.getPassword().equals(rpassword)) {
 //                bindingResult.addError(new FieldError("user", "rpassword", "Passwords must match"));
@@ -92,23 +95,6 @@ public class UserController {
         if(bindingResult.hasErrors()){
             return "users/register";
         }
-//        if(userService.userExists(userToBeSaved.getEmail())) {
-//            validation.rejectValue("email", "userToBeSaved.email", "Enter a valid email address");
-//        }
-//
-//        if(userToBeSaved.getPassword() !=null && rpassword !=null) {
-//            if(!userToBeSaved.getPassword().equals(rpassword)) {
-//                validation.rejectValue("password", "userToBeSaved.password", "Password must match");
-//            }
-//        }
-//
-//        if(validation.hasErrors()) {
-//            model.addAttribute("error", validation);
-//            model.addAttribute("user", userToBeSaved);
-//            return "us"
-//        }
-
-
 
         ra.addFlashAttribute("message", "Account has been created");
         userToBeSaved.setBaker(isBaker);

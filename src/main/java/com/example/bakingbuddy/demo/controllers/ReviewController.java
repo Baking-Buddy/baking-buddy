@@ -22,29 +22,30 @@ public class ReviewController {
     @Autowired
     private UserRepository userDao;
 
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
 
-    public ReviewController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/review/{id}")
     public String showReview(@PathVariable long id, Model model){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("user", userDao.getOne(user.getId()));
-
+        if(!userService.isLoggedIn()){
+            return "redirect:/login";
+        }
+        User sessionUser = userService.sessionUser();
+        model.addAttribute("user", sessionUser.getId());
         model.addAttribute("reviews", reviewDao.getOne(id));
+        model.addAttribute("isBaker", sessionUser.isBaker());
         return "review/show-review";
     }
 
     @GetMapping("/review/{id}/create")
-    public String showCreateReview(Model model,
-                                   @PathVariable long id){
+    public String showCreateReview(Model model, @PathVariable long id){
         if (userService.isLoggedIn()){
             model.addAttribute("review", new Review());
             model.addAttribute("bakerID", id);
-            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            model.addAttribute("user", userDao.getOne(user.getId()));
+            User sessionUser = userService.sessionUser();
+            model.addAttribute("user", sessionUser.getId());
+            model.addAttribute("isBaker", sessionUser.isBaker());
             return "review/create-review";
         } else {
             return "redirect:/login";
@@ -54,10 +55,8 @@ public class ReviewController {
     @PostMapping("/review/{id}/create")
     public String createReview(@ModelAttribute Review reviewToBeSaved,
                                @PathVariable long id){
-        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userDb = userDao.getOne(sessionUser.getId());
-
-        reviewToBeSaved.setOwner(userDb);
+        User sessionUser = userService.sessionUser();
+        reviewToBeSaved.setOwner(sessionUser);
         reviewToBeSaved.setBaker(userDao.getOne(id));
         reviewToBeSaved.setDate(new Date());
         reviewDao.save(reviewToBeSaved);
@@ -68,9 +67,9 @@ public class ReviewController {
     public String showBakersReviews(Model model, @PathVariable long id){
         User baker = userDao.getOne(id);
         if (userService.isLoggedIn()){
-            User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User userDb = userDao.getOne(sessionUser.getId());
-            model.addAttribute("user", userDb);
+            User sessionUser = userService.sessionUser();
+            model.addAttribute("user", sessionUser);
+            model.addAttribute("isBaker", sessionUser.isBaker());
         }
         model.addAttribute("baker", baker);
         model.addAttribute("reviews", reviewDao.findAllByBaker(baker));
@@ -78,23 +77,21 @@ public class ReviewController {
     }
 
     @GetMapping("/review/{id}/edit/{reviewID}")
-        public String showEditForm(@PathVariable long reviewID,
-                                   @PathVariable long id,
-                                   Model model){
-        if (!userService.isLoggedIn()){
-            return "redirect:/login";
-        }
-        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userDb = userDao.getOne(sessionUser.getId());
-        if (userDb.getId() != reviewDao.getOne(reviewID).getOwner().getId()){
-            return  "redirect:/error";
-        }
-        model.addAttribute("reviewToEdit", reviewDao.getOne(reviewID));
-        model.addAttribute("user", userDao.getOne(id));
-        return "review/edit-review";
-        }
+    public String showEditForm(@PathVariable long reviewID, @PathVariable long id,  Model model){
+    if (!userService.isLoggedIn()){
+        return "redirect:/login";
+    }
+    User sessionUser = userService.sessionUser();
+    if (!userService.reviewOwner(sessionUser, reviewID)){
+        return  "redirect:/reviews/" + id;
+    }
+    model.addAttribute("reviewToEdit", reviewDao.getOne(reviewID));
+    model.addAttribute("user", userDao.getOne(id));
+    model.addAttribute("isBaker", sessionUser.isBaker());
+    return "review/edit-review";
+    }
 
-        @PostMapping("/review/{id}/edit/{reviewID}")
+    @PostMapping("/review/{id}/edit/{reviewID}")
     public String updateReview(@PathVariable long id,
                                @PathVariable long reviewID,
                                @RequestParam(name="title") String title,
@@ -110,10 +107,8 @@ public class ReviewController {
         return "redirect:/reviews/{id}";
         }
 
-        @PostMapping("/review/{id}/delete/{reviewID}")
-    public String deleteReview(@PathVariable long id,
-                               @PathVariable long reviewID){
-
+    @PostMapping("/review/{id}/delete/{reviewID}")
+    public String deleteReview(@PathVariable long id, @PathVariable long reviewID){
         reviewDao.deleteById(reviewID);
         return"redirect:/reviews/{id}";
         }

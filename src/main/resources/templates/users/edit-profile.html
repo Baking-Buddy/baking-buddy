@@ -6,16 +6,16 @@
     <aside th:replace="partials/sidebar ::  aside"></aside>
     <div role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
         <form th:action="@{/user/{id}/edit(id=${user.id})}" th:method="post" th:object="${user}">
-                <div class="image-stack">
-                    <div>
-                        <img th:src="${profileImage.imageURL}" alt="profile image">
-                    </div>
-                    <!--                        <div class="image-stack__item&#45;&#45;bottom">-->
-                    <!--                            <label for="newImage"><img class="poi-img" id="imagePreview" src="" alt=""></label>-->
-                    <!--                            <input class="profile-img-edit new-img" type="hidden" id="newImage" th:field="${}" th:value="${userToEdit.photo_url}" name="photo_url">-->
-                    <!--                        </div>-->
-
-                </div>
+<!--                <div class="image-stack">-->
+<!--                    <div>-->
+<!--                        <img class="profileCheck" th:src="${profileImage.imageURL}" alt="profile image">-->
+<!--                    </div>-->
+<!--                    <div class="hide">-->
+<!--                        <img id="profileImage" class="profileCheck" src="" alt="">-->
+<!--                        <input type="hidden" id="fileupload" value="" name="uploadedImage">-->
+<!--                    </div>-->
+<!--                    <button class="btn btn-pill btn-info" type="button" id="picker">Profile Picture</button>-->
+<!--                </div>-->
 
                 <div class="mb-3">
                     <label for="firstName" class="form-label">First Name</label>
@@ -42,5 +42,8 @@
     </div>
 
     <div th:replace="partials/scripts :: scripts"></div>
+<!--    <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>-->
+<!--    <script src="/js/keys.js"></script>-->
+<!--    <script src="/js/main.js"></script>-->
 </body>
 </html>

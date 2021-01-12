@@ -82,8 +82,7 @@ public class OrderController {
     }
 
     @PostMapping("/orders/create/{id}")
-    public String createOrder(@RequestParam(name="uploadedImage") String uploadedImage,
-                              @RequestParam(name="date") String date,
+    public String createOrder(@RequestParam(name="date") String date,
                               @RequestParam(name="description") String description,
                               @PathVariable long id) throws ParseException {
         Order orderToBeSaved = new Order();
@@ -96,11 +95,9 @@ public class OrderController {
         orderToBeSaved.setDescription(description);
         orderToBeSaved.setBaker(userDao.getOne(id));
         orderToBeSaved.setOwner(sessionUser);
+        orderToBeSaved.setOrderImage("");
         orderToBeSaved.setStatus(OrderStatus.PENDING);
         Order dbOrder = orderDao.save(orderToBeSaved);
-
-        OrderImage orderImage = new OrderImage(uploadedImage, dbOrder);
-        orderImageDao.save(orderImage);
 
         User emailReciever = userDao.getOne(id);
         String emailSubject = "Order Recieved from: " + sessionUser.getFirstName() + " " + sessionUser.getLastName();
@@ -148,12 +145,19 @@ public String showOrders(@Param("query") String query, Model model) {
     public String submitOrderEdit(
             @PathVariable long id,
             @RequestParam(name="description") String description,
-            @RequestParam(name="date") String date) throws ParseException {
+            @RequestParam(name="date") String date,
+            @RequestParam(name="price") double price,
+            @RequestParam(name = "uploadedImage") String imageURL) throws ParseException {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date convertedDate =df.parse(date);
         Order orderToBeEdited = orderDao.getOne(id);
         orderToBeEdited.setDescription(description);
         orderToBeEdited.setDate(convertedDate);
+        User sessionUser = userService.sessionUser();
+        if (sessionUser.isBaker()){
+            orderToBeEdited.setPrice(price);
+            orderToBeEdited.setOrderImage(imageURL);
+        }
         orderDao.save(orderToBeEdited);
         return "redirect:/orders";
     }

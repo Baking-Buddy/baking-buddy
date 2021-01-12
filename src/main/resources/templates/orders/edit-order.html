@@ -1,26 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head  th:replace="partials/bs-head :: head('Tools')">
+<head  th:replace="partials/bs-head :: head('Edit Order')">
     <meta charset="UTF-8">
     <title>Orders</title>
 </head>
 <nav th:replace="partials/navbar :: navbar"></nav>
 <h1>Edit Order</h1>
 <body>
-<main class="container">
+<main class="container mt-5">
     <div>
         <p>Current Description : <span th:text="${order.description}"></span></p>
         <p>Current Request by date : <span th:text="${order.date}"></span></p>
+        <p>Current Price: <span th:if="${order.price} == 0" th:text="PENDING"></span><span th:if="${order.price} !=0" th:text="'$'+${order.price}"></span></p>
     </div>
     <form th:action="@{/orders/{id}/edit(id=${order.id})}" th:method="post" th:object="${order}">
         New Description:
-        <input type="textarea" name="description" id="description" th:field="*{description}">
+        <textarea type="textarea" name="description" id="description" th:field="*{description}"></textarea>
         <br>
         New Request by date (yyyy-MM-dd):
         <input type="text" name="date" id="date" th:field="*{date}">
-        <input type="submit">
-        <button class="btn btn-pill btn-info" type="button" id="picker">Profile Picture</button>
-        <input type="hidden" id="fileupload" value="" name="uploadedImage">
+        <br>
+        <div th:if="${isBaker}">
+            Set Price:$
+            <input type="number" name="price" id="price" th:field="*{price}">
+            <button class="btn btn-pill btn-info" type="button" id="picker">Profile Picture</button>
+            <input type="hidden" id="fileupload" th:value="${order.orderImage}" name="uploadedImage">
+        </div>
+        <div th:if="${!isBaker}">
+            <input type="hidden" name="price" id="price" th:field="*{price}">
+            <input type="hidden" id="fileupload" th:value="${order.orderImage}" name="uploadedImage">
+        </div>
+        <button class="btn btn-pill btn-success" id="submit" type="submit">Save <Changes>                           </Changes></button>
     </form>
 </main>
 <div th:replace="partials/scripts :: scripts"></div>

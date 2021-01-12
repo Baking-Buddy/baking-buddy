@@ -62,11 +62,16 @@ public class UserController {
 
     @GetMapping("/dashboard")
     public String showDashboard(Model model) {
-        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userDb = usersDao.getOne(sessionUser.getId());
-        model.addAttribute("pendingOrders", orderDao.findAll());
-        model.addAttribute("user", userDb);
-        return "users/dashboard";
+        if (userService.isLoggedIn()) {
+            User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User userDb = usersDao.getOne(sessionUser.getId());
+            model.addAttribute("pendingOrders", orderDao.findAll());
+            model.addAttribute("user", userDb);
+            model.addAttribute("isBaker", sessionUser.isBaker());
+            return "users/dashboard";
+        } else {
+            return "redirect:/login";
+        }
     }
 
 
@@ -118,15 +123,13 @@ public class UserController {
         if (!userService.isLoggedIn()){
             return "redirect:/login";
         }
-        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = usersDao.getOne(sessionUser.getId());
-        if (user.getId() == id){
-            model.addAttribute("user", usersDao.getOne(id));
-            model.addAttribute("profileImage", imageDao.findByOwner(usersDao.getOne(id)));
+        User sessionUser = userService.sessionUser();
+        if (!userService.profileOwner(sessionUser, id)){
+            return "redirect:/user/" + sessionUser.getId() + "/edit";
         }
-        if (user.getId() != id){
-            return "redirect:/error";
-        }
+        model.addAttribute("user", usersDao.getOne(id));
+        model.addAttribute("isBaker", sessionUser.isBaker());
+        model.addAttribute("profileImage", imageDao.findByOwner(usersDao.getOne(id)));
         return "users/edit-profile";
     }
 
@@ -138,32 +141,29 @@ public class UserController {
             @RequestParam(name="city") String city,
             @RequestParam(name="state") String state,
             @RequestParam(name="email") String email) {
-        User sessionuser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userToBeEdited = usersDao.getOne(sessionuser.getId());
-        Image imageToBeEdited = imageDao.findByOwner(userToBeEdited);
-        userToBeEdited.setFirstName(firstName);
-        userToBeEdited.setLastName(lastName);
-        userToBeEdited.setCity(city);
-        userToBeEdited.setState(state);
-        userToBeEdited.setEmail(email);
+        User sessionuser = userService.sessionUser();
+        Image imageToBeEdited = imageDao.findByOwner(sessionuser);
+        sessionuser.setFirstName(firstName);
+        sessionuser.setLastName(lastName);
+        sessionuser.setCity(city);
+        sessionuser.setState(state);
+        sessionuser.setEmail(email);
 //        imageToBeEdited.setImageURL(profilePicture);
 //        imageDao.save(imageToBeEdited);
-        usersDao.save(userToBeEdited);
-        mailgunService.sendSimpleMessage(userToBeEdited, "SETTINGS UPDATED", "Some changes have been made to your account.");
+        usersDao.save(sessionuser);
+        mailgunService.sendSimpleMessage(sessionuser, "SETTINGS UPDATED", "Some changes have been made to your account.");
         return "redirect:/dashboard";
     }
 
     @GetMapping("/")
     public String showHomePage(Model model){
         if (userService.isLoggedIn()){
-           User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-           User userDb = usersDao.getOne(sessionUser.getId());
-            model.addAttribute("user", userDb);
-            model.addAttribute("isBaker", userDb.isBaker());
+           User sessionUser = userService.sessionUser();
+            model.addAttribute("user", sessionUser);
+            model.addAttribute("isBaker", sessionUser.isBaker());
         }
         List<User> users = usersDao.findAll();
         model.addAttribute("users", users);
-//        model.addAttribute("reviews", reviewDao.findAllByBaker());
         return "home/index";
     }
 
@@ -172,13 +172,13 @@ public class UserController {
     public String showBakerProfile(@PathVariable long id, Model model){
         User user = usersDao.getOne(id);
         if (userService.isLoggedIn()){
-            User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User userDb = usersDao.getOne(sessionUser.getId());
+            User sessionUser = userService.sessionUser();
             boolean sendMessage = false;
-            if ((user.getId() != userDb.getId())){
+            if (!userService.profileOwner(sessionUser, id)){
                 sendMessage = true;
                 model.addAttribute("sendMessage", sendMessage);
             }
+            model.addAttribute("isBaker", sessionUser.isBaker());
         }
         model.addAttribute("isAnonymous", userService.isLoggedIn());
         model.addAttribute("user", user);

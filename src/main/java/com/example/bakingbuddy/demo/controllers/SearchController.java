@@ -17,25 +17,17 @@ import java.util.List;
 
 @Controller
 public class SearchController {
-    private final UserRepository usersDao;
-    private final UserService userService;
-
-    public SearchController(UserRepository userDao, UserService userService){
-        this.usersDao = userDao;
-        this.userService = userService;
-    }
-
-//    @GetMapping("/search-results")
-//    public String getSearchResults(){
-//        return "home/search-results";
-//    }
+    @Autowired
+    private UserRepository usersDao;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/search-results")
     public String bakerSearchResults(@RequestParam(name = "query") String query, Model model){
         if (userService.isLoggedIn()){
-            User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User userDb = usersDao.getOne(sessionUser.getId());
-            model.addAttribute("user", userDb);
+            User sessionUser = userService.sessionUser();
+            model.addAttribute("user", sessionUser);
+            model.addAttribute("isBaker", sessionUser.isBaker());
         }
         List<User> userResults = usersDao.findBakerByUsernameLike(query);
         model.addAttribute("userResults", userResults);

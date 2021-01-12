@@ -52,20 +52,33 @@ public class OrderController {
 
     @GetMapping("/orders/{id}")
     public String order(@PathVariable long id, Model viewModel){
-        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userDb = userDao.getOne(sessionUser.getId());
-        viewModel.addAttribute("order", orderDao.getOne(id));
-        viewModel.addAttribute("user", userDb);
-        return "orders/customer-order";
+        if (userService.isLoggedIn()) {
+            User sessionUser = userService.sessionUser();
+            if (userService.orderOwner(sessionUser, id) || userService.orderBaker(sessionUser, id)) {
+                viewModel.addAttribute("order", orderDao.getOne(id));
+                viewModel.addAttribute("user", sessionUser);
+                viewModel.addAttribute("isBaker", sessionUser.isBaker());
+                return "orders/customer-order";
+            } else {
+                return "redirect:/orders";
+            }
+        } else {
+            return "redirect:/login";
+        }
     }
 
 
     @GetMapping("/orders/create/{id}")
     public String showOrderForm(Model viewModel, @PathVariable long id){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        viewModel.addAttribute("user", userDao.getOne(user.getId()));
-        viewModel.addAttribute("bakerID", id);
-        return "orders/create";
+        if (userService.isLoggedIn()) {
+            User sessionUser = userService.sessionUser();
+            viewModel.addAttribute("user", sessionUser);
+            viewModel.addAttribute("bakerID", id);
+            viewModel.addAttribute("isBaker", sessionUser.isBaker());
+            return "orders/create";
+        } else {
+            return "redirect:/login";
+        }
     }
 
     @PostMapping("/orders/create/{id}")
@@ -74,8 +87,7 @@ public class OrderController {
                               @RequestParam(name="description") String description,
                               @PathVariable long id) throws ParseException {
         Order orderToBeSaved = new Order();
-        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userDb = userDao.getOne(sessionUser.getId());
+        User sessionUser = userService.sessionUser();
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date convertedDate =df.parse(date);
@@ -83,7 +95,7 @@ public class OrderController {
         orderToBeSaved.setDate(convertedDate);
         orderToBeSaved.setDescription(description);
         orderToBeSaved.setBaker(userDao.getOne(id));
-        orderToBeSaved.setOwner(userDb);
+        orderToBeSaved.setOwner(sessionUser);
         orderToBeSaved.setStatus(OrderStatus.PENDING);
         Order dbOrder = orderDao.save(orderToBeSaved);
 
@@ -91,32 +103,45 @@ public class OrderController {
         orderImageDao.save(orderImage);
 
         User emailReciever = userDao.getOne(id);
-        String emailSubject = "Order Recieved from: " + userDb.getFirstName() + " " + userDb.getLastName();
+        String emailSubject = "Order Recieved from: " + sessionUser.getFirstName() + " " + sessionUser.getLastName();
         mailgunService.sendSimpleMessage(emailReciever, emailSubject, dbOrder.getDescription());
         return "redirect:/orders/" + dbOrder.getId();
     }
 
 @GetMapping("/orders")
 public String showOrders(@Param("query") String query, Model model) {
-    User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    User userDb = userDao.getOne(sessionUser.getId());
-    if (userDb.isBaker()) {
-        model.addAttribute("orders", service.listAllBaker(query, userDb));
-        model.addAttribute("user", userDb);
-    } else if (!userDb.isBaker()) {
-        model.addAttribute("orders", service.listAllOwner(query, userDb));
-        model.addAttribute("user", userDb);
-    }
-    return "orders/orders";
+        if (userService.isLoggedIn()) {
+            User sessionUser = userService.sessionUser();
+            if (sessionUser.isBaker()) {
+                model.addAttribute("orders", service.listAllBaker(query, sessionUser));
+                model.addAttribute("user", sessionUser);
+            } else if (!sessionUser.isBaker()) {
+                model.addAttribute("orders", service.listAllOwner(query, sessionUser));
+                model.addAttribute("user", sessionUser);
+            }
+            model.addAttribute("isBaker", sessionUser.isBaker());
+            return "orders/orders";
+        } else {
+            return "redirect:/login";
+        }
 }
 
 
     @GetMapping("/orders/{id}/edit")
     public String editOrderForm(@PathVariable long id, Model model){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("user", userDao.getOne(user.getId()));
-        model.addAttribute("order", orderDao.getOne(id));
-        return "orders/edit-order";
+        if (userService.isLoggedIn()) {
+            User sessionUser = userService.sessionUser();
+            if(userService.orderOwner(sessionUser, id) || userService.orderBaker(sessionUser, id)) {
+                model.addAttribute("user", sessionUser);
+                model.addAttribute("order", orderDao.getOne(id));
+                model.addAttribute("isBaker", sessionUser.isBaker());
+                return "orders/edit-order";
+            }else {
+                return "redirect:/orders";
+            }
+        } else{
+            return "redirect:/login";
+        }
     }
 
     @PostMapping("/orders/{id}/edit")

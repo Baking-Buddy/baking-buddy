@@ -138,8 +138,8 @@ public class UserController {
             @RequestParam(name="city") String city,
             @RequestParam(name="state") String state,
             @RequestParam(name="email") String email) {
-        User sessionuser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userToBeEdited = usersDao.getOne(sessionuser.getId());
+        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userToBeEdited = usersDao.getOne(sessionUser.getId());
 //        Image imageToBeEdited = imageDao.findByOwner(userToBeEdited);
         userToBeEdited.setFirstName(firstName);
         userToBeEdited.setLastName(lastName);
@@ -147,8 +147,8 @@ public class UserController {
         userToBeEdited.setState(state);
         userToBeEdited.setEmail(email);
         usersDao.save(userToBeEdited);
+        mailgunService.sendSimpleMessage(userToBeEdited, "SETTINGS UPDATED", "Some changes have been made to your account.");
         return "redirect:/dashboard";
-
     }
 
     @GetMapping("/")

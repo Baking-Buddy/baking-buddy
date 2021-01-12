@@ -5,6 +5,7 @@ import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Repos.MessageRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import com.example.bakingbuddy.demo.services.EmailService;
+import com.example.bakingbuddy.demo.services.MailgunService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -24,11 +25,8 @@ public class MessageController {
     @Autowired
     private UserRepository userDao;
 
-    private final EmailService emailService;
-
-    public MessageController(EmailService emailService){
-        this.emailService = emailService;
-    }
+    @Autowired
+    private MailgunService mailgunService;
 
     @GetMapping("/inbox")
     public String inbox(Model model){
@@ -62,7 +60,7 @@ public class MessageController {
 
         messagesDao.save(messageToBeSaved);
 
-        emailService.userCreatedProfileEmail(userDb,
+        mailgunService.sendSimpleMessage(messageToBeSaved.getRecipient(),
                 "Inbox message from" + userDb.getUsername(),
                 messageToBeSaved.getSender().getFirstName() + " " + messageToBeSaved.getSender().getLastName() +
                 " said: " + messageToBeSaved.getBody());

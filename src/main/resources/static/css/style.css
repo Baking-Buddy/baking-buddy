@@ -188,14 +188,14 @@ h2 {
     margin-left: auto;
 }
 
-body.modal-open div.modal-backdrop {
-    z-index: 0;
+.hide {
+    display: none;
 }
 
-.modal-btn {
-    margin-left: auto;
-}
-
-.modal-header {
-    border: none;
+.profileCheck {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: red;
+    border: 1px solid white;
 }

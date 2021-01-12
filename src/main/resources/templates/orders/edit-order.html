@@ -19,8 +19,13 @@
         New Request by date (yyyy-MM-dd):
         <input type="text" name="date" id="date" th:field="*{date}">
         <input type="submit">
+        <button class="btn btn-pill btn-info" type="button" id="picker">Profile Picture</button>
+        <input type="hidden" id="fileupload" value="" name="uploadedImage">
     </form>
 </main>
 <div th:replace="partials/scripts :: scripts"></div>
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+<script src="/js/keys.js"></script>
+<script src="/js/main.js"></script>
 </body>
 </html>

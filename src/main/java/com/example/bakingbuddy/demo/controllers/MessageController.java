@@ -6,6 +6,7 @@ import com.example.bakingbuddy.demo.Repos.MessageRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import com.example.bakingbuddy.demo.services.EmailService;
 import com.example.bakingbuddy.demo.services.MailgunService;
+import com.example.bakingbuddy.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -28,24 +29,31 @@ public class MessageController {
     @Autowired
     private MailgunService mailgunService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/inbox")
     public String inbox(Model model){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userdb = userDao.getOne(user.getId());
-        List<User> senderList = new ArrayList<>();
-        List<Message> userMessages = messagesDao.findMessagesByRecipientOrSenderOrderByDateAsc(userdb, userdb);
-        for (Message message : userMessages){
-            if (message.getSender().getId() == userdb.getId()){
-                continue;
+        if (userService.isLoggedIn()) {
+            User sessionUser = userService.sessionUser();
+            List<User> senderList = new ArrayList<>();
+            List<Message> userMessages = messagesDao.findMessagesByRecipientOrSenderOrderByDateAsc(sessionUser, sessionUser);
+            for (Message message : userMessages) {
+                if (message.getSender().getId() == sessionUser.getId()) {
+                    continue;
+                }
+                if (!senderList.contains(message.getSender())) {
+                    senderList.add(userDao.getOne(message.getSender().getId()));
+                }
             }
-            if (!senderList.contains(message.getSender())){
-                senderList.add(userDao.getOne(message.getSender().getId()));
-            }
+            model.addAttribute("isBaker", sessionUser.isBaker());
+            model.addAttribute("user", userDao.getOne(sessionUser.getId()));
+            model.addAttribute("messages", userMessages);
+            model.addAttribute("senders", senderList);
+            return "inbox/inbox";
+        } else {
+            return "redirect:/login";
         }
-        model.addAttribute("user", userDao.getOne(userdb.getId()));
-        model.addAttribute("messages", userMessages);
-        model.addAttribute("senders", senderList);
-        return "inbox/inbox";
     }
 
     @PostMapping("/inbox/{id}")

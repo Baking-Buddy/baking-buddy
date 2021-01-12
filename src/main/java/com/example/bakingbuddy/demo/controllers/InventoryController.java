@@ -41,12 +41,11 @@ public class InventoryController {
         if (!userService.isLoggedIn()){
             return "redirect:/login";
         }
-        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userDb = userDao.getOne(sessionUser.getId());
-        List<Tool> userTools = toolDao.findToolByOwner(userDb);
+        User sessionUser = userService.sessionUser();
+        List<Tool> userTools = toolDao.findToolByOwner(sessionUser);
         List<ToolImage> userToolImages = new ArrayList<>();
-        for (int i = 0; i < userTools.size(); i++){
-            userToolImages.add(toolImageDao.findToolImageByTool(userTools.get(i)));
+        for (Tool userTool : userTools) {
+            userToolImages.add(toolImageDao.findToolImageByTool(userTool));
         }
         model.addAttribute("user",userDao.getOne(sessionUser.getId()));
         model.addAttribute("userTools", userTools);
@@ -59,8 +58,8 @@ public class InventoryController {
         if (!userService.isLoggedIn()){
             return "redirect:/login";
         }
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("user", userDao.getOne(user.getId()));
+        User sessionUser = userService.sessionUser();
+        model.addAttribute("user", sessionUser.getId());
         model.addAttribute("tool", new Tool());
         return "inventory/add-tool";
     }
@@ -81,9 +80,8 @@ public class InventoryController {
         if (!userService.isLoggedIn()){
             return "redirect:/login";
         }
-        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userDb = userDao.getOne(sessionUser.getId());
-        model.addAttribute("user", userDb);
+        User sessionUser = userService.sessionUser();
+        model.addAttribute("user", sessionUser);
         return "inventory/consumables";
     }
 
@@ -92,8 +90,8 @@ public class InventoryController {
         if (!userService.isLoggedIn()){
             return "redirect:/login";
         }
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("user", userDao.getOne(user.getId()));
+        User sessionUser = userService.sessionUser();
+        model.addAttribute("user", sessionUser.getId());
         model.addAttribute("consumable", new Consumable());
         return "inventory/add-consumable";
     }
@@ -112,13 +110,12 @@ public class InventoryController {
         if (!userService.isLoggedIn()){
             return "redirect:/login";
         }
-        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userDb = userDao.getOne(sessionUser.getId());
-        Consumable consumableDb = consumableDao.getOne(id);
-        if (userDb != userDao.getOne(consumableDb.getOwner().getId())){
-            return "redirect:/error";
+        User sessionUser = userService.sessionUser();
+        if (!userService.consumableOwner(sessionUser, id)){
+            return "redirect:/inventory/consumables";
         }
-        model.addAttribute("user", userDb);
+        Consumable consumableDb = consumableDao.getOne(id);
+        model.addAttribute("user", sessionUser);
         model.addAttribute("consumable", consumableDb);
         return "inventory/edit-consumables";
     }
@@ -136,13 +133,12 @@ public class InventoryController {
         if (!userService.isLoggedIn()){
             return "redirect:/login";
         }
-        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User userDb = userDao.getOne(sessionUser.getId());
-        Tool toolDb = toolDao.getOne(id);
-        if (userDb != userDao.getOne(toolDb.getOwner().getId())){
-            return "redirect:/error";
+        User sessionUser = userService.sessionUser();
+        if (!userService.toolOwner(sessionUser, id)){
+            return "redirect:/inventory/tools";
         }
-        model.addAttribute("user", userDb);
+        Tool toolDb = toolDao.getOne(id);
+        model.addAttribute("user", sessionUser);
         model.addAttribute("tool", toolDb);
         return "inventory/edit-tools";
     }

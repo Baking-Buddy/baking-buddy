@@ -39,8 +39,8 @@ public class Order {
 //    @JoinColumn(nullable = false, name = "user_id")
     private User owner;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
-    private List<OrderImage> orderImages;
+    @Column
+    private String orderImage;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable=false)
@@ -48,19 +48,21 @@ public class Order {
 
     public Order(){}
 
-    public Order(String description, User owner, OrderStatus status, Date date) {
+    public Order(String description, User owner, OrderStatus status, Date date, String orderImage) {
         this.date = date;
         this.description = description;
         this.owner = owner;
         this.status = status;
+        this.orderImage = orderImage;
     }
 
-    public Order(long id, String description, double price, User baker, User owner) {
+    public Order(long id, String description, double price, User baker, User owner, String orderImage) {
         this.id = id;
         this.description = description;
         this.price = price;
         this.baker = baker;
         this.owner = owner;
+        this.orderImage = orderImage;
     }
 
     public Order(String description, double price, User baker, User owner) {
@@ -110,12 +112,12 @@ public class Order {
         this.owner = owner;
     }
 
-    public List<OrderImage> getOrderImages() {
-        return orderImages;
+    public String getOrderImage() {
+        return orderImage;
     }
 
-    public void setOrderImages(List<OrderImage> orderImages) {
-        this.orderImages = orderImages;
+    public void setOrderImage(String orderImage) {
+        this.orderImage = orderImage;
     }
 
     public OrderStatus getStatus() {

@@ -9,6 +9,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findUserByEmail(String email);
     User findByUsername(String username);
+    User findByResetPasswordToken(String token);
     List<User> findByUsernameLike(String username);
     List<User> findAllByUsernameIsLike(String query);
 

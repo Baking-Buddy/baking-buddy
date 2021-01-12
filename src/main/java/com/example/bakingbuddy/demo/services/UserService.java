@@ -2,6 +2,8 @@ package com.example.bakingbuddy.demo.services;
 import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -82,5 +84,30 @@ public class UserService {
     public boolean reviewOwner(User currentuser, long reviewID){
         return currentuser == reviewDao.getOne(reviewID).getOwner();
     }
+
+    public void updateResetPasswordToken(String token, String email) throws UsernameNotFoundException {
+        User dbUser = userDao.findUserByEmail(email);
+
+        if (dbUser == null) {
+            throw new UsernameNotFoundException("");
+        } else {
+            dbUser.setResetPasswordToken(token);
+            userDao.save(dbUser);
+        }
+    }
+
+    public User getByResetPasswordToken(String token) {
+        return userDao.findByResetPasswordToken(token);
+    }
+
+    public void updatePassword(User user, String newPassword) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(encodedPassword);
+
+        user.setResetPasswordToken(null);
+        userDao.save(user);
+    }
+
 }
 

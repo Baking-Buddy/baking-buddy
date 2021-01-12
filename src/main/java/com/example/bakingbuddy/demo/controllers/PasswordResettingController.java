@@ -2,11 +2,13 @@ package com.example.bakingbuddy.demo.controllers;
 
 import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
+import com.example.bakingbuddy.demo.Utility.Utility;
 import com.example.bakingbuddy.demo.services.MailgunService;
 import com.example.bakingbuddy.demo.services.UserService;
 import kong.unirest.JsonNode;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -37,29 +39,57 @@ public class PasswordResettingController {
     }
 
     @PostMapping("/forgot-password")
-    public String processForgotPassword(@RequestParam(name="email") String email, String newPassword) {
-        User user = userDao.findUserByEmail(email);
-        String resetPasswordLink = "/reset-password/" + user.getId();
-//        JsonNode response = mailgunService.sendPasswordResetMessage(userDao.findUserByEmail(email), resetPasswordLink, true);
+    public String processForgotPassword(HttpServletRequest request, Model model) {
+        String email = request.getParameter("email");
+        String token = RandomString.make(30);
 
-        return "redirect:/reset-password/" + user.getId();
+        try {
+            userService.updateResetPasswordToken(token, email);
+            String resetPasswordLink = Utility.getSiteURL(request) + "/reset-password?token=" + token;
+
+            JsonNode response = mailgunService.sendPasswordResetMessage(userDao.findUserByEmail(email), resetPasswordLink, false);
+            System.out.println("response.toPrettyString() = " + response.toPrettyString());
+            model.addAttribute("message", "We have sent a reset password link to your email. Please check.");
+
+        } catch (UsernameNotFoundException ex) {
+            model.addAttribute("error", ex.getMessage());
+            model.addAttribute("message", "We have sent a reset password link to your email. Please check.");
+        }
+        return "user/forgot-password";
     }
 
-    @GetMapping("/reset-password/{id}")
-    public String resetPasswordForm(@PathVariable long id){
-        User user = userDao.getOne(id);
-        return "users/reset-password/" + user.getId();
+    @GetMapping("/reset-password")
+    public String showResetPasswordForm(@Param(value = "token") String token, Model model) {
+        User user = userService.getByResetPasswordToken(token);
+
+        if (user == null) {
+            model.addAttribute("message", "Invalid Token");
+            return "user/reset-password";
+        }
+        else {
+            model.addAttribute("token", token);
+            return "user/reset-password";
+        }
     }
 
-    @PostMapping("/reset-password/{id}")
-    public String resetPassword(@PathVariable long id, String newPassword){
-        User user = userDao.getOne(id);
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(newPassword);
-        user.setPassword(encodedPassword);
-        userDao.save(user);
+    @PostMapping("/reset-password")
+    public String processResetPassword(HttpServletRequest request, Model model) {
+        String token = request.getParameter("token");
+        String password = request.getParameter("password");
 
-        return "redirect:/login";
+        User user = userService.getByResetPasswordToken(token);
+        model.addAttribute("title", "Reset your password");
+
+        if (user == null) {
+            model.addAttribute("message", "Invalid Token");
+            return "message";
+        } else {
+            userService.updatePassword(user, password);
+
+            model.addAttribute("message", "You have successfully changed your password.");
+        }
+
+        return "user/reset-confirm";
     }
 
 }

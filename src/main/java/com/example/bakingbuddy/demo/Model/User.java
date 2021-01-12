@@ -68,6 +68,9 @@ public class User {
     @OneToMany(mappedBy = "owner")
     private List<Review> reviews;
 
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
+
     public User(){}
 
     public User(User copy) {
@@ -100,6 +103,25 @@ public class User {
         this.city = city;
         this.state = state;
         this.consumables = consumables;
+    }
+
+    public User(long id, @NotBlank(message = "Enter your first name") String firstName, @NotBlank(message = "enter your last name") String lastName, String username, @NotBlank(message = "Enter your email") @Email(message = "enter a valid email Address") String email, @NotBlank(message = "Enter your password") @Length(min = 6, message = "Password Must be at least 6 Characters") String password, boolean isBaker, @NotBlank(message = "Enter your city") String city, @NotBlank(message = "enter your state") String state, List<Image> images, List<Tool> tools, List<Consumable> consumables, List<Order> orders, List<Recipe> recipes, List<Review> reviews, String resetPasswordToken) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.isBaker = isBaker;
+        this.city = city;
+        this.state = state;
+        this.images = images;
+        this.tools = tools;
+        this.consumables = consumables;
+        this.orders = orders;
+        this.recipes = recipes;
+        this.reviews = reviews;
+        this.resetPasswordToken = resetPasswordToken;
     }
 
     public long getId() {
@@ -222,7 +244,12 @@ public class User {
         this.reviews = reviews;
     }
 
+    public String getResetPasswordToken() {
+        return resetPasswordToken;
+    }
 
-
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
+    }
 }
 

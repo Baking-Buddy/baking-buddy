@@ -26,6 +26,7 @@ filePicker.addEventListener('click', function (e) {
 function updateForm (result) {
     const fileData = result.filesUploaded[0];
     fileInput.value = fileData.url;
-    document.querySelector("fileupload").value = fileData.url;
+    document.querySelector("#fileupload").value = fileData.url;
+    document.querySelector("#profileImage").src= fileData.url;
 };
 

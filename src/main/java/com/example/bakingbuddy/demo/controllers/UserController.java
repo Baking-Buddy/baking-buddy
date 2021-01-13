@@ -109,7 +109,7 @@ public class UserController {
         User dbUser = usersDao.save(userToBeSaved);
         Image profileImage = new Image(true, uploadedImage, dbUser);
         imageDao.save(profileImage);
-        mailgunService.sendSimpleMessage(dbUser, "Registration", "Congratulations "+ userToBeSaved.getFirstName()+"! Welcome to BakingBuddy!");
+        mailgunService.sendRegisterMessage(userToBeSaved, false);
         return "redirect:/login";
     }
 

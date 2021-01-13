@@ -1,4 +1,5 @@
 package com.example.bakingbuddy.demo.services;
+import com.example.bakingbuddy.demo.Model.Image;
 import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +19,20 @@ public class UserService {
     private final ToolRepository toolDao;
     private final ConsumableRepository consuambleDao;
     private final ReviewRepository reviewDao;
+    private final ImageRepository imageDao;
 
     public UserService(UserRepository userDao,
                        OrderRepository orderDao,
                        ToolRepository toolDao,
                        ConsumableRepository consumableDao,
-                       ReviewRepository reviewDao) {
+                       ReviewRepository reviewDao,
+                       ImageRepository imageDao) {
         this.userDao = userDao;
         this.orderDao = orderDao;
         this.toolDao = toolDao;
         this.consuambleDao = consumableDao;
         this.reviewDao = reviewDao;
+        this.imageDao = imageDao;
     }
 
     @Transactional
@@ -83,6 +87,29 @@ public class UserService {
 
     public boolean reviewOwner(User currentuser, long reviewID){
         return currentuser == reviewDao.getOne(reviewID).getOwner();
+    }
+
+    public String profileImage(User currentUser){
+        try {
+            Image userImage = imageDao.findByOwner(currentUser);
+            return userImage.getImageURL();
+        } catch (NullPointerException e){
+            System.err.println("Looks like this user did not setup a profile picture upon registering " +
+                    "causing a: " + e);
+            System.err.println("UserID: " + currentUser.getId() +
+                    ", Username: " + currentUser.getUsername() +
+                    ", First Name: " + currentUser.getFirstName() +
+                    ", Last Name: " + currentUser.getLastName() +
+                    ", Email: " + currentUser.getEmail());
+            System.out.println("\033[32mThe user has been assigned the default profile picture\033[0m");
+            Image newUserImage = new Image();
+            newUserImage.setImageURL("https://picsum.photos/id/870/200/300?grayscale&blur=2");
+            newUserImage.setOwner(currentUser);
+            newUserImage.setProfilePicture(true);
+            imageDao.save(newUserImage);
+            return imageDao.findByOwner(currentUser).getImageURL();
+        }
+
     }
 
     public void updateResetPasswordToken(String token, String email) throws UsernameNotFoundException {

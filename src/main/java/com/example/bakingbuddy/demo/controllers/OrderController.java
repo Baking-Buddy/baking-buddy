@@ -1,9 +1,7 @@
 package com.example.bakingbuddy.demo.controllers;
 
-import com.example.bakingbuddy.demo.Model.Order;
-import com.example.bakingbuddy.demo.Model.OrderImage;
-import com.example.bakingbuddy.demo.Model.OrderStatus;
-import com.example.bakingbuddy.demo.Model.User;
+import com.example.bakingbuddy.demo.Model.*;
+import com.example.bakingbuddy.demo.Repos.ImageRepository;
 import com.example.bakingbuddy.demo.Repos.OrderImageRepository;
 import com.example.bakingbuddy.demo.Repos.OrderRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
@@ -35,7 +33,7 @@ public class OrderController {
     private UserRepository userDao;
 
     @Autowired
-    private OrderImageRepository orderImageDao;
+    private ImageRepository imageDao;
 
     @Autowired
     private ProductService service;
@@ -58,6 +56,8 @@ public class OrderController {
                 viewModel.addAttribute("order", orderDao.getOne(id));
                 viewModel.addAttribute("user", sessionUser);
                 viewModel.addAttribute("isBaker", sessionUser.isBaker());
+                Image profileImage = imageDao.findByOwner(sessionUser);
+                viewModel.addAttribute("profileImage", profileImage.getImageURL());
                 return "orders/customer-order";
             } else {
                 return "redirect:/orders";
@@ -75,6 +75,8 @@ public class OrderController {
             viewModel.addAttribute("user", sessionUser);
             viewModel.addAttribute("bakerID", id);
             viewModel.addAttribute("isBaker", sessionUser.isBaker());
+            Image profileImage = imageDao.findByOwner(sessionUser);
+            viewModel.addAttribute("profileImage", profileImage.getImageURL());
             return "orders/create";
         } else {
             return "redirect:/login";
@@ -117,6 +119,8 @@ public String showOrders(@Param("query") String query, Model model) {
                 model.addAttribute("user", sessionUser);
             }
             model.addAttribute("isBaker", sessionUser.isBaker());
+            Image profileImage = imageDao.findByOwner(sessionUser);
+            model.addAttribute("profileImage", profileImage.getImageURL());
             return "orders/orders";
         } else {
             return "redirect:/login";
@@ -132,6 +136,8 @@ public String showOrders(@Param("query") String query, Model model) {
                 model.addAttribute("user", sessionUser);
                 model.addAttribute("order", orderDao.getOne(id));
                 model.addAttribute("isBaker", sessionUser.isBaker());
+                Image profileImage = imageDao.findByOwner(sessionUser);
+                model.addAttribute("profileImage", profileImage.getImageURL());
                 return "orders/edit-order";
             }else {
                 return "redirect:/orders";

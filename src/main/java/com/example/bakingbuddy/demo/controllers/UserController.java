@@ -63,11 +63,11 @@ public class UserController {
     @GetMapping("/dashboard")
     public String showDashboard(Model model) {
         if (userService.isLoggedIn()) {
-            User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User userDb = usersDao.getOne(sessionUser.getId());
+            User sessionUser = userService.sessionUser();
             model.addAttribute("pendingOrders", orderDao.findAll());
-            model.addAttribute("user", userDb);
+            model.addAttribute("user", sessionUser);
             model.addAttribute("isBaker", sessionUser.isBaker());
+            model.addAttribute("profileImage",userService.profileImage(sessionUser));
             return "users/dashboard";
         } else {
             return "redirect:/login";
@@ -129,7 +129,7 @@ public class UserController {
         }
         model.addAttribute("user", usersDao.getOne(id));
         model.addAttribute("isBaker", sessionUser.isBaker());
-        model.addAttribute("profileImage", imageDao.findByOwner(usersDao.getOne(id)));
+        model.addAttribute("profileImage", imageDao.findByOwner(sessionUser).getImageURL());
         return "users/edit-profile";
     }
 
@@ -161,6 +161,7 @@ public class UserController {
            User sessionUser = userService.sessionUser();
             model.addAttribute("user", sessionUser);
             model.addAttribute("isBaker", sessionUser.isBaker());
+            model.addAttribute("profileImage",userService.profileImage(sessionUser));
         }
         List<User> users = usersDao.findAll();
         model.addAttribute("users", users);
@@ -173,6 +174,8 @@ public class UserController {
         User user = usersDao.getOne(id);
         if (userService.isLoggedIn()){
             User sessionUser = userService.sessionUser();
+            Image profileImage = imageDao.findByOwner(sessionUser);
+            model.addAttribute("profileImage", profileImage.getImageURL());
             boolean sendMessage = false;
             if (!userService.profileOwner(sessionUser, id)){
                 sendMessage = true;

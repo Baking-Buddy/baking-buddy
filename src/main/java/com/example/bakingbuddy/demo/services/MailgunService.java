@@ -39,8 +39,8 @@ public class MailgunService {
         final String resetVars = String.format(
                 "{\"username\": \"%s\", \"reset_url\": \"%s\"}", user.getUsername(), resetUrl
         );
-        System.out.println("resetUrl = " + resetUrl);
-        System.out.println("resetVars = " + resetVars);
+        System.out.println("\033[32mresetUrl = \033[0m" + resetUrl);
+        System.out.println("\033[32mresetVars = \033[0m" + resetVars);
 
         HttpResponse<JsonNode> request = Unirest.post("https://api.mailgun.net/v3/" + mgDomain + "/messages")
                 .basicAuth("api", mgAPIKey)

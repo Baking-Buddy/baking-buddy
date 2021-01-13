@@ -1,7 +1,9 @@
 package com.example.bakingbuddy.demo.controllers;
 
+import com.example.bakingbuddy.demo.Model.Image;
 import com.example.bakingbuddy.demo.Model.Review;
 import com.example.bakingbuddy.demo.Model.User;
+import com.example.bakingbuddy.demo.Repos.ImageRepository;
 import com.example.bakingbuddy.demo.Repos.ReviewRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import com.example.bakingbuddy.demo.services.UserService;
@@ -23,6 +25,9 @@ public class ReviewController {
     private UserRepository userDao;
 
     @Autowired
+    private ImageRepository imageDao;
+
+    @Autowired
     private UserService userService;
 
 
@@ -35,6 +40,8 @@ public class ReviewController {
         model.addAttribute("user", sessionUser.getId());
         model.addAttribute("reviews", reviewDao.getOne(id));
         model.addAttribute("isBaker", sessionUser.isBaker());
+        Image profileImage = imageDao.findByOwner(sessionUser);
+        model.addAttribute("profileImage", profileImage.getImageURL());
         return "review/show-review";
     }
 
@@ -46,6 +53,8 @@ public class ReviewController {
             User sessionUser = userService.sessionUser();
             model.addAttribute("user", sessionUser.getId());
             model.addAttribute("isBaker", sessionUser.isBaker());
+            Image profileImage = imageDao.findByOwner(sessionUser);
+            model.addAttribute("profileImage", profileImage.getImageURL());
             return "review/create-review";
         } else {
             return "redirect:/login";
@@ -70,6 +79,8 @@ public class ReviewController {
             User sessionUser = userService.sessionUser();
             model.addAttribute("user", sessionUser);
             model.addAttribute("isBaker", sessionUser.isBaker());
+            Image profileImage = imageDao.findByOwner(sessionUser);
+            model.addAttribute("profileImage", profileImage.getImageURL());
         }
         model.addAttribute("baker", baker);
         model.addAttribute("reviews", reviewDao.findAllByBaker(baker));
@@ -88,6 +99,8 @@ public class ReviewController {
     model.addAttribute("reviewToEdit", reviewDao.getOne(reviewID));
     model.addAttribute("user", userDao.getOne(id));
     model.addAttribute("isBaker", sessionUser.isBaker());
+        Image profileImage = imageDao.findByOwner(sessionUser);
+        model.addAttribute("profileImage", profileImage.getImageURL());
     return "review/edit-review";
     }
 

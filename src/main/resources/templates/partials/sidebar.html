@@ -22,8 +22,8 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/orders}">Orders</a>
                     </li>
-                    <li class="nav-item">
-                    <li class="nav-item dropdown">
+                    <li th:if="${isBaker}" class="nav-item">
+                    <li th:if="${isBaker}" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Inventory
                         </a>

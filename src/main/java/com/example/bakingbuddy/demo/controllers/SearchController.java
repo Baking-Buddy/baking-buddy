@@ -1,6 +1,8 @@
 package com.example.bakingbuddy.demo.controllers;
 
+import com.example.bakingbuddy.demo.Model.Image;
 import com.example.bakingbuddy.demo.Model.User;
+import com.example.bakingbuddy.demo.Repos.ImageRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import com.example.bakingbuddy.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class SearchController {
     private UserRepository usersDao;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ImageRepository imageDao;
 
     @GetMapping("/search-results")
     public String bakerSearchResults(@RequestParam(name = "query") String query, Model model){
@@ -28,6 +32,8 @@ public class SearchController {
             User sessionUser = userService.sessionUser();
             model.addAttribute("user", sessionUser);
             model.addAttribute("isBaker", sessionUser.isBaker());
+            Image profileImage = imageDao.findByOwner(sessionUser);
+            model.addAttribute("profileImage", profileImage.getImageURL());
         }
         List<User> userResults = usersDao.findBakerByUsernameLike(query);
         model.addAttribute("userResults", userResults);

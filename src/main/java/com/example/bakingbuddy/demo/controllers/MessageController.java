@@ -1,7 +1,9 @@
 package com.example.bakingbuddy.demo.controllers;
 
+import com.example.bakingbuddy.demo.Model.Image;
 import com.example.bakingbuddy.demo.Model.Message;
 import com.example.bakingbuddy.demo.Model.User;
+import com.example.bakingbuddy.demo.Repos.ImageRepository;
 import com.example.bakingbuddy.demo.Repos.MessageRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import com.example.bakingbuddy.demo.services.EmailService;
@@ -32,6 +34,9 @@ public class MessageController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ImageRepository imageDao;
+
     @GetMapping("/inbox")
     public String inbox(Model model){
         if (userService.isLoggedIn()) {
@@ -50,6 +55,8 @@ public class MessageController {
             model.addAttribute("user", userDao.getOne(sessionUser.getId()));
             model.addAttribute("messages", userMessages);
             model.addAttribute("senders", senderList);
+            Image profileImage = imageDao.findByOwner(sessionUser);
+            model.addAttribute("profileImage", profileImage.getImageURL());
             return "inbox/inbox";
         } else {
             return "redirect:/login";

@@ -1,14 +1,7 @@
 package com.example.bakingbuddy.demo.controllers;
 
-import com.example.bakingbuddy.demo.Model.Consumable;
-import com.example.bakingbuddy.demo.Model.Tool;
-import com.example.bakingbuddy.demo.Model.ToolImage;
-import com.example.bakingbuddy.demo.Model.User;
-import com.example.bakingbuddy.demo.Repos.ConsumableRepository;
-import com.example.bakingbuddy.demo.Repos.ToolImageRepository;
-import com.example.bakingbuddy.demo.Repos.RecipeRepository;
-import com.example.bakingbuddy.demo.Repos.ToolRepository;
-import com.example.bakingbuddy.demo.Repos.UserRepository;
+import com.example.bakingbuddy.demo.Model.*;
+import com.example.bakingbuddy.demo.Repos.*;
 import com.example.bakingbuddy.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,6 +29,9 @@ public class InventoryController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ImageRepository imageDao;
+
     @GetMapping("/inventory/tools")
     public String userTools(Model model){
         if (!userService.isLoggedIn()){
@@ -50,6 +46,8 @@ public class InventoryController {
         model.addAttribute("user",userDao.getOne(sessionUser.getId()));
         model.addAttribute("userTools", userTools);
         model.addAttribute("userToolImages", userToolImages);
+        Image profileImage = imageDao.findByOwner(sessionUser);
+        model.addAttribute("profileImage", profileImage.getImageURL());
         return "inventory/tools";
     }
 
@@ -61,6 +59,8 @@ public class InventoryController {
         User sessionUser = userService.sessionUser();
         model.addAttribute("user", sessionUser.getId());
         model.addAttribute("tool", new Tool());
+        Image profileImage = imageDao.findByOwner(sessionUser);
+        model.addAttribute("profileImage", profileImage.getImageURL());
         return "inventory/add-tool";
     }
 
@@ -82,6 +82,8 @@ public class InventoryController {
         }
         User sessionUser = userService.sessionUser();
         model.addAttribute("user", sessionUser);
+        Image profileImage = imageDao.findByOwner(sessionUser);
+        model.addAttribute("profileImage", profileImage.getImageURL());
         return "inventory/consumables";
     }
 
@@ -93,6 +95,8 @@ public class InventoryController {
         User sessionUser = userService.sessionUser();
         model.addAttribute("user", sessionUser.getId());
         model.addAttribute("consumable", new Consumable());
+        Image profileImage = imageDao.findByOwner(sessionUser);
+        model.addAttribute("profileImage", profileImage.getImageURL());
         return "inventory/add-consumable";
     }
 
@@ -117,6 +121,8 @@ public class InventoryController {
         Consumable consumableDb = consumableDao.getOne(id);
         model.addAttribute("user", sessionUser);
         model.addAttribute("consumable", consumableDb);
+        Image profileImage = imageDao.findByOwner(sessionUser);
+        model.addAttribute("profileImage", profileImage.getImageURL());
         return "inventory/edit-consumables";
     }
 
@@ -140,6 +146,8 @@ public class InventoryController {
         Tool toolDb = toolDao.getOne(id);
         model.addAttribute("user", sessionUser);
         model.addAttribute("tool", toolDb);
+        Image profileImage = imageDao.findByOwner(sessionUser);
+        model.addAttribute("profileImage", profileImage.getImageURL());
         return "inventory/edit-tools";
     }
 

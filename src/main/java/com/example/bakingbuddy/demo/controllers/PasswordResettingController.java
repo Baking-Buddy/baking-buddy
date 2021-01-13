@@ -55,7 +55,7 @@ public class PasswordResettingController {
             model.addAttribute("error", ex.getMessage());
             model.addAttribute("message", "We have sent a reset password link to your email. Please check.");
         }
-        return "user/forgot-password";
+        return "users/forgot-password";
     }
 
     @GetMapping("/reset-password")
@@ -64,11 +64,11 @@ public class PasswordResettingController {
 
         if (user == null) {
             model.addAttribute("message", "Invalid Token");
-            return "user/reset-password";
+            return "users/reset-password";
         }
         else {
             model.addAttribute("token", token);
-            return "user/reset-password";
+            return "users/reset-password";
         }
     }
 
@@ -89,7 +89,7 @@ public class PasswordResettingController {
             model.addAttribute("message", "You have successfully changed your password.");
         }
 
-        return "user/reset-confirm";
+        return "users/reset-confirm";
     }
 
 }

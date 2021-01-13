@@ -44,11 +44,27 @@ public class MailgunService {
 
         HttpResponse<JsonNode> request = Unirest.post("https://api.mailgun.net/v3/" + mgDomain + "/messages")
                 .basicAuth("api", mgAPIKey)
-                .field("from", String.format("Better Reads <%s>", from))
+                .field("from", String.format("Baking Buddy <%s>", from))
                 .field("to", user.getEmail())
                 .field("subject", subject)
                 .field("template", "pw_reset")
                 .field("h:X-Mailgun-Variables", resetVars)
+                .field("o:testmode", String.format("%s", testMode))
+                .asJson();
+
+        return request.getBody();
+    }
+
+    public JsonNode sendRegisterMessage(User user, boolean testMode) throws UnirestException {
+        final String subject = "Thanks for Registering to Baking Buddy!";
+
+        HttpResponse<JsonNode> request = Unirest.post("https://api.mailgun.net/v3/" + mgDomain + "/messages")
+                .basicAuth("api", mgAPIKey)
+                .field("from", String.format("Baking Buddy <%s>", from))
+                .field("to", user.getEmail())
+                .field("subject", subject)
+                .field("template", "registration_email")
+                .field("h:X-Mailgun-Variables", "{\"test\": \"test\"}")
                 .field("o:testmode", String.format("%s", testMode))
                 .asJson();
 

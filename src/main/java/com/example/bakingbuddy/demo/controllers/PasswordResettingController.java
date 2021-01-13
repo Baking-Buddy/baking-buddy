@@ -89,7 +89,7 @@ public class PasswordResettingController {
             model.addAttribute("message", "You have successfully changed your password.");
         }
 
-        return "users/reset-confirm";
+        return "redirect:/login";
     }
 
 }

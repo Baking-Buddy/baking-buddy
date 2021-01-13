@@ -63,7 +63,7 @@ public class MailgunService {
                 .field("from", String.format("Baking Buddy <%s>", from))
                 .field("to", user.getEmail())
                 .field("subject", subject)
-                .field("template", "registration_email")
+                .field("template", "registeration_email")
                 .field("h:X-Mailgun-Variables", "{\"test\": \"test\"}")
                 .field("o:testmode", String.format("%s", testMode))
                 .asJson();

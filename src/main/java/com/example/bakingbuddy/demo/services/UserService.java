@@ -93,6 +93,7 @@ public class UserService {
         Image userImage = imageDao.findByOwner(currentUser);
         if (userImage.getImageURL() == null){
             userImage.setImageURL("https://cdn.filestackcontent.com/z2yTGxRyyPn3GUz3E7wJ");
+            imageDao.save(userImage);
             return userImage.getImageURL();
         }
         return userImage.getImageURL();

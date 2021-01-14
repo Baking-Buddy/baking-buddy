@@ -37,7 +37,7 @@ public class ReviewController {
             return "redirect:/login";
         }
         User sessionUser = userService.sessionUser();
-        model.addAttribute("user", sessionUser.getId());
+        model.addAttribute("user", sessionUser);
         model.addAttribute("reviews", reviewDao.getOne(id));
         model.addAttribute("isBaker", sessionUser.isBaker());
         model.addAttribute("profileImage",userService.profileImage(sessionUser));
@@ -50,7 +50,7 @@ public class ReviewController {
             model.addAttribute("review", new Review());
             model.addAttribute("bakerID", id);
             User sessionUser = userService.sessionUser();
-            model.addAttribute("user", sessionUser.getId());
+            model.addAttribute("user", sessionUser);
             model.addAttribute("isBaker", sessionUser.isBaker());
             model.addAttribute("profileImage",userService.profileImage(sessionUser));
             return "review/create-review";
@@ -94,7 +94,7 @@ public class ReviewController {
             return  "redirect:/reviews/" + id;
         }
         model.addAttribute("reviewToEdit", reviewDao.getOne(reviewID));
-        model.addAttribute("user", userDao.getOne(id));
+        model.addAttribute("user", sessionUser);
         model.addAttribute("isBaker", sessionUser.isBaker());
         model.addAttribute("profileImage",userService.profileImage(sessionUser));
         return "review/edit-review";

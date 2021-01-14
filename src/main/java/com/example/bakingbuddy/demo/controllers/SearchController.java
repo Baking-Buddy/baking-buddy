@@ -32,8 +32,7 @@ public class SearchController {
             User sessionUser = userService.sessionUser();
             model.addAttribute("user", sessionUser);
             model.addAttribute("isBaker", sessionUser.isBaker());
-            Image profileImage = imageDao.findByOwner(sessionUser);
-            model.addAttribute("profileImage", profileImage.getImageURL());
+            model.addAttribute("profileImage",userService.profileImage(sessionUser));
         }
         List<User> userResults = usersDao.findBakerByUsernameLike(query);
         model.addAttribute("userResults", userResults);

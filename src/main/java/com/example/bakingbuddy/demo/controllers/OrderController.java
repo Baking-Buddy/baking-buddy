@@ -56,8 +56,7 @@ public class OrderController {
                 viewModel.addAttribute("order", orderDao.getOne(id));
                 viewModel.addAttribute("user", sessionUser);
                 viewModel.addAttribute("isBaker", sessionUser.isBaker());
-                Image profileImage = imageDao.findByOwner(sessionUser);
-                viewModel.addAttribute("profileImage", profileImage.getImageURL());
+                viewModel.addAttribute("profileImage",userService.profileImage(sessionUser));
                 return "orders/customer-order";
             } else {
                 return "redirect:/orders";
@@ -75,8 +74,7 @@ public class OrderController {
             viewModel.addAttribute("user", sessionUser);
             viewModel.addAttribute("bakerID", id);
             viewModel.addAttribute("isBaker", sessionUser.isBaker());
-            Image profileImage = imageDao.findByOwner(sessionUser);
-            viewModel.addAttribute("profileImage", profileImage.getImageURL());
+            viewModel.addAttribute("profileImage",userService.profileImage(sessionUser));
             return "orders/create";
         } else {
             return "redirect:/login";
@@ -119,8 +117,7 @@ public String showOrders(@Param("query") String query, Model model) {
                 model.addAttribute("user", sessionUser);
             }
             model.addAttribute("isBaker", sessionUser.isBaker());
-            Image profileImage = imageDao.findByOwner(sessionUser);
-            model.addAttribute("profileImage", profileImage.getImageURL());
+            model.addAttribute("profileImage",userService.profileImage(sessionUser));
             return "orders/orders";
         } else {
             return "redirect:/login";

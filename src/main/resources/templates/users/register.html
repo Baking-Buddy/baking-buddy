@@ -21,33 +21,33 @@
                                     </div>
                                     <div class="form-group first row">
                                         <div class="col-6">
-                                            <label for="firstName">First Name:</label>
+                                            <label for="firstName">First Name</label>
                                             <input id="firstName" class="form-control" th:field="*{firstName}" name="firstname" th:errorClass="is-invalid">
                                             <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="invalid-feedback"></div>
                                         </div>
 
                                         <div class="col-6">
-                                            <label for="lastName">Last Name:</label>
+                                            <label for="lastName">Last Name</label>
                                             <input id="lastName" class="form-control" th:field="*{lastName}" name="lastname" th:errorClass="is-invalid" >
                                             <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="invalid-feedback"></div>
                                         </div>
                                     </div>
 
                                     <div class="form-group first">
-                                        <label for="username">Username:</label>
+                                        <label for="username">Username</label>
                                         <input  id="username" class="form-control" th:field="*{username}" name="username" th:errorClass="is-invalid">
                                         <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="invalid-feedback"></div>
 
                                     </div>
                                     <div class="form-group first row">
                                         <div class="col-6">
-                                            <label for="city">City:</label>
+                                            <label for="city">City</label>
                                             <input id="city" class="form-control" th:field="*{city}" name="city" th:errorClass="is-invalid">
                                             <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="invalid-feedback"></div>
                                         </div>
 
                                         <div class="col-6">
-                                            <label for="state">State:</label>
+                                            <label for="state">State</label>
                                             <input id="state" class="form-control" th:field="*{state}" name="state" th:errorClass="is-invalid">
                                             <div th:if="${#fields.hasErrors('state')}" th:errors="*{state}" class="invalid-feedback"></div>
                                         </div>
@@ -67,21 +67,21 @@
                                     </div>
 
                                     <div class="form-group first">
-                                        <label for="email">Email:</label>
+                                        <label for="email">Email</label>
                                         <input id="email" class="form-control" th:field="*{email}" name="email" th:errorClass="is-invalid">
                                         <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
 
                                     </div>
 
                                     <div class="form-group first">
-                                        <label for="password">Password:</label>
+                                        <label for="password">Password</label>
                                         <input id="password" class="form-control" th:type="password" th:field="*{password}" name="password" th:errorClass="is-invalid">
                                         <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback"></div>
 
                                     </div>
 
-                                    <div class="form-group first">
-                                        <label for="confirmPass">Confirm Password:</label>
+                                    <div class="form-group first mb-4">
+                                        <label for="confirmPass">Confirm Password</label>
                                         <input id="confirmPass" class="form-control" th:type="password" name="rpassword">
         <!--                            <div th:if="${#fields.hasErrors('rpassword')}" class="invalid-feedback"><p>Passwords must match</p></div>-->
                                     </div>

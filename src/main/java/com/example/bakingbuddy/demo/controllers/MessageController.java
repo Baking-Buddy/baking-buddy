@@ -55,8 +55,7 @@ public class MessageController {
             model.addAttribute("user", userDao.getOne(sessionUser.getId()));
             model.addAttribute("messages", userMessages);
             model.addAttribute("senders", senderList);
-            Image profileImage = imageDao.findByOwner(sessionUser);
-            model.addAttribute("profileImage", profileImage.getImageURL());
+            model.addAttribute("profileImage",userService.profileImage(sessionUser));
             return "inbox/inbox";
         } else {
             return "redirect:/login";

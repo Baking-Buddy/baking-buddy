@@ -37,11 +37,10 @@ public class ReviewController {
             return "redirect:/login";
         }
         User sessionUser = userService.sessionUser();
-        model.addAttribute("user", sessionUser.getId());
+        model.addAttribute("user", sessionUser);
         model.addAttribute("reviews", reviewDao.getOne(id));
         model.addAttribute("isBaker", sessionUser.isBaker());
-        Image profileImage = imageDao.findByOwner(sessionUser);
-        model.addAttribute("profileImage", profileImage.getImageURL());
+        model.addAttribute("profileImage",userService.profileImage(sessionUser));
         return "review/show-review";
     }
 
@@ -51,10 +50,9 @@ public class ReviewController {
             model.addAttribute("review", new Review());
             model.addAttribute("bakerID", id);
             User sessionUser = userService.sessionUser();
-            model.addAttribute("user", sessionUser.getId());
+            model.addAttribute("user", sessionUser);
             model.addAttribute("isBaker", sessionUser.isBaker());
-            Image profileImage = imageDao.findByOwner(sessionUser);
-            model.addAttribute("profileImage", profileImage.getImageURL());
+            model.addAttribute("profileImage",userService.profileImage(sessionUser));
             return "review/create-review";
         } else {
             return "redirect:/login";
@@ -79,8 +77,7 @@ public class ReviewController {
             User sessionUser = userService.sessionUser();
             model.addAttribute("user", sessionUser);
             model.addAttribute("isBaker", sessionUser.isBaker());
-            Image profileImage = imageDao.findByOwner(sessionUser);
-            model.addAttribute("profileImage", profileImage.getImageURL());
+            model.addAttribute("profileImage",userService.profileImage(sessionUser));
         }
         model.addAttribute("baker", baker);
         model.addAttribute("reviews", reviewDao.findAllByBaker(baker));
@@ -89,19 +86,18 @@ public class ReviewController {
 
     @GetMapping("/review/{id}/edit/{reviewID}")
     public String showEditForm(@PathVariable long reviewID, @PathVariable long id,  Model model){
-    if (!userService.isLoggedIn()){
-        return "redirect:/login";
-    }
-    User sessionUser = userService.sessionUser();
-    if (!userService.reviewOwner(sessionUser, reviewID)){
-        return  "redirect:/reviews/" + id;
-    }
-    model.addAttribute("reviewToEdit", reviewDao.getOne(reviewID));
-    model.addAttribute("user", userDao.getOne(id));
-    model.addAttribute("isBaker", sessionUser.isBaker());
-        Image profileImage = imageDao.findByOwner(sessionUser);
-        model.addAttribute("profileImage", profileImage.getImageURL());
-    return "review/edit-review";
+        if (!userService.isLoggedIn()){
+            return "redirect:/login";
+        }
+        User sessionUser = userService.sessionUser();
+        if (!userService.reviewOwner(sessionUser, reviewID)){
+            return  "redirect:/reviews/" + id;
+        }
+        model.addAttribute("reviewToEdit", reviewDao.getOne(reviewID));
+        model.addAttribute("user", sessionUser);
+        model.addAttribute("isBaker", sessionUser.isBaker());
+        model.addAttribute("profileImage",userService.profileImage(sessionUser));
+        return "review/edit-review";
     }
 
     @PostMapping("/review/{id}/edit/{reviewID}")

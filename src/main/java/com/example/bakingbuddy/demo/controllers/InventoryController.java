@@ -43,9 +43,10 @@ public class InventoryController {
         for (Tool userTool : userTools) {
             userToolImages.add(toolImageDao.findToolImageByTool(userTool));
         }
-        model.addAttribute("user",userDao.getOne(sessionUser.getId()));
+        model.addAttribute("user",sessionUser);
         model.addAttribute("userTools", userTools);
         model.addAttribute("userToolImages", userToolImages);
+        model.addAttribute("isBaker", sessionUser.isBaker());
         model.addAttribute("profileImage",userService.profileImage(sessionUser));
         return "inventory/tools";
     }
@@ -56,8 +57,9 @@ public class InventoryController {
             return "redirect:/login";
         }
         User sessionUser = userService.sessionUser();
-        model.addAttribute("user", sessionUser.getId());
+        model.addAttribute("user", sessionUser);
         model.addAttribute("tool", new Tool());
+        model.addAttribute("isBaker", sessionUser.isBaker());
         model.addAttribute("profileImage",userService.profileImage(sessionUser));
         return "inventory/add-tool";
     }
@@ -80,6 +82,7 @@ public class InventoryController {
         }
         User sessionUser = userService.sessionUser();
         model.addAttribute("user", sessionUser);
+        model.addAttribute("isBaker", sessionUser.isBaker());
         model.addAttribute("profileImage",userService.profileImage(sessionUser));
         return "inventory/consumables";
     }
@@ -90,7 +93,8 @@ public class InventoryController {
             return "redirect:/login";
         }
         User sessionUser = userService.sessionUser();
-        model.addAttribute("user", sessionUser.getId());
+        model.addAttribute("user", sessionUser);
+        model.addAttribute("isBaker", sessionUser.isBaker());
         model.addAttribute("consumable", new Consumable());
         model.addAttribute("profileImage",userService.profileImage(sessionUser));
         return "inventory/add-consumable";
@@ -117,6 +121,7 @@ public class InventoryController {
         Consumable consumableDb = consumableDao.getOne(id);
         model.addAttribute("user", sessionUser);
         model.addAttribute("consumable", consumableDb);
+        model.addAttribute("isBaker", sessionUser.isBaker());
         model.addAttribute("profileImage",userService.profileImage(sessionUser));
         return "inventory/edit-consumables";
     }

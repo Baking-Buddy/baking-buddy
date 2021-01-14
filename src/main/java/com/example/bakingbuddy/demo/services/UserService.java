@@ -92,6 +92,10 @@ public class UserService {
     public String profileImage(User currentUser){
         try {
             Image userImage = imageDao.findByOwner(currentUser);
+            if (userImage.getImageURL().isEmpty()){
+                userImage.setImageURL("https://cdn.filestackcontent.com/z2yTGxRyyPn3GUz3E7wJ");
+                return userImage.getImageURL();
+            }
             return userImage.getImageURL();
         } catch (NullPointerException e){
             System.err.println("Looks like this user did not setup a profile picture upon registering " +
@@ -103,7 +107,7 @@ public class UserService {
                     ", Email: " + currentUser.getEmail());
             System.out.println("\033[32mThe user has been assigned the default profile picture\033[0m");
             Image newUserImage = new Image();
-            newUserImage.setImageURL("https://picsum.photos/id/870/200/300?grayscale&blur=2");
+            newUserImage.setImageURL("https://cdn.filestackcontent.com/z2yTGxRyyPn3GUz3E7wJ");
             newUserImage.setOwner(currentUser);
             newUserImage.setProfilePicture(true);
             imageDao.save(newUserImage);

@@ -129,7 +129,7 @@ public class UserController {
         }
         model.addAttribute("user", usersDao.getOne(id));
         model.addAttribute("isBaker", sessionUser.isBaker());
-        model.addAttribute("profileImage", imageDao.findByOwner(sessionUser).getImageURL());
+        model.addAttribute("profileImage",userService.profileImage(sessionUser));
         return "users/edit-profile";
     }
 

@@ -1,4 +1,4 @@
-const client = filestack.init(stackKey);
+const client = filestack.init(filestackAPIKey);
 
 const options = {
     onUploadDone: updateForm,

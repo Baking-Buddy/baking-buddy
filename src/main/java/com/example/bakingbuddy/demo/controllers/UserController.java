@@ -9,6 +9,7 @@ import com.example.bakingbuddy.demo.Repos.UserRepository;
 import com.example.bakingbuddy.demo.services.EmailService;
 import com.example.bakingbuddy.demo.services.MailgunService;
 import com.example.bakingbuddy.demo.services.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,6 +36,10 @@ public class UserController {
     private ReviewRepository reviewDao;
     private MailgunService mailgunService;
 
+    @Value("${filestackApiKey}")
+    private String fileStackApiKey;
+
+
     public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService, ImageRepository imageDao, OrderRepository orderDao, ReviewRepository reviewDao, UserService userService, MailgunService mailgunService) {
         this.usersDao = usersDao;
         this.passwordEncoder = passwordEncoder;
@@ -44,6 +49,14 @@ public class UserController {
         this.imageDao = imageDao;
         this.orderDao = orderDao;
         this.mailgunService = mailgunService;
+    }
+
+
+    @RequestMapping(path = "/keys.js", produces = "application/javascript")
+    @ResponseBody
+    public String apikey(){
+        System.out.println(fileStackApiKey);
+        return "const filestackAPIKey = `" + fileStackApiKey + "`";
     }
 
     @InitBinder
@@ -188,6 +201,11 @@ public class UserController {
         return "users/baker-profile";
 
     }
+
+    @GetMapping("/developers")
+        public String showDevelopers(){
+        return "AboutUs/developers";
+        }
 
 
 

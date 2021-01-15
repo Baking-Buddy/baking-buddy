@@ -5,7 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="partials/navbar :: navbar"></div>
+<div th:replace="patials/navbar :: side-menu"></div>
+<nav th:replace="partials/navbar :: navbar"></nav>
 <h1>Create Order</h1>
 <main class="container mt-5">
     <form th:action="@{|/orders/create/${bakerID}|}" th:method="post">
@@ -22,8 +23,10 @@
 
     </main>
     <div th:replace="partials/scripts :: scripts"></div>
+    <script src="/keys.js"></script>
     <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
-    <script src="/js/keys.js"></script>
     <script src="/js/main.js"></script>
+    <script src="/js/navigation.js"></script>
+
 </body>
 </html>

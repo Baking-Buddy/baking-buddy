@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title>Orders</title>
 </head>
-<div th:replace="paptials/navbar :: side-menu"></div>
+<!--<div th:replace="partials/navbar :: side-menu"></div>-->
 <nav th:replace="partials/navbar :: navbar"></nav>
 <h1>Edit Order</h1>
 <body>
-<main class="container mt-5">
+<main class="container mt-5 row align-items-center">
     <div>
         <p>Current Description : <span th:text="${order.description}"></span></p>
         <p>Current Request by date : <span th:text="${date}"></span></p>

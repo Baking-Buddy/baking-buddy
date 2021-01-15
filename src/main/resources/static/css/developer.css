@@ -1,0 +1,11 @@
+#devBG {
+    background-image: url("../img/BakingBG.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#devCards {
+    background-color: black;
+    outline-color: black;
+}

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -51,6 +52,11 @@ public class MessageController {
                     senderList.add(userDao.getOne(message.getSender().getId()));
                 }
             }
+            HashMap<Long, String> senderImages = new HashMap<>();
+            for (User sender : senderList){
+                senderImages.put(sender.getId(), userService.profileImage(sender));
+            }
+            model.addAttribute("senderImages", senderImages);
             model.addAttribute("isBaker", sessionUser.isBaker());
             model.addAttribute("user", userDao.getOne(sessionUser.getId()));
             model.addAttribute("messages", userMessages);

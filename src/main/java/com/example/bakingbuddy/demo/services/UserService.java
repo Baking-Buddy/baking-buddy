@@ -93,32 +93,10 @@ public class UserService {
         Image userImage = imageDao.findByOwner(currentUser);
         if (userImage.getImageURL() == null){
             userImage.setImageURL("https://cdn.filestackcontent.com/z2yTGxRyyPn3GUz3E7wJ");
+            imageDao.save(userImage);
             return userImage.getImageURL();
         }
         return userImage.getImageURL();
-//        try {
-//            Image userImage = imageDao.findByOwner(currentUser);
-//            if (userImage.getImageURL().isEmpty()){
-//                userImage.setImageURL("https://cdn.filestackcontent.com/z2yTGxRyyPn3GUz3E7wJ");
-//                return userImage.getImageURL();
-//            }
-//            return userImage.getImageURL();
-//        } catch (NullPointerException e){
-//            System.err.println("Looks like this user did not setup a profile picture upon registering " +
-//                    "causing a: " + e);
-//            System.err.println("UserID: " + currentUser.getId() +
-//                    ", Username: " + currentUser.getUsername() +
-//                    ", First Name: " + currentUser.getFirstName() +
-//                    ", Last Name: " + currentUser.getLastName() +
-//                    ", Email: " + currentUser.getEmail());
-//            System.out.println("\033[32mThe user has been assigned the default profile picture\033[0m");
-//            Image newUserImage = new Image();
-//            newUserImage.setImageURL("https://cdn.filestackcontent.com/z2yTGxRyyPn3GUz3E7wJ");
-//            newUserImage.setOwner(currentUser);
-//            newUserImage.setProfilePicture(true);
-//            return imageDao.findByOwner(currentUser).getImageURL();
-//        }
-
     }
 
     public void updateResetPasswordToken(String token, String email) throws UsernameNotFoundException {

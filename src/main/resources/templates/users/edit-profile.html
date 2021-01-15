@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="partials/bs-head :: head('Profile')"></head>
 <body>
-    <nav th:replace="partials/navbar :: navbar"></nav>
+    <div th:replace="partials/navbar :: navbar"></div>
     <aside th:replace="partials/sidebar ::  aside"></aside>
         <form th:action="@{/user/{id}/edit(id=${user.id})}" th:method="post" th:object="${user}">
     <div role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">

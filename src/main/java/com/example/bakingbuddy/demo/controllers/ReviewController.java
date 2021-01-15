@@ -1,11 +1,13 @@
 package com.example.bakingbuddy.demo.controllers;
 
 import com.example.bakingbuddy.demo.Model.Image;
+import com.example.bakingbuddy.demo.Model.Order;
 import com.example.bakingbuddy.demo.Model.Review;
 import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Repos.ImageRepository;
 import com.example.bakingbuddy.demo.Repos.ReviewRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
+import com.example.bakingbuddy.demo.services.DateService;
 import com.example.bakingbuddy.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 @Controller
 public class ReviewController {
@@ -29,6 +33,9 @@ public class ReviewController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private DateService dateService;
 
 
     @GetMapping("/review/{id}")
@@ -79,8 +86,11 @@ public class ReviewController {
             model.addAttribute("isBaker", sessionUser.isBaker());
             model.addAttribute("profileImage",userService.profileImage(sessionUser));
         }
+        List<Review> reviews = reviewDao.findAllByBaker(baker);
+        HashMap<Long, String> reviewDates = dateService.listOfReviewDates(reviews);
+        model.addAttribute("dates", reviewDates);
         model.addAttribute("baker", baker);
-        model.addAttribute("reviews", reviewDao.findAllByBaker(baker));
+        model.addAttribute("reviews", reviews);
         return "review/review";
     }
 

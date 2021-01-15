@@ -5,10 +5,7 @@ import com.example.bakingbuddy.demo.Repos.ImageRepository;
 import com.example.bakingbuddy.demo.Repos.OrderImageRepository;
 import com.example.bakingbuddy.demo.Repos.OrderRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
-import com.example.bakingbuddy.demo.services.EmailService;
-import com.example.bakingbuddy.demo.services.MailgunService;
-import com.example.bakingbuddy.demo.services.ProductService;
-import com.example.bakingbuddy.demo.services.UserService;
+import com.example.bakingbuddy.demo.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.*;
+import java.util.HashMap;
+import java.util.Locale;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -47,13 +49,18 @@ public class OrderController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private DateService dateService;
+
 
     @GetMapping("/orders/{id}")
     public String order(@PathVariable long id, Model viewModel){
         if (userService.isLoggedIn()) {
             User sessionUser = userService.sessionUser();
             if (userService.orderOwner(sessionUser, id) || userService.orderBaker(sessionUser, id)) {
-                viewModel.addAttribute("order", orderDao.getOne(id));
+                Order displayedOrder = orderDao.getOne(id);
+                viewModel.addAttribute("date", dateService.displayDate(displayedOrder.getDate()));
+                viewModel.addAttribute("order", displayedOrder);
                 viewModel.addAttribute("user", sessionUser);
                 viewModel.addAttribute("isBaker", sessionUser.isBaker());
                 viewModel.addAttribute("profileImage",userService.profileImage(sessionUser));
@@ -88,8 +95,10 @@ public class OrderController {
         Order orderToBeSaved = new Order();
         User sessionUser = userService.sessionUser();
 
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date convertedDate =df.parse(date);
+        Date convertedDate = dateService.dateToStore(date);
+        System.err.println("dateService.displayOrderDate(convertedDate) = " + dateService.displayDate(convertedDate));
+        System.err.println("convertedDate = " + convertedDate);
+
 
         orderToBeSaved.setDate(convertedDate);
         orderToBeSaved.setDescription(description);
@@ -110,10 +119,16 @@ public String showOrders(@Param("query") String query, Model model) {
         if (userService.isLoggedIn()) {
             User sessionUser = userService.sessionUser();
             if (sessionUser.isBaker()) {
-                model.addAttribute("orders", service.listAllBaker(query, sessionUser));
+                List<Order> orders = service.listAllBaker(query, sessionUser);
+                HashMap<Long, String> orderDates = dateService.listOfOrderDates(orders);
+                model.addAttribute("dates", orderDates);
+                model.addAttribute("orders", orders);
                 model.addAttribute("user", sessionUser);
             } else if (!sessionUser.isBaker()) {
-                model.addAttribute("orders", service.listAllOwner(query, sessionUser));
+                List<Order> orders = service.listAllOwner(query, sessionUser);
+                HashMap<Long, String> orderDates = dateService.listOfOrderDates(orders);
+                model.addAttribute("dates", orderDates);
+                model.addAttribute("orders", orders);
                 model.addAttribute("user", sessionUser);
             }
             model.addAttribute("isBaker", sessionUser.isBaker());
@@ -130,8 +145,10 @@ public String showOrders(@Param("query") String query, Model model) {
         if (userService.isLoggedIn()) {
             User sessionUser = userService.sessionUser();
             if(userService.orderOwner(sessionUser, id) || userService.orderBaker(sessionUser, id)) {
+                Order displayedOrder = orderDao.getOne(id);
+                model.addAttribute("date", dateService.displayDate(displayedOrder.getDate()));
                 model.addAttribute("user", sessionUser);
-                model.addAttribute("order", orderDao.getOne(id));
+                model.addAttribute("order", displayedOrder);
                 model.addAttribute("isBaker", sessionUser.isBaker());
                 Image profileImage = imageDao.findByOwner(sessionUser);
                 model.addAttribute("profileImage", profileImage.getImageURL());
@@ -151,8 +168,9 @@ public String showOrders(@Param("query") String query, Model model) {
             @RequestParam(name="date") String date,
             @RequestParam(name="price") double price,
             @RequestParam(name = "uploadedImage") String imageURL) throws ParseException {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date convertedDate =df.parse(date);
+
+        Date convertedDate = dateService.dateToStore(date);
+
         Order orderToBeEdited = orderDao.getOne(id);
         orderToBeEdited.setDescription(description);
         orderToBeEdited.setDate(convertedDate);

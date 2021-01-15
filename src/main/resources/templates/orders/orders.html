@@ -28,7 +28,7 @@
                 <tbody>
     <!--                THIS IS CUSTOMER VIEW-->
                     <tr th:if="${!user.isBaker()}" th:each="order : ${orders}">
-                            <td th:text="${order.date}" class="card-title"></td>
+                            <td th:text="${dates.get(order.id)}" class="card-title"></td>
                             <td><span th:text="${order.baker.firstName}"></span> <span th:text="${order.baker.lastName}"></span></td>
                             <td th:text="${order.status}" class="card-text"></td>
                             <td><a th:href="@{/orders/{id}(id=${order.id})}" class="btn btn-primary">More Details</a></td>
@@ -36,7 +36,7 @@
     <!--    THIS IS BAKER VIEW<-->
 
                     <tr th:if="${user.isBaker()}" th:each="order : ${orders}" class="col-sm-6">
-                        <td th:text="${order.date}" class="card-title"></td>
+                        <td th:text="${dates.get(order.id)}" class="card-title"></td>
                         <td><span th:text="${order.owner.firstName}"></span> <span th:text="${order.owner.lastName}"></span></td>
                         <td th:text="${order.status}" class="card-text"></td>
                         <td><a th:href="@{/orders/{id}(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">More Details</a></td>

@@ -9,3 +9,7 @@
     background-color: black;
     outline-color: black;
 }
+
+#github #linkedin {
+    size: 10em
+}

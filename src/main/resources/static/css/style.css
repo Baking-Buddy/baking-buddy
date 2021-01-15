@@ -5,10 +5,10 @@
 .center {
     margin: auto;
 }
+
 p {
     color: #b3b3b3;
     font-weight: 300; }
-
 
 a {
     -webkit-transition: .3s all ease;
@@ -153,10 +153,6 @@ h2 {
 
 .dash-main {
     padding-top: 90px;
-}
-
-.nav-dropdown {
-    margin-left: auto;
 }
 
 

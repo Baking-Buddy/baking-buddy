@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="partials/bs-head :: head('Tools')">
     <meta charset="UTF-8">
     <title>Inventory</title>
 </head>
 <body>
-<nav th:replace="partials/navbar :: navbar"></nav>
+<div th:replace="partials/navbar :: navbar"></div>
 <h1>Add Tool</h1>
     <form th:action="@{/inventory/tools/add}" th:method="post" th:object="${tool}">
         Tool Name:

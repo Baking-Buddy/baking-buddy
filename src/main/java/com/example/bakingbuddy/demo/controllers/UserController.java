@@ -9,6 +9,7 @@ import com.example.bakingbuddy.demo.Repos.UserRepository;
 import com.example.bakingbuddy.demo.services.EmailService;
 import com.example.bakingbuddy.demo.services.MailgunService;
 import com.example.bakingbuddy.demo.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.context.SecurityContextHolder;

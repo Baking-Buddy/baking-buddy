@@ -59,7 +59,7 @@ public class OrderController {
             User sessionUser = userService.sessionUser();
             if (userService.orderOwner(sessionUser, id) || userService.orderBaker(sessionUser, id)) {
                 Order displayedOrder = orderDao.getOne(id);
-                viewModel.addAttribute("date", dateService.displayOrderDate(displayedOrder.getDate()));
+                viewModel.addAttribute("date", dateService.displayDate(displayedOrder.getDate()));
                 viewModel.addAttribute("order", displayedOrder);
                 viewModel.addAttribute("user", sessionUser);
                 viewModel.addAttribute("isBaker", sessionUser.isBaker());
@@ -96,7 +96,7 @@ public class OrderController {
         User sessionUser = userService.sessionUser();
 
         Date convertedDate = dateService.dateToStore(date);
-        System.err.println("dateService.displayOrderDate(convertedDate) = " + dateService.displayOrderDate(convertedDate));
+        System.err.println("dateService.displayOrderDate(convertedDate) = " + dateService.displayDate(convertedDate));
         System.err.println("convertedDate = " + convertedDate);
 
 
@@ -146,7 +146,7 @@ public String showOrders(@Param("query") String query, Model model) {
             User sessionUser = userService.sessionUser();
             if(userService.orderOwner(sessionUser, id) || userService.orderBaker(sessionUser, id)) {
                 Order displayedOrder = orderDao.getOne(id);
-                model.addAttribute("date", dateService.displayOrderDate(displayedOrder.getDate()));
+                model.addAttribute("date", dateService.displayDate(displayedOrder.getDate()));
                 model.addAttribute("user", sessionUser);
                 model.addAttribute("order", displayedOrder);
                 model.addAttribute("isBaker", sessionUser.isBaker());

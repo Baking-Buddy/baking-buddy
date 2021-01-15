@@ -23,7 +23,7 @@ public class Review {
     private String body;
 
     @Column(nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "MM-dd-yyyy")
     private Date date;
 
     @ManyToOne

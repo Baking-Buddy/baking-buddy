@@ -18,8 +18,7 @@
             <li th:if="${isBaker}"><a class="dropdown-item" th:href="@{/inventory/consumables}">Pantry</a></li>
             <li th:if="${isBaker}"><a class="dropdown-item" th:href="@{/inventory/tools}">Tools</a></li>
             <li><a class="nav-item" th:href="@{/inbox}">Inbox</a></li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/developers}">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/developers}">About Us</a></li>
             <!--                <li><a class="nav-item" th:href="@{/user/{id}/edit(id=${user.id})}">Settings</a></li>-->
             <li>
                 <form th:action="@{/logout}" th:method="post">

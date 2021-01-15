@@ -1,0 +1,28 @@
+#devBG {
+    background-image: url("../img/BakingBG.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#devCards {
+    background-color: initial;
+}
+
+.text-center{
+    color: floralwhite;
+}
+
+#github {
+   color: black;
+}
+
+#linkedin {
+    color: cornflowerblue;
+}
+
+#devContainer {
+    display: flex;
+    align-content: center;
+    margin-top: 50%;
+}

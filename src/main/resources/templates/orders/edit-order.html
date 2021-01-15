@@ -10,14 +10,14 @@
 <main class="container mt-5">
     <div>
         <p>Current Description : <span th:text="${order.description}"></span></p>
-        <p>Current Request by date : <span th:text="${order.date}"></span></p>
+        <p>Current Request by date : <span th:text="${date}"></span></p>
         <p>Current Price: <span th:if="${order.price} == 0" th:text="PENDING"></span><span th:if="${order.price} !=0" th:text="'$'+${order.price}"></span></p>
     </div>
     <form th:action="@{/orders/{id}/edit(id=${order.id})}" th:method="post" th:object="${order}">
         New Description:
         <textarea type="textarea" name="description" id="description" th:field="*{description}"></textarea>
         <br>
-        New Request by date (yyyy-MM-dd):
+        New Request by date (MM-dd-yyyy):
         <input type="text" name="date" id="date" th:field="*{date}">
         <br>
         <div th:if="${isBaker}">

@@ -10,7 +10,7 @@
 <main>
         <h1 class="mt-5" th:text="'Requested by:' +${order.owner.username}">Requested by: </h1>
     <h2 th:text="'Baker: ' + ${order.baker.username}">Baker:</h2>
-        <h2 th:text="${order.date}"></h2>
+        <h2 th:text="${date}"></h2>
         <p th:text="${order.description}"></p>
         <a th:href="@{/orders/{id}/edit(id=${order.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">EDIT</a>
         <div th:if="${user.isBaker()}">

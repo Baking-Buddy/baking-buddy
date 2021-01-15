@@ -4,40 +4,56 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body class="inbox">
     <div th:replace="partials/navbar :: navbar"></div>
-    <main class="container mt-5">
-        <h1>INBOX</h1>
-        <div th:each="sender: ${senders}">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" th:data-target="${'#modal' + sender.id}">
-                <span th:text="${sender.username}"></span>
-            </button>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="modal fade" th:id="${'modal'+sender.id}">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 th:text="${sender.username} + ' aka ' +${sender.firstName} +' '+ ${sender.lastName}"></h1>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div th:each="message : ${messages}" th:if="${message.sender.id == sender.id || message.sender.id == user.id && message.recipient.id == sender.id}">
-                                                <p th:text="${message.body}"></p>
-                                                <div th:text="${message.date}"></div>
-                                                <br>
+    <main class="container inbox-container text-center">
+        <div class="row">
+            <div th:each="sender: ${senders}" class="col py-1">
+                <div class="card message-card">
+                    <div class="card-body">
+                        <img class="card-img-top inbox-photo" th:src="${senderImages.get(sender.id)}" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${sender.username}"></h5>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary btn-message draw-border" data-toggle="modal" th:data-target="${'#modal' + sender.id}">
+                                <span>View Messages</span>
+                            </button>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="modal fade" th:id="${'modal'+sender.id}">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 th:text="${sender.username} + ' aka ' +${sender.firstName} +' '+ ${sender.lastName}"></h1>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div th:each="message : ${messages}" th:if="${message.sender.id == sender.id || message.sender.id == user.id && message.recipient.id == sender.id}">
+                                                            <div th:if="${message.sender.id == sender.id}" class="message-to">
+                                                                <h5 th:text="${message.sender.firstName + ' ' + message.sender.lastName}" class="text-left"></h5>
+                                                                <div th:text="${message.body}" class="text-left"></div>
+                                                                <p th:text="${message.date}" class="text-left message-date"></p>
+                                                            </div>
+                                                            <div th:if="${message.recipient.id == sender.id}" class="message-from">
+                                                                <h5 th:text="${message.sender.firstName + ' ' + message.sender.lastName}" class="text-right"></h5>
+                                                                <div th:text="${message.body}" class="text-right"></div>
+                                                                <p th:text="${message.date}" class="text-right message-date"></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <form th:action="@{|/inbox/${sender.id}|}" th:method="post">
+                                                        <textarea class="form-control" aria-label="body" name="body"></textarea>
+                                                        <button class="btn btn-success btn-message draw-border" type="submit">Send</button>
+                                                    </form>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-danger btn-message draw-border" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <form th:action="@{|/inbox/${sender.id}|}" th:method="post">
-                                        <textarea class="form-control" aria-label="body" name="body"></textarea>
-                                        <button class="btn btn-success" type="submit">Send</button>
-                                    </form>
-                                    <div class="modal-footer">
-                                        <input class="btn btn-primary" data-dismiss="modal" value="Close">
                                     </div>
                                 </div>
                             </div>
@@ -45,7 +61,6 @@
                     </div>
                 </div>
             </div>
-            <br>
         </div>
 
     </main>

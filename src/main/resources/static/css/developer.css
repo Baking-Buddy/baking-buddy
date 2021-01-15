@@ -6,10 +6,23 @@
 }
 
 #devCards {
-    background-color: black;
-    outline-color: black;
+    background-color: initial;
 }
 
-#github #linkedin {
-    size: 10em
+.text-center{
+    color: floralwhite;
+}
+
+#github {
+   color: black;
+}
+
+#linkedin {
+    color: cornflowerblue;
+}
+
+#devContainer {
+    display: flex;
+    align-content: center;
+    margin-top: 50%;
 }

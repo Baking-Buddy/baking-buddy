@@ -1,0 +1,167 @@
+:root {
+    --navigation: #0c7f90;
+}
+
+#header {
+    /*background-image:;*/
+    height: 70vh;
+    background-image: url("../img/landingbg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+#nav, #main-nav {
+    z-index: 2;
+}
+
+#main-nav {
+    background: var(--navigation);
+}
+.navbar-nav li a {
+    margin-right: 20px;
+    text-shadow: 1px 1px 5px #000;
+    vertical-align: middle;
+}
+
+.navbar-brand img {
+    width: 60px;
+    margin-top: 30px;
+    margin-top: 10px;
+}
+
+#nav.fixed-top.scrolled {
+    background: var(--navigation);
+    transition: background-color 200ms linear;
+    opacity: 0.9;
+}
+
+.welcome {
+    padding: 50px 80px;
+    margin-top: -140px;
+    background-color: #fff;
+    box-shadow: 0 0 20px 7px rgba(0, 0, 0, 0.2);
+    border-radius: 200px 20px;
+}
+
+.welcome h1 {
+    font-size: 40px;
+    color: #505050;
+    font-weight: 700;
+}
+
+.welcome p {
+    font-size: 18px;
+    color: #6b6b6b;
+}
+
+.welcome .read-more {
+    margin-top: 10px;
+    padding: 10px 30px;
+    border-radius: 30px;
+    background-color: #0c7f90;
+    color: #fff;
+}
+
+.slide-nav {
+    display: none;
+    position: fixed;
+    z-index: 101;
+    top: 0;
+    right: 0;
+    background: var(--navigation);
+    width: 30%;
+    height: 100vh;
+
+}
+
+.slide-nav .nav-items {
+    width: 10%;
+    height: 100%;
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.slide-nav .nav-item {
+    margin: 1rem 0;
+}
+
+
+.slide-nav .nav-item a {
+    text-decoration: none;
+    color: #0e4f1f;
+    /*font-weight: bold;*/
+    padding: 0.2rem 0;
+}
+
+.profile-picture {
+    width: 200px;
+    height: 200px
+}
+.open {
+    display: block;
+}
+
+
+
+.draw-border {
+    box-shadow: inset 0 0 0 4px #58afd1;
+    color: #58afd1;
+    transition: color 0.25s 0.0833333333s;
+    position: relative;
+}
+.draw-border::before, .draw-border::after {
+    border: 0 solid transparent;
+    box-sizing: border-box;
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    width: 0;
+    height: 0;
+    bottom: 0;
+    right: 0;
+}
+.draw-border::before {
+    border-bottom-width: 4px;
+    border-left-width: 4px;
+}
+.draw-border::after {
+    border-top-width: 4px;
+    border-right-width: 4px;
+}
+.draw-border:hover {
+    color: #ffe593;
+}
+.draw-border:hover::before, .draw-border:hover::after {
+    border-color: #ffe593;
+    transition: border-color 0s, width 0.25s, height 0.25s;
+    width: 100%;
+    height: 100%;
+}
+.draw-border:hover::before {
+    transition-delay: 0s, 0s, 0.25s;
+}
+.draw-border:hover::after {
+    transition-delay: 0s, 0.25s, 0s;
+}
+
+.btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1.5;
+    font: 700 1.2rem "Roboto Slab", sans-serif;
+    padding: 1em 2em;
+    letter-spacing: 0.05rem;
+}
+.btn:focus {
+    outline: 2px dotted #55d7dc;
+}
+

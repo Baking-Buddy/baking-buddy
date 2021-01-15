@@ -189,6 +189,11 @@ public class UserController {
 
     }
 
+    @GetMapping("/developers")
+        public String showDevelopers(){
+        return "AboutUs/developers";
+        }
+
 
 
 

@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <img class="card-img-top inbox-photo" th:src="${senderImages.get(sender.id)}" alt="">
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${sender.username}"></h5>
+                            <h5 class="card-title" th:text="${sender.username}" style="color: black"></h5>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-primary btn-message draw-border" data-toggle="modal" th:data-target="${'#modal' + sender.id}">
                                 <span>View Messages</span>

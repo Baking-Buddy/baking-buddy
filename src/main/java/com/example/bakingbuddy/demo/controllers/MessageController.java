@@ -40,32 +40,31 @@ public class MessageController {
 
     @GetMapping("/inbox")
     public String inbox(Model model){
-        if (userService.isLoggedIn()) {
-            User sessionUser = userService.sessionUser();
-            List<User> senderList = new ArrayList<>();
-            List<Message> userMessages = messagesDao.findMessagesByRecipientOrSenderOrderByDateAsc(sessionUser, sessionUser);
-            for (Message message : userMessages) {
-                if (message.getSender().getId() == sessionUser.getId()) {
-                    continue;
-                }
-                if (!senderList.contains(message.getSender())) {
-                    senderList.add(userDao.getOne(message.getSender().getId()));
-                }
-            }
-            HashMap<Long, String> senderImages = new HashMap<>();
-            for (User sender : senderList){
-                senderImages.put(sender.getId(), userService.profileImage(sender));
-            }
-            model.addAttribute("senderImages", senderImages);
-            model.addAttribute("isBaker", sessionUser.isBaker());
-            model.addAttribute("user", userDao.getOne(sessionUser.getId()));
-            model.addAttribute("messages", userMessages);
-            model.addAttribute("senders", senderList);
-            model.addAttribute("profileImage",userService.profileImage(sessionUser));
-            return "inbox/inbox";
-        } else {
+        if (!userService.isLoggedIn()){
             return "redirect:/login";
         }
+        User sessionUser = userService.sessionUser();
+        List<User> senderList = new ArrayList<>();
+        List<Message> userMessages = messagesDao.findMessagesByRecipientOrSenderOrderByDateAsc(sessionUser, sessionUser);
+        for (Message message : userMessages) {
+            if (message.getSender().getId() == sessionUser.getId()) {
+                continue;
+            }
+            if (!senderList.contains(message.getSender())) {
+                senderList.add(userDao.getOne(message.getSender().getId()));
+            }
+        }
+        HashMap<Long, String> senderImages = new HashMap<>();
+        for (User sender : senderList){
+            senderImages.put(sender.getId(), userService.profileImage(sender));
+        }
+        model.addAttribute("senderImages", senderImages);
+        model.addAttribute("isBaker", sessionUser.isBaker());
+        model.addAttribute("user", userDao.getOne(sessionUser.getId()));
+        model.addAttribute("messages", userMessages);
+        model.addAttribute("senders", senderList);
+        model.addAttribute("profileImage",userService.profileImage(sessionUser));
+        return "inbox/inbox";
     }
 
     @PostMapping("/inbox/{id}")

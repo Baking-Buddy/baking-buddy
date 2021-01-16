@@ -1,6 +1,7 @@
 .inbox-photo{
-    height: 25em;
-    width: 25em;
+    height: 50%;
+    width: 50%;
+    align-self: center;
 }
 
 .message-card {
@@ -16,16 +17,21 @@
     margin-top: 5rem;
 }
 
-.message-to {
-    background-color: #55d7dc;
+.message {
     color: white;
     border-radius: 3px;
+    margin-bottom: 1em;
+    padding: 1em;
+}
+
+.message-to {
+    background-color: #55d7dc;
+    border: 2px black solid;
 }
 
 .message-from {
     background-color: coral;
-    color: white;
-    border-radius: 3px;
+    border: 2px black dashed;
 }
 
 .message-date {

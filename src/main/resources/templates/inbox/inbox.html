@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body class="inbox">
+<body>
     <div th:replace="partials/navbar :: navbar"></div>
-    <main class="container inbox-container text-center">
+    <aside th:replace="partials/sidebar :: aside"></aside>
+    <main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main inbox-container inbox">
         <div class="row">
-            <div th:each="sender: ${senders}" class="col py-1">
+            <div th:each="sender: ${senders}" class="col-sm-4 text-center py-1">
                 <div class="card message-card">
-                    <div class="card-body">
+
                         <img class="card-img-top inbox-photo" th:src="${senderImages.get(sender.id)}" alt="">
                         <div class="card-body">
                             <h5 class="card-title" th:text="${sender.username}" style="color: black"></h5>
@@ -32,12 +33,12 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div th:each="message : ${messages}" th:if="${message.sender.id == sender.id || message.sender.id == user.id && message.recipient.id == sender.id}">
-                                                            <div th:if="${message.sender.id == sender.id}" class="message-to">
+                                                            <div th:if="${message.sender.id == sender.id}" class="message-to message">
                                                                 <h5 th:text="${message.sender.firstName + ' ' + message.sender.lastName}" class="text-left"></h5>
                                                                 <div th:text="${message.body}" class="text-left"></div>
                                                                 <p th:text="${message.date}" class="text-left message-date"></p>
                                                             </div>
-                                                            <div th:if="${message.recipient.id == sender.id}" class="message-from">
+                                                            <div th:if="${message.recipient.id == sender.id}" class="message-from message">
                                                                 <h5 th:text="${message.sender.firstName + ' ' + message.sender.lastName}" class="text-right"></h5>
                                                                 <div th:text="${message.body}" class="text-right"></div>
                                                                 <p th:text="${message.date}" class="text-right message-date"></p>
@@ -58,11 +59,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
-
     </main>
     <div th:replace="partials/scripts :: scripts"></div>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>

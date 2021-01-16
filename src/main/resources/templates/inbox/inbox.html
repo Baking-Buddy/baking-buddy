@@ -5,7 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-    <div th:replace="partials/navbar :: navbar"></div>
+    <div th:replace="partials/navbar :: side-menu"></div>
+    <nav th:replace="partials/navbar :: main-nav"></nav>
     <main class="container mt-5">
         <h1>INBOX</h1>
         <div th:each="sender: ${senders}">
@@ -27,9 +28,9 @@
                                     </div>
                                     <div class="modal-body">
                                         <div th:each="message : ${messages}" th:if="${message.sender.id == sender.id || message.sender.id == user.id && message.recipient.id == sender.id}">
-                                                <p th:text="${message.body}"></p>
-                                                <div th:text="${message.date}"></div>
-                                                <br>
+                                            <p th:text="${message.body}"></p>
+                                            <div th:text="${message.date}"></div>
+                                            <br>
                                         </div>
                                     </div>
                                     <form th:action="@{|/inbox/${sender.id}|}" th:method="post">
@@ -53,5 +54,7 @@
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="/js/navigation.js"></script>
+
 </body>
 </html>

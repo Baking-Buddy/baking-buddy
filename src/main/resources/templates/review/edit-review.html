@@ -5,7 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="partials/navbar :: navbar"></div>
+<div th:replace="partials/navbar:: side-menu"></div>
+<div th:replace="partials/navbar :: main-nav"></div>
 <h1>Update Review</h1>
 <br>
 <main class="container">
@@ -33,5 +34,7 @@
     </form>
 </main>
 <div th:replace="partials/scripts :: scripts"></div>
+<script src="/js/navigation.js"></script>
+
 </body>
 </html>

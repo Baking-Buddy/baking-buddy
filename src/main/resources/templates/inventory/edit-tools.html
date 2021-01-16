@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<div th:replace="partials/navbar :: navbar"></div>
-<h1>Edit Description</h1>
 <body>
+<div th:replace="partials/navbar :: side-menu"></div>
+<nav th:replace="partials/navbar :: dash-nav"></nav>
+<h1>Edit Description</h1>
 <main class="container">
     <div>
         <h2 th:text="${tool.name}"></h2>
@@ -20,5 +21,7 @@
     </form>
 </main>
 <div th:replace="partials/scripts :: scripts"></div>
+<script src="/js/navigation.js"></script>
+
 </body>
 </html>

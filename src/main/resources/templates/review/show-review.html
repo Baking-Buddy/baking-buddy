@@ -5,9 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="partials/navbar :: navbar"></div>
+<div th:replace="partials/navbar :: side-menu"></div>
+<nav th:replace="partials/navbar :: main-nav"></nav>
 <h1>Review</h1>
-<br>
 <main class="container">
     <div th:object="${review}">
         <label for="reviewTitle">Title:</label>
@@ -21,5 +21,7 @@
     </div>
 </main>
 <div th:replace="partials/scripts :: scripts"></div>
+<script src="/js/navigation.js"></script>
+
 </body>
 </html>

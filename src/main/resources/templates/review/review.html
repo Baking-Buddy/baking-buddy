@@ -5,7 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="partials/navbar :: navbar"></div>
+<div th:replace="partials/navbar :: side-menu"></div>
+<nav th:replace="partials/navbar :: main-nav"></nav>
 
 <main class="container mt-5">
 
@@ -15,12 +16,12 @@
             <p class="mt-5">Rating: <strong th:text="${review.rating}"></strong></p>
             <p class="card-text" th:text="${review.body}"></p>
             <p>Created by: <span th:text="${review.getOwner().getUsername()}"></span></p>
-            <p th:text="${dates.get(review.id)}"></p>
+            <p th:text="${review.date}"></p>
         </div>
         <div sec:authorize="isAuthenticated()">
-        <form th:if="${#authentication.principal.id == review.owner.id}" th:action="@{|/review/${baker.id}/edit/${review.id}|}" th:method="get">
-            <button>Edit</button>
-        </form>
+            <form th:if="${#authentication.principal.id == review.owner.id}" th:action="@{|/review/${baker.id}/edit/${review.id}|}" th:method="get">
+                <button>Edit</button>
+            </form>
             <form th:if="${#authentication.principal.id == review.owner.id}" th:action="@{|/review/${baker.id}/delete/${review.id}|}" th:method="post">
                 <button>Delete</button>
             </form>

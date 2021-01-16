@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="partials/bs-head :: head('Profile')"></head>
 <body>
-    <div th:replace="partials/navbar :: side-menu"></div>
+<!--    <div th:replace="partials/navbar :: side-menu"></div>-->
     <nav th:replace="partials/navbar :: navbar"></nav>
     <aside th:replace="partials/sidebar ::  aside"></aside>
         <form th:action="@{/user/{id}/edit(id=${user.id})}" th:method="post" th:object="${user}">

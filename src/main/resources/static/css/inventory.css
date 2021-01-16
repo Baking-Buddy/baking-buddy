@@ -1,0 +1,15 @@
+.tools {
+    background-color: #C9E4DE;
+}
+
+.tool-card {
+    box-shadow: 5px 5px #0e4f1f;
+}
+
+.consumables {
+    background-color: #F7D9C4;
+}
+
+.consumable-card {
+    box-shadow: 5px 5px darkorange;
+}

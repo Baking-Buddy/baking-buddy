@@ -7,18 +7,21 @@
 <body>
 <div th:replace="partials/navbar :: navbar"></div>
 <aside th:replace="partials/sidebar :: aside"></aside>
-<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
+<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main  tools">
 <h1>Tools</h1>
-<br>
-<a th:href="@{/inventory/tools/add}" class="btn btn-primary">Add Tool</a>
-    <main class="container">
-        <div th:each="tool : ${userTools}" class="col-sm-6">
-            <h4 th:text="${tool.name}" class="card-title"></h4>
-            <p th:text="${tool.description}" class="card-text"></p>
-            <img th:each="image : ${userToolImages}" th:if="${image.tool.id == tool.id}" th:src="${image.imageUrl}" alt="">
-            <a th:href="@{/inventory/tools/{id}/edit(id=${tool.id})}" class="btn btn-primary">EDIT</a>
+<a th:href="@{/inventory/tools/add}" class="btn btn-success btn-message draw-border">Add Tool</a>
+    <div class="row">
+        <div th:each="tool : ${userTools}" class="col-sm-4 text-center my-2" style="color: black">
+            <div class="card p-1 tool-card">
+                <img class="card-img-top inbox-photo" th:each="image : ${userToolImages}" th:if="${image.tool.id == tool.id}" th:src="${image.imageUrl}" th:alt="${tool.name}">
+                <div class="card-body">
+                    <h4 th:text="${tool.name}" class="card-title"></h4>
+                    <p th:text="${tool.description}" class="card-text"></p>
+                    <a th:href="@{/inventory/tools/{id}/edit(id=${tool.id})}" class="btn btn-primary btn-message draw-border">EDIT</a>
+                </div>
+            </div>
         </div>
-    </main>
+    </div>
 </main>
   <div th:replace="partials/scripts :: scripts"></div>
 </body>

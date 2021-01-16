@@ -5,16 +5,11 @@
 }
 
 .message-card {
-    border: 3px slategrey solid;
     box-shadow: 5px 5px deepskyblue;
 }
 
 .inbox {
-    background-color: lightskyblue;
-}
-
-.inbox-container {
-    margin-top: 5rem;
+    background-color: #C6DEF1;
 }
 
 .message {

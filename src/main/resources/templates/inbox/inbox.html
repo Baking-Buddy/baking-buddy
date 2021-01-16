@@ -12,7 +12,7 @@
             <div th:each="sender: ${senders}" class="col-sm-4 text-center py-1">
                 <div class="card message-card">
 
-                        <img class="card-img-top inbox-photo" th:src="${senderImages.get(sender.id)}" alt="">
+                        <img class="card-img-top inbox-photo" th:src="${senderImages.get(sender.id)}" th:alt="${sender.username}">
                         <div class="card-body">
                             <h5 class="card-title" th:text="${sender.username}" style="color: black"></h5>
                             <!-- Button trigger modal -->

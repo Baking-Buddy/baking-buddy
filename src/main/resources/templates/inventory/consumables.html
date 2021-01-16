@@ -4,16 +4,18 @@
 <body>
 <div th:replace="partials/navbar :: navbar"></div>
 <aside th:replace="partials/sidebar :: aside"></aside>
-<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
+<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main consumables">
     <h1>Consumables</h1>
-    <a th:href="@{/inventory/consumables/add}" class="btn btn-primary">Add Consumable</a>
+    <a th:href="@{/inventory/consumables/add}" class="btn btn-success btn-message draw-border">Add Consumable</a>
         <div class="row">
             <div th:each="consumable : ${user.consumables}" class="col-sm-4 text-center my-2" style="color: black">
-                <div class="card">
-                    <h4 th:text="${consumable.brand}" class="card-title"></h4>
-                    <h6 th:text="${consumable.type}" class="card-subtitle text-muted"></h6>
-                    <p class="card-text"><span th:text="${consumable.amount}"></span> - <span th:text="${consumable.weightUnit}"></span></p>
-                    <a class="btn btn-primary btn-message draw-border" th:href="@{/inventory/consumables/{id}/edit(id=${consumable.id})}">EDIT</a>
+                <div class="card consumable-card">
+                    <div class="card-body">
+                        <h4 th:text="${consumable.brand}" class="card-title"></h4>
+                        <h6 th:text="${consumable.type}" class="card-subtitle text-muted"></h6>
+                        <p class="card-text"><span th:text="${consumable.amount}"></span> - <span th:text="${consumable.weightUnit}"></span></p>
+                        <a class="btn btn-primary btn-message draw-border" th:href="@{/inventory/consumables/{id}/edit(id=${consumable.id})}">EDIT</a>
+                    </div>
                 </div>
             </div>
         </div>

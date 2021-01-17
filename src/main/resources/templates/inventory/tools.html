@@ -7,19 +7,94 @@
 <body>
 <div th:replace="partials/navbar :: navbar"></div>
 <aside th:replace="partials/sidebar :: aside"></aside>
-<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
-<h1>Tools</h1>
-<br>
-<a th:href="@{/inventory/tools/add}" class="btn btn-primary">Add Tool</a>
-    <main class="container">
-        <div th:each="tool : ${userTools}" class="col-sm-6">
-            <h4 th:text="${tool.name}" class="card-title"></h4>
-            <p th:text="${tool.description}" class="card-text"></p>
-            <img th:each="image : ${userToolImages}" th:if="${image.tool.id == tool.id}" th:src="${image.imageUrl}" alt="">
-            <a th:href="@{/inventory/tools/{id}/edit(id=${tool.id})}" class="btn btn-primary">EDIT</a>
+<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main  tools">
+    <h1>Tools</h1>
+    <button class="btn btn-success btn-message draw-border" data-toggle="modal" data-target="#modal-add-tool">Add Tool</button>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="modal fade" id="modal-add-tool">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 style="color: black">New Tool</h1>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form th:action="@{/inventory/tools/add}" th:method="post" th:object="${tool}">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="name">Tool Name:</label>
+                                        <input class="form-control" name="name" id="name" th:field="*{name}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="set-description">Type:</label>
+                                        <textarea class="form-control" name="description" id="set-description" th:field="*{description}"></textarea>
+                                    </div>
+                                    <button class="button btn btn-message draw-border btn-warning" type="button" id="picker">Pick file</button>
+                                    <input type="hidden" id="fileupload" value="" name="uploadedImage">
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="text-right">
+                                        <button class="btn btn-message btn-success draw-border" type="submit">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </main>
+    </div>
+    <div class="row">
+        <div th:each="tool : ${userTools}" class="col-lg-4 col-md-12 text-center my-2" style="color: black">
+            <div class="card p-1 tool-card">
+                <img class="card-img-top tool-image" th:each="image : ${userToolImages}" th:if="${image.tool.id == tool.id}" th:src="${image.imageUrl}" th:alt="${tool.name}">
+                <div class="card-body">
+                    <h4 th:text="${tool.name}" class="card-title"></h4>
+                    <p th:text="${tool.description}" class="card-text"></p>
+                    <button type="button" class="btn btn-primary btn-message draw-border" data-toggle="modal" th:data-target="${'#modal'+tool.id}">UPDATE</button>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="modal fade" th:id="${'modal'+tool.id}">
+                                    <div class="modal-dialog modal-md">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 th:text="${tool.name}" style="color: black"></h1>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p th:text="${'Current Description: '+ tool.description}" class="text-muted"></p>
+                                                <form th:action="@{/inventory/tools/{id}/edit(id=${tool.id})}" th:method="post" th:object="${tool}">
+                                                    <div class="form-group">
+                                                        <label for="description">New Description</label>
+                                                        <textarea class="form-control" name="description" id="description" th:field="*{description}"></textarea>
+                                                    </div>
+                                                    <button class="btn btn-message btn-success draw-border" type="submit">Submit</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
   <div th:replace="partials/scripts :: scripts"></div>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="/keys.js"></script>
+<script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/navigation.js"></script>
 </body>
 </html>

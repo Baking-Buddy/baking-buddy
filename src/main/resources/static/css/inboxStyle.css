@@ -68,6 +68,8 @@
 .draw-border:hover {
     color: #ffe593;
     box-shadow: 4px 4px darkgoldenrod;
+    bottom: 4px;
+    right: 4px;
 }
 .draw-border:active {
     box-shadow: none;

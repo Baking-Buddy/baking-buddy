@@ -48,7 +48,7 @@
         </div>
     </div>
     <div class="row">
-        <div th:each="tool : ${userTools}" class="col-sm-4 text-center my-2" style="color: black">
+        <div th:each="tool : ${userTools}" class="col-lg-4 col-md-12 text-center my-2" style="color: black">
             <div class="card p-1 tool-card">
                 <img class="card-img-top tool-image" th:each="image : ${userToolImages}" th:if="${image.tool.id == tool.id}" th:src="${image.imageUrl}" th:alt="${tool.name}">
                 <div class="card-body">

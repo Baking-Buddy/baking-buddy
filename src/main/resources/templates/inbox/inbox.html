@@ -9,7 +9,7 @@
     <aside th:replace="partials/sidebar :: aside"></aside>
     <main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main inbox-container inbox">
         <div class="row">
-            <div th:each="sender: ${senders}" class="col-sm-4 text-center py-1">
+            <div th:each="sender: ${senders}" class="col-lg-4 col-md-12 text-center py-1">
                 <div class="card message-card">
 
                         <img class="card-img-top inbox-photo" th:src="${senderImages.get(sender.id)}" th:alt="${sender.username}">

@@ -1,8 +1,15 @@
-#devBG {
-    background-image: url("../img/BakingBG.jpg");
-    background-repeat: no-repeat;
+#htmlBG {
+    background: url("../img/BakingBG.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
-    background-position: center;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll
+}
+#devBG{
+    background-color: initial;
 }
 
 #devCards {
@@ -14,11 +21,11 @@
 }
 
 #github {
-   color: black;
+   color: #555555;
 }
 
 #linkedin {
-    color: cornflowerblue;
+    color: royalblue;
 }
 
 #devContainer {
@@ -26,3 +33,5 @@
     align-content: center;
     margin-top: 50%;
 }
+
+

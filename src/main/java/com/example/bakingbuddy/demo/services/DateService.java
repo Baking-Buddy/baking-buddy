@@ -17,7 +17,7 @@ import java.util.List;
 public class DateService {
 
     public Date dateToStore(String date) throws ParseException {
-        DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date convertedDate = df.parse(date);
         return convertedDate;
     }

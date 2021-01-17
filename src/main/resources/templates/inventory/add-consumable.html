@@ -7,28 +7,37 @@
 <body>
 <div th:replace="partials/navbar :: navbar"></div>
 <aside th:replace="partials/sidebar :: aside"></aside>
-<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
+<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main consumables">
 <h1>Add Consumable</h1>
 <form th:action="@{/inventory/consumables/add}" th:method="post" th:object="${consumable}">
-    Brand Name:
-    <input name="brand" id="brand" th:field="*{brand}">
-    <br>
-    Type:
-    <input name="type" id="type" th:field="*{type}">
-    <br>
-    Amount:
-    <input name="amount" id="amount" th:field="*{amount}">
-    <br>
-    Weight-Unit:
-    <br>
-    <input type="radio" id="lbs" name="weight_unit" value="lb(s)" th:field="*{weightUnit}">
-    <label for="lbs">lbs</label><br>
-    <input type="radio" id="oz" name="weight_unit" value="oz" th:field="*{weightUnit}">
-    <label for="oz">oz</label><br>
-    <input type="radio" id="kg" name="weight_unit" value="kg" th:field="*{weightUnit}">
-    <label for="kg">kg</label><br>
-    <br>
-    <input type="submit">
+    <div class="form-row">
+    <div class="form-group col-md-4">
+        <label for="brand">Brand Name:</label>
+        <input name="brand" id="brand" th:field="*{brand}">
+    </div>
+    <div class="form-group col-md-4">
+        <label for="type">Type:</label>
+        <input name="type" id="type" th:field="*{type}">
+    </div>
+    <div class="form-group col-md-4">
+        <label for="amount">Amount: </label>
+        <input type="number" name="amount" id="amount" th:field="*{amount}">
+    </div>
+    <legend>Weight Unit:</legend>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" id="lbs" name="weight_unit" value="lb(s)" th:field="*{weightUnit}">
+        <label class="form-check-label" for="lbs">lbs</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" id="oz" name="weight_unit" value="oz" th:field="*{weightUnit}">
+        <label class="form-check-label" for="oz">oz</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" id="kg" name="weight_unit" value="kg" th:field="*{weightUnit}">
+        <label class="form-check-label" for="kg">kg</label><br>
+    </div>
+        <button class="btn btn-message btn-success draw-border" type="submit">Submit</button>
+    </div>
 </form>
 </main>
 <div th:replace="partials/scripts :: scripts"></div>

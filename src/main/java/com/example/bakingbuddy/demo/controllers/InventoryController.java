@@ -82,6 +82,7 @@ public class InventoryController {
         }
         User sessionUser = userService.sessionUser();
         model.addAttribute("user", sessionUser);
+        model.addAttribute("consumable", new Consumable());
         model.addAttribute("isBaker", sessionUser.isBaker());
         model.addAttribute("profileImage",userService.profileImage(sessionUser));
         return "inventory/consumables";
@@ -146,6 +147,7 @@ public class InventoryController {
         Tool toolDb = toolDao.getOne(id);
         model.addAttribute("user", sessionUser);
         model.addAttribute("tool", toolDb);
+        model.addAttribute("isBaker", sessionUser.isBaker());
         model.addAttribute("profileImage",userService.profileImage(sessionUser));
         return "inventory/edit-tools";
     }

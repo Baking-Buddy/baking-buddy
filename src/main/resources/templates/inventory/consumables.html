@@ -6,20 +6,102 @@
 <aside th:replace="partials/sidebar :: aside"></aside>
 <main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main consumables">
     <h1>Consumables</h1>
-    <a th:href="@{/inventory/consumables/add}" class="btn btn-success btn-message draw-border">Add Consumable</a>
+    <button class="btn btn-success btn-message draw-border" data-toggle="modal" data-target="#modal-add-consumable">Add Consumable</button>
+    <div class="container">
         <div class="row">
-            <div th:each="consumable : ${user.consumables}" class="col-sm-4 text-center my-2" style="color: black">
-                <div class="card consumable-card">
-                    <div class="card-body">
-                        <h4 th:text="${consumable.brand}" class="card-title"></h4>
-                        <h6 th:text="${consumable.type}" class="card-subtitle text-muted"></h6>
-                        <p class="card-text"><span th:text="${consumable.amount}"></span> - <span th:text="${consumable.weightUnit}"></span></p>
-                        <a class="btn btn-primary btn-message draw-border" th:href="@{/inventory/consumables/{id}/edit(id=${consumable.id})}">EDIT</a>
+            <div class="col-md-12">
+                <div class="modal fade" id="modal-add-consumable">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 style="color: black">New Consumable</h1>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                                <form th:action="@{/inventory/consumables/add}" th:method="post" th:object="${consumable}">
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="brand">Brand Name:</label>
+                                            <input class="form-control" name="brand" id="brand" th:field="*{brand}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="type">Type:</label>
+                                            <input class="form-control" name="type" id="type" th:field="*{type}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="amount">Amount: </label>
+                                            <input class="form-control" type="number" name="amount" id="amount" th:field="*{amount}">
+                                        </div>
+                                        <legend>Weight Unit:</legend>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" id="lbs" name="weight_unit" value="lb(s)" th:field="*{weightUnit}">
+                                            <label class="form-check-label" for="lbs">lbs</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" id="oz" name="weight_unit" value="oz" th:field="*{weightUnit}">
+                                            <label class="form-check-label" for="oz">oz</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" id="kg" name="weight_unit" value="kg" th:field="*{weightUnit}">
+                                            <label class="form-check-label" for="kg">kg</label><br>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="text-right">
+                                            <button class="btn btn-message btn-success draw-border" type="submit">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+    <div class="row">
+        <div th:each="consumable : ${user.consumables}" class="col-sm-4 text-center my-2" style="color: black">
+            <div class="card consumable-card">
+                <div class="card-body">
+                    <h4 th:text="${consumable.brand}" class="card-title"></h4>
+                    <h6 th:text="${consumable.type}" class="card-subtitle text-muted"></h6>
+                    <p class="card-text"><span th:text="${consumable.amount}"></span> - <span th:text="${consumable.weightUnit}"></span></p>
+                    <button type="button" class="btn btn-primary btn-message draw-border" data-toggle="modal" th:data-target="${'#modal'+consumable.id}">UPDATE</button>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="modal fade" th:id="${'modal'+consumable.id}">
+                                    <div class="modal-dialog modal-md">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 th:text="${consumable.brand} + '-' + ${consumable.type}" style="color: black"></h1>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p th:text="${'Current Amount: ' + consumable.amount + '-' + consumable.weightUnit}" class="text-muted"></p>
+                                                <form th:action="@{/inventory/consumables/{id}/edit(id=${consumable.id})}" th:method="post" th:object="${consumable}">
+                                                    <div class="form-group">
+                                                        <input type="number" name="amount" th:value="${consumable.amount}">
+                                                    </div>
+                                                    <button class="btn btn-message btn-success draw-border" type="submit">Submit</button>
+                                                </form>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</main>
 <div th:replace="partials/scripts :: scripts"></div>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

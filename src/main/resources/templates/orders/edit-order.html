@@ -8,8 +8,8 @@
 <nav th:replace="partials/navbar :: navbar"></nav>
 <h1>Edit Order</h1>
 <body>
-<main class="container mt-5 row align-items-center">
-    <div>
+<main class="container">
+    <div class="edit-form row">
         <p>Current Description : <span th:text="${order.description}"></span></p>
         <p>Current Request by date : <span th:text="${date}"></span></p>
         <p>Current Price: <span th:if="${order.price} == 0" th:text="PENDING"></span><span th:if="${order.price} !=0" th:text="'$'+${order.price}"></span></p>

@@ -43,6 +43,7 @@ public class InventoryController {
         for (Tool userTool : userTools) {
             userToolImages.add(toolImageDao.findToolImageByTool(userTool));
         }
+        model.addAttribute("tool", new Tool());
         model.addAttribute("user",sessionUser);
         model.addAttribute("userTools", userTools);
         model.addAttribute("userToolImages", userToolImages);

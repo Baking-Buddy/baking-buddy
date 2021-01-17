@@ -3,7 +3,22 @@
 }
 
 .tool-card {
-    box-shadow: 5px 5px #0e4f1f;
+    box-shadow: 5px 5px seagreen;
+}
+
+.tool-card:hover{
+    box-shadow: none;
+    left: 5px;
+    top: 5px;
+}
+
+.tool-image{
+    width: 200px;
+    height: auto;
+}
+.tool-image {
+    width: auto;
+    height: 300px;
 }
 
 .consumables {
@@ -12,4 +27,10 @@
 
 .consumable-card {
     box-shadow: 5px 5px darkorange;
+}
+
+.consumable-card:hover {
+    box-shadow: none;
+    left: 5px;
+    top: 5px;
 }

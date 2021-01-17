@@ -1,11 +1,17 @@
 .inbox-photo{
-    height: 50%;
-    width: 50%;
+    height: 10em;
+    width: 10em;
     align-self: center;
 }
 
 .message-card {
     box-shadow: 5px 5px deepskyblue;
+}
+
+.message-card:hover {
+    box-shadow: none;
+    left: 5px;
+    top: 5px;
 }
 
 .inbox {
@@ -61,6 +67,12 @@
 }
 .draw-border:hover {
     color: #ffe593;
+    box-shadow: 4px 4px darkgoldenrod;
+}
+.draw-border:active {
+    box-shadow: none;
+    top: 4px;
+    left: 4px;
 }
 .draw-border:hover::before, .draw-border:hover::after {
     border-color: #ffe593;
@@ -83,7 +95,4 @@
     font: 700 1.2rem "Roboto Slab", sans-serif;
     padding: 1em 2em;
     letter-spacing: 0.05rem;
-}
-.btn-message:focus {
-    outline: 2px dotted #55d7dc;
 }

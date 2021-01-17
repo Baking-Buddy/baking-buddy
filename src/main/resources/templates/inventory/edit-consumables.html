@@ -3,19 +3,23 @@
 <head th:replace="partials/bs-head :: head('Consumables')"></head>
 <body>
 <div th:replace="partials/navbar :: navbar"></div>
+<aside th:replace="partials/sidebar :: aside"></aside>
 <h1>Edit Amount</h1>
-<main class="container">
-    <div>
-        <h2 th:text="${consumable.brand}"></h2>
-        <h4 th:text="${consumable.type}"></h4>
-        <p>Current Amount: <span th:text="${consumable.amount}"></span> - <span th:text="${consumable.weightUnit}"></span></p>
+<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main justify-content-center">
+    <div class="card text-center p-1 consumable-card w-50">
+        <div class="card-body">
+            <h4 th:text="${consumable.brand}" class="card-title" style="color: black"></h4>
+            <h5 th:text="${consumable.type}" class="card-subtitle text-muted"></h5>
+            <p th:text="${'Current Amount: ' + consumable.amount + '-' + consumable.weightUnit}" class="card-text"></p>
+            <form th:action="@{/inventory/consumables/{id}/edit(id=${consumable.id})}" th:method="post" th:object="${consumable}">
+                <div class="form-group">
+                    <label for="amount" style="color: black">New Amount</label>
+                    <input type="number" name="amount" id="amount" th:field="*{amount}">
+                </div>
+                <button class="btn btn-message btn-success draw-border" type="submit">Submit</button>
+            </form>
+        </div>
     </div>
-    <form th:action="@{/inventory/consumables/{id}/edit(id=${consumable.id})}" th:method="post" th:object="${consumable}">
-        New Amount:
-        <input name="amount" id="amount" th:field="*{amount}">
-        <br>
-        <input type="submit">
-    </form>
 </main>
 <div th:replace="partials/scripts :: scripts"></div>
 </body>

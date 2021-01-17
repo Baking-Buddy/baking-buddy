@@ -43,6 +43,7 @@ public class InventoryController {
         for (Tool userTool : userTools) {
             userToolImages.add(toolImageDao.findToolImageByTool(userTool));
         }
+        model.addAttribute("tool", new Tool());
         model.addAttribute("user",sessionUser);
         model.addAttribute("userTools", userTools);
         model.addAttribute("userToolImages", userToolImages);
@@ -82,6 +83,7 @@ public class InventoryController {
         }
         User sessionUser = userService.sessionUser();
         model.addAttribute("user", sessionUser);
+        model.addAttribute("consumable", new Consumable());
         model.addAttribute("isBaker", sessionUser.isBaker());
         model.addAttribute("profileImage",userService.profileImage(sessionUser));
         return "inventory/consumables";
@@ -146,6 +148,7 @@ public class InventoryController {
         Tool toolDb = toolDao.getOne(id);
         model.addAttribute("user", sessionUser);
         model.addAttribute("tool", toolDb);
+        model.addAttribute("isBaker", sessionUser.isBaker());
         model.addAttribute("profileImage",userService.profileImage(sessionUser));
         return "inventory/edit-tools";
     }

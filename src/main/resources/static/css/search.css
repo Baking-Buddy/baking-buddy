@@ -1,0 +1,28 @@
+.modal-rating{
+    color: black;
+    border: 2px black solid;
+    padding: 1px;
+    border-radius: 3px;
+}
+
+.modal-rating-good {
+    background-color: lawngreen;
+}
+
+.modal-rating-average {
+    background-color: gold;
+}
+
+.modal-rating-subpar {
+    background-color: darkorange;
+}
+
+.modal-rating-bad {
+    background-color: red;
+}
+
+.modal-review {
+    padding: 1em;
+    border: 3px black dashed;
+    border-radius: 3px;
+}

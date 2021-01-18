@@ -10,7 +10,7 @@
 <aside th:replace="partials/sidebar :: aside"></aside>
 <main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main  tools">
         <h1>Tools</h1>
-    <button class="btn btn-success btn-message draw-border" data-toggle="modal" data-target="#modal-add-tool">Add Tool</button>
+    <button class="tool-btns inventory-btns" data-toggle="modal" data-target="#modal-add-tool">Add Tool</button>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -33,12 +33,12 @@
                                         <label for="set-description">Type:</label>
                                         <textarea class="form-control" name="description" id="set-description" th:field="*{description}"></textarea>
                                     </div>
-                                    <button class="button btn btn-message draw-border btn-warning" type="button" id="picker">Pick file</button>
+                                    <button class="inventory-btns tool-btns" type="button" id="picker">Pick file</button>
                                     <input type="hidden" id="fileupload" value="" name="uploadedImage">
                                 </div>
                                 <div class="modal-footer">
                                     <div class="text-right">
-                                        <button class="btn btn-message btn-success draw-border" type="submit">Submit</button>
+                                        <button class="tool-btns inventory-btns" type="submit">Submit</button>
                                     </div>
                                 </div>
                             </form>
@@ -55,7 +55,7 @@
                 <div class="card-body">
                     <h4 th:text="${tool.name}" class="card-title"></h4>
                     <p th:text="${tool.description}" class="card-text"></p>
-                    <button type="button" class="btn btn-primary btn-message draw-border" data-toggle="modal" th:data-target="${'#modal'+tool.id}">UPDATE</button>
+                    <button type="button" class="tool-btns inventory-btns" data-toggle="modal" th:data-target="${'#modal'+tool.id}">UPDATE</button>
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
@@ -75,7 +75,7 @@
                                                         <label for="description">New Description</label>
                                                         <textarea class="form-control" name="description" id="description" th:field="*{description}"></textarea>
                                                     </div>
-                                                    <button class="btn btn-message btn-success draw-border" type="submit">Submit</button>
+                                                    <button class="tool-btns inventory-btns" type="submit">Submit</button>
                                                 </form>
                                             </div>
                                         </div>

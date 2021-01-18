@@ -19,7 +19,8 @@ a:hover {
     }
 
 .content {
-    padding: 7rem 0; }
+    padding: 3rem 0;
+}
 
 h2 {
     font-size: 20px; }
@@ -27,8 +28,9 @@ h2 {
 .form-block {
     background: #fff;
     padding: 60px;
-    -webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
-    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1); }
+    -webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.4);
+}
 @media (max-width: 991.98px) {
     .form-block {
         padding: 30px; } }
@@ -75,7 +77,6 @@ h2 {
 .content .bg .form-group label,
 .edit-content .edit-contents .form-group label,
 .edit-content .bg .form-group label{
-    font-size: 12px;
     display: block;
     margin-bottom: 0;
     color: #b3b3b3; }
@@ -130,8 +131,27 @@ h2 {
 .edit-content .btn-pill {
     border-radius: 30px; }
 
+.btn-login:hover {
+    background: #BBDDD6;
+}
+.btn-login {
+    background: #92C8BE;
+    border: none;
+    box-shadow: #2a2a28;
+}
 
+.login-bg {
+    background-image: url("../img/loginbg.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
-
+.registerbg {
+    background-image: url("../img/registerbg.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
 

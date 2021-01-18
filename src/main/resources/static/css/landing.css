@@ -1,9 +1,25 @@
 :root {
-    --navigation: #0c7f90;
+    --navigation: rgba(198,222,241, 0.85);
+    --mainbg: #f5f5f5;
+    --text: #2a2a28;
 }
+body {
+    background: var(--mainbg);
+    color: #2a2a28;
+}
+a {
+    text-decoration: none;
+    color: var(--text);
 
+}
+.card-width {
+    min-width: 30%;
+}
+.dark-text {
+    color: #2a2a28 !important;
+}
 #header {
-    height: 70vh;
+    height: 50vh;
     background-image: url("../img/landingbg.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -138,7 +154,7 @@
 .toggle-button__bar {
     width: 100%;
     height: 0.2rem;
-    background: black;
+    background: var(--text);
     display: block;
     margin: 0.4rem 0;
 }
@@ -186,6 +202,10 @@
     transition-delay: 0s, 0.25s, 0s;
 }
 
+.btn-purple {
+    background: #DBCBF0;
+}
+
 .fancy-btn {
     background: none;
     border: none;
@@ -227,4 +247,15 @@
 .justify-content-evenly {
     gap: 20px;
     justify-content: space-evenly;
+}
+
+.card-shadow {
+   box-shadow: 0 3rem 6rem rgba(0, 0, 0, 0.1);
+}
+
+.errorbg {
+    background-image: url("../img/aboutbg.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }

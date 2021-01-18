@@ -4,35 +4,52 @@
     <meta charset="UTF-8">
     <title>Orders</title>
 </head>
-<div th:replace="paptials/navbar :: side-menu"></div>
+<!--<div th:replace="partials/navbar :: side-menu"></div>-->
+<body class="background-theme">
 <nav th:replace="partials/navbar :: navbar"></nav>
-<h1>Edit Order</h1>
-<body>
-<main class="container mt-5">
-    <div>
-        <p>Current Description : <span th:text="${order.description}"></span></p>
-        <p>Current Request by date : <span th:text="${date}"></span></p>
-        <p>Current Price: <span th:if="${order.price} == 0" th:text="PENDING"></span><span th:if="${order.price} !=0" th:text="'$'+${order.price}"></span></p>
-    </div>
-    <form th:action="@{/orders/{id}/edit(id=${order.id})}" th:method="post" th:object="${order}">
-        New Description:
-        <textarea type="textarea" name="description" id="description" th:field="*{description}"></textarea>
-        <br>
-        New Request by date (MM-dd-yyyy):
-        <input type="text" name="date" id="date" th:field="*{date}">
-        <br>
-        <div th:if="${isBaker}">
-            Set Price:$
-            <input type="number" name="price" id="price" th:field="*{price}">
-            <button class="btn btn-pill btn-info" type="button" id="picker">Profile Picture</button>
-            <input type="hidden" id="fileupload" th:value="${order.orderImage}" name="uploadedImage">
+<aside th:replace="partials/sidebar :: aside"></aside>
+<main class="background-theme col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
+    <section class="edit_form_section">
+        <h1 class="title">Edit Order</h1>
+        <div class="container mt-6 p-6 ">
+            <div class="edit-form row mt-5">
+                <div class="form-field col-lg-5">
+                    <div class="form-field">
+                        <p class="current_info">Current Description : <span th:text="${order.description}"></span></p>
+                    </div>
+                    <div class="form-field">
+                        <p class="current_info">Current Request by date : <span th:value="${date}"></span></p>
+                    </div>
+                    <div class="form-field">
+                        <p class="current_info">Current Price: <span th:if="${order.price} == 0" th:text="PENDING"></span><span th:if="${order.price} !=0" th:text="'$'+${order.price}"></span></p>
+                    </div>
+                </div>
+                <form class="col-lg-5" th:action="@{/orders/{id}/edit(id=${order.id})}" th:method="post" th:object="${order}">
+                    <div class="form-field">
+                        <label for="description" class="label">New Description:</label>
+                        <textarea class="input-text" type="textarea" name="description" id="description" th:field="*{description}"></textarea>
+                    </div>
+                    <div class="form-field">
+                        <label for="date" class="label"><span style="color: red;">**</span>Request by date</label>
+                        <input class="input-text" type="date" name="date" id="date" th:field="*{date}">
+                    </div>
+                    <div class="form-field" th:if="${isBaker}">
+                        <label for="price" class="label">Set Price:$</label>
+                        <input class="input-text" type="number" name="price" id="price" th:field="*{price}">
+                    </div>
+                    <div class="form-field">
+                        <button class="submit-btns" type="submit" id="picker">Order Image</button>
+                        <input class="input-text" type="hidden" id="fileupload" th:value="${order.orderImage}" name="uploadedImage">
+                    </div>
+                    <div class="form-field" th:if="${!isBaker}">
+                        <input type="hidden" name="price" id="price" th:field="*{price}">
+                        <input type="hidden" id="fileupload" th:value="${order.orderImage}" name="uploadedImage">
+                    </div>
+                    <button class="submit-btns form-field" id="submit" type="submit">Save</button>
+                </form>
+            </div>
         </div>
-        <div th:if="${!isBaker}">
-            <input type="hidden" name="price" id="price" th:field="*{price}">
-            <input type="hidden" id="fileupload" th:value="${order.orderImage}" name="uploadedImage">
-        </div>
-        <button class="btn btn-pill btn-success" id="submit" type="submit">Save <Changes>                           </Changes></button>
-    </form>
+    </section>
 </main>
 <div th:replace="partials/scripts :: scripts"></div>
 <script src="/keys.js"></script>

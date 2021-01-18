@@ -5,8 +5,8 @@
     <title>Inventory</title>
 </head>
 <body>
-<nav th:replace="partials/navbar :: navbar"></nav>
-<aside th:replace="partials/sidebar :: aside"></aside>
+<div th:replace="partials/navbar :: side-menu"></div>
+<nav th:replace="partials/navbar :: dash-nav"></nav>
 <main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main tools">
 <h1>Add Tool</h1>
     <form th:action="@{/inventory/tools/add}" th:method="post" th:object="${tool}">
@@ -27,7 +27,7 @@
     <script src="/keys.js"></script>
     <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
     <script src="/js/main.js"></script>
-<script src="/js/navigation.js"></script>
+    <script src="/js/navigation.js"></script>
 
 </body>
 </html>

@@ -1,57 +1,59 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head th:replace="partials/bs-head :: head('Sign In')"></head>
-<body>
+<body class="login-bg">
 
 
 <!--new sign-->
-<form th:action="@{/login}" th:method="POST" th:object="${user}">
-    <div class="content">
-        <div class="container">
-            <div class="row justify-content-center">
-<!--                &lt;!&ndash; <div class="col-md-6 order-md-2">-->
-<!--                  <img src="images/undraw_file_sync_ot38.svg" alt="Image" class="img-fluid">-->
-<!--                </div> &ndash;&gt;-->
-                <div class="col-md-6 contents">
-                    <div class="row justify-content-center">
-                        <div class="col-md-12">
-                            <div class="form-block">
-                                <div class="mb-4">
-                                    <h3>Sign In</h3>
-                                    <div th:if="${param.error}" class="text-danger">
-                                        Invalid Username or Password. Please try again
+<div>
+    <form th:action="@{/login}" th:method="POST" th:object="${user}">
+        <div class="content">
+            <div class="container">
+                <div class="row justify-content-center">
+    <!--                &lt;!&ndash; <div class="col-md-6 order-md-2">-->
+    <!--                  <img src="images/undraw_file_sync_ot38.svg" alt="Image" class="img-fluid">-->
+    <!--                </div> &ndash;&gt;-->
+                    <div class="col-md-6 contents">
+                        <div class="row justify-content-center">
+                            <div class="col-md-12">
+                                <div class="form-block">
+                                    <div class="mb-4">
+                                        <h3>Sign In</h3>
+                                        <div th:if="${param.error}" class="text-danger">
+                                            Invalid Username or Password. Please try again
+                                        </div>
+                                        <div th:if="${param.logout}">
+                                            You have been logged out.
+                                        </div>
                                     </div>
-                                    <div th:if="${param.logout}">
-                                        You have been logged out.
-                                    </div>
+                                        <div class="form-group first">
+                                            <label for="username">Username</label>
+                                            <input type="text" class="form-control" id="username" name="username">
+
+                                        </div>
+                                        <div class="form-group last">
+                                            <label for="password">Password</label>
+                                            <input type="password" class="form-control" id="password" name="password">
+
+                                        </div>
+
+
+                                        <div class="d-flex mb-5 align-items-center">
+                                            <span class="ml-auto"><a th:href="@{/forgot-password}" class="forgot-pass">Forgot Password</a></span>
+                                        </div>
+
+                                        <button class="btn btn-pill btn-info btn-block py-1" id="submit" type="submit">Sign in</button>
+
+                                        <span class="d-block text-center my-4 text-muted">Don't have an account? <a th:href="@{/register}">Sign up</a></span>
                                 </div>
-                                    <div class="form-group first">
-                                        <label for="username">Username</label>
-                                        <input type="text" class="form-control" id="username" name="username">
-
-                                    </div>
-                                    <div class="form-group last">
-                                        <label for="password">Password</label>
-                                        <input type="password" class="form-control" id="password" name="password">
-
-                                    </div>
-
-
-                                    <div class="d-flex mb-5 align-items-center">
-                                        <span class="ml-auto"><a th:href="@{/forgot-password}" class="forgot-pass">Forgot Password</a></span>
-                                    </div>
-
-                                    <button class="btn btn-pill btn-info btn-block py-1" id="submit" type="submit">Sign in</button>
-
-                                    <span class="d-block text-center my-4 text-muted">Don't have an account? <a th:href="@{/register}">Sign up</a></span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>
 <script th:replace="partials/scripts :: scripts"></script>
 </body>
 </html>

@@ -1,86 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head th:replace="partials/bs-head :: head('Baking Buddy')">
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:replace="partials/bs-head :: head('Baking Buddy')"></head>
 <body>
-    <div class="slide-nav" sec:authorize="isAuthenticated()">
-        <div>
-            <a href="#" class="close p-3" type="button">X</a>
-        </div>
-        <ul class="nav-items"  aria-labelledby="navbarDropdown">
-            <li>
-<!--                <img th:src="${profileImage}"  class="profile-picture" alt="">-->
-            </li>
-            <li><a class="nav-item" th:href="@{/dashboard}">Dashboard</a></li>
-            <li><a class="nav-item" th:href="@{/orders}">Orders</a></li>
-            <li th:if="${isBaker}"><a class="dropdown-item" th:href="@{/inventory/consumables}">Pantry</a></li>
-            <li th:if="${isBaker}"><a class="dropdown-item" th:href="@{/inventory/tools}">Tools</a></li>
-            <li><a class="nav-item" th:href="@{/inbox}">Inbox</a></li>
-            <li class="nav-item"><a class="nav-link" th:href="@{/developers}">About Us</a></li>
-            <!--                <li><a class="nav-item" th:href="@{/user/{id}/edit(id=${user.id})}">Settings</a></li>-->
-            <li>
-                <form th:action="@{/logout}" th:method="post">
-                    <button class="dropdown-item" type="submit">Logout</button>
-                </form>
-            </li>
-        </ul>
-    </div>
-        <header id="header">
-        <nav id="nav" class="navbar navbar-expand-lg navbar-expand navbar-dark fixed-top" th:fragment="navbar">
-            <div class="container-fluid px-4">
-                <a th:href="@{/}" class="navbar-brand">
-                    <img src="https://cdn.filestackcontent.com/z2yTGxRyyPn3GUz3E7wJ" alt="baking buddy" class="m-0">
-                </a>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav home mb-2 mb-lg-0">
-                        <li class="nav-item pr-5">
-                            <form class="form-inline pt-sm-3 pt-md-2" th:action="@{/search-results}" th:method="get">
-                                <input name="query" type="text" class="form-control" placeholder="Find a Baker" aria-label="find a baker" aria-describedby="button-addon2">
-                                <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="button-addon2"><i class="fas fa-search"></i></button>
-                            </form>
-                        </li>
-                        <li class="nav-item" sec:authorize="isAuthenticated()">
-                            <a href="#"  class="nav-link toggle-button pt-sm-4 pt-md-3">
-                                <i class="fas fa-bars"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item" sec:authorize="!isAuthenticated()">
-                            <a class="nav-link pt-sm-4 pt-md-3" th:href="@{/login}">Login</a>
-                        </li>
-                        <li class="nav-item" sec:authorize="!isAuthenticated()">
-                            <a class="nav-link pt-sm-4 pt-md-3" th:href="@{/register}">Join</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link pt-sm-4 pt-md-3" sec:authorize="!isAuthenticated()" th:href="@{/developers}">About Us</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+    <div th:replace="partials/navbar :: side-menu"></div>
+    <div th:replace="partials/navbar :: mobile-side-menu"></div>
+    <header id="header">
+        <nav th:replace="partials/navbar :: landing-nav"></nav>
     </header>
-<section id="welcome">
-    <div class="container">
-        <div class="welcome text-center">
-            <h1>Welcome to baking buddy</h1>
-            <p>Home </p>
+    <section id="welcome">
+        <div class="container">
+            <div class="welcome text-center">
+                <h1>Baking Buddy</h1>
+                <p class="text-uppercase">Home of your friendly neighborhood bakers</p>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-    <main class="container text-center">
-        <div class="card" th:each="user : ${users}" th:if="${user.isBaker()}">
-            <div class="card-body">
-                <a th:href="@{|/baker-profile/${user.id}|}" class="card-title" th:text="${user.username}"></a>
-                <p class="card-text">
+    <main class="container d-flex flex-wrap justify-content-evenly mt-5">
+        <div class="card card-width card-shadow" th:each="user : ${users}" th:if="${user.isBaker()}">
+            <div class="card-body text-center">
+<!--                <img th:src="${profileImage}" alt="baker profile image">-->
+                <a th:href="@{|/baker-profile/${user.id}|}" class="card-title h3" th:text="${user.username}"></a>
+                <p class="card-text dark-text text-uppercase">
                     <span th:text="${user.city}"></span>,
                     <span th:text="${user.state}"></span>
                 </p>
-                <a th:href="@{|/reviews/${user.id}|}" class="btn btn-primary">View Reviews</a>
+                <a th:href="@{|/reviews/${user.id}|}" class="btn btn-purple">View Reviews</a>
             </div>
         </div>
     </main>
     <div th:replace="partials/scripts :: scripts"></div>
+    <script src="/js/navigation.js"></script>
 </body>
 </html>

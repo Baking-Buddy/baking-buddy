@@ -4,64 +4,60 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<nav th:replace="partials/navbar :: navbar"></nav>
-<body id="devBG">
-<div class="text-center mt-5 pt-5">
+<nav th:replace="partials/navbar :: main-nav"></nav>
+<body class="devbg">
+<div class="text-center dev-header">
     <h1>Developers</h1>
 </div>
-<main id="devContainer" class="container mt-3 pt-3 justify-content-center">
-    <div class="row align-content-center mx-5">
-    <div id="devCards" class="card p-2 border-0 col-xl-3 col-lg-6 col-md-12 col-sm-12" style="width: 18rem;">
-        <img src="/img/Skyler.jpg" class="card-img-top rounded-circle" alt="Skyler's Professional Picture">
+<main id="devContainer" class="container-fluid mt-5 pt-3">
+    <div class="d-flex justify-content-center align-content-center flex-wrap mx-5 w-100">
+    <div id="devCards" class="card mx-5 p-2 border-0" style="width: 18rem;">
+        <img src="/img/Skyler.jpg" class="card-img-top dev-img" alt="Skyler's Professional Picture">
         <div  class="card-body">
-            <h5 class="card-title text-center">Skyler Aschenbeck</h5>
+            <h5 class="card-title text-center dev-text">Skyler Aschenbeck</h5>
             <p class="card-text"></p>
             <div class="text-center">
-            <a href="https://www.github.com/saschenbeck" class="p-2"><i id="github" class="fab fa-github-square fa-2x"></i></a>
-            <a href="https://www.linkedin.com/in/skyler-aschenbeck/" class="p-2"><i id="linkedin" class="fab fa-linkedin fa-2x"></i></a>
+            <a href="https://www.github.com/saschenbeck" class="dark"><i id="github" class="fab fa-github-square fa-3x"></i></a>
+            <a href="https://www.linkedin.com/in/skyler-aschenbeck/" class=""><i id="linkedin" class="fab fa-linkedin fa-3x"></i></a>
         </div>
         </div>
     </div>
-    <div id="devCards" class="card p-2 border-0 col-xl-3  col-lg-6 col-md-12 col-sm-12" style="width: 18rem;">
-        <img src="/img/Blossom.jpg" class="card-img-top rounded-circle" alt="Blossom's Professional Picture">
+    <div id="devCards" class="card mx-5 p-2 border-0" style="width: 18rem;">
+        <img src="/img/Blossom.jpg" class="card-img-top dev-img" alt="Blossom's Professional Picture">
         <div  class="card-body">
-            <h5 class="card-title text-center">Blossom Perez</h5>
+            <h5 class="card-title text-center dev-text">Blossom Perez</h5>
             <p class="card-text"></p>
             <div class="text-center">
-            <a href="https://github.com/blperez1" class="p-2"><i id="github" class="fab fa-github-square fa-2x"></i></a>
-            <a href="https://www.linkedin.com/in/blossom-perez-2781b7184/" class="p-2"><i id="linkedin" class="fab fa-linkedin fa-2x"></i></a>
+            <a href="https://github.com/blperez1" class=""><i id="github" class="fab fa-github-square fa-3x"></i></a>
+            <a href="https://www.linkedin.com/in/blossom-perez-2781b7184/" class=""><i id="linkedin" class="fab fa-linkedin fa-3x"></i></a>
         </div>
         </div>
     </div>
-    <div id="devCards" class="card p-2 border-0 col-xl-3 col-lg-6 col-md-12 col-sm-12" style="width: 18rem;">
-        <img src="/img/Austin.jpg" class="card-img-top rounded-circle" alt="Austin's Professional Picture">
+    <div id="devCards" class="card mx-5 p-2 border-0" style="width: 18rem;">
+        <img src="/img/Austin.jpg" class="card-img-top dev-img" alt="Austin's Professional Picture">
         <div  class="card-body">
-            <h5 class="card-title text-center">Austin Varnon</h5>
+            <h5 class="card-title text-center dev-text">Austin Varnon</h5>
             <p class="card-text"></p>
             <div class="text-center">
-            <a href="https://github.com/asvarnon" class="p-2"><i id="github" class="fab fa-github-square fa-2x"></i></a>
-            <a href="https://www.linkedin.com/in/austinvarnon/" class="p-2"><i id="linkedin" class="fab fa-linkedin fa-2x"></i></a>
+            <a href="https://github.com/asvarnon" class=""><i id="github" class="fab fa-github-square fa-3x"></i></a>
+            <a href="https://www.linkedin.com/in/austinvarnon/" class=""><i id="linkedin" class="fab fa-linkedin fa-3x"></i></a>
         </div>
         </div>
     </div>
-    <div id="devCards" class="card p-2 border-0 col-xl-3 col-lg-6 col-md-12 col-sm-12" style="width: 18rem;">
-        <img src="/img/Armando.jpg" class="card-img-top rounded-circle" alt="Armando's Professional Picture">
+    <div id="devCards" class="card mx-5 p-2 border-0" style="width: 18rem;">
+        <img src="/img/Armando.jpg" class="card-img-top dev-img" alt="Armando's Professional Picture">
         <div  class="card-body">
-            <h5 class="card-title text-center">Armando Salazar</h5>
+            <h5 class="card-title text-center dev-text">Armando Salazar</h5>
             <p class="card-text"></p>
             <div class="text-center">
-            <a id="github" href="https://github.com/armandojsalazar" class="p-2"><i class="fab fa-github-square fa-2x"></i></a>
-            <a id="linkedin" href="https://www.linkedin.com/in/armando-salazar89/" class="p-2"><i class="fab fa-linkedin fa-2x"></i></a>
+            <a id="github" href="https://github.com/armandojsalazar" ><i class="fab fa-github-square fa-3x"></i></a>
+            <a id="linkedin" href="https://www.linkedin.com/in/armando-salazar89/"><i class="fab fa-linkedin fa-3x"></i></a>
         </div>
         </div>
     </div>
     </div>
 </main>
-
-
-
-
-
 <div th:replace="partials/scripts :: scripts"></div>
+<script src="/js/navigation.js"></script>
 </body>
 </html>

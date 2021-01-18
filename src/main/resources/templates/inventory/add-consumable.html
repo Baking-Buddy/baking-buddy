@@ -5,8 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="partials/navbar :: navbar"></div>
-<aside th:replace="partials/sidebar :: aside"></aside>
+<div th:replace="patials/ navbar :: side-menu"></div>
+<nav th:replace="partials/navbar :: dash-nav"></nav>
 <main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main consumables">
 <h1>Add Consumable</h1>
 <form th:action="@{/inventory/consumables/add}" th:method="post" th:object="${consumable}">
@@ -41,5 +41,7 @@
 </form>
 </main>
 <div th:replace="partials/scripts :: scripts"></div>
+<script src="/js/navigation.js"></script>
+
 </body>
 </html>

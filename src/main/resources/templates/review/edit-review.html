@@ -5,36 +5,47 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="partials/navbar:: side-menu"></div>
-<div th:replace="partials/navbar :: main-nav"></div>
-<h1>Update Review</h1>
-<br>
-<main class="container">
-    <form th:action="@{|/review/${user.id}/edit/${reviewToEdit.id}|}" th:method="post" th:object="${reviewToEdit}">
-        <label for="reviewTitle">Title:</label>
-        <input type="text" th:field="*{title}" id="reviewTitle" name="title">
-        <br>
-        <label for="reviewRating">Rating:</label>
-        <input type="range" list="tickmarks" min="1" max="5" th:field="*{rating}" id="reviewRating"  name="rating">
-        <datalist id="tickmarks">
-            <option value="1"></option>
-            <option value="2"></option>
-            <option value="3"></option>
-            <option value="4"></option>
-            <option value="5"></option>
-        </datalist>
-        <br>
-        <label for="reviewBody"></label>
-        <textarea rows="10" cols="60" th:field="*{body}" id="reviewBody" name="body"></textarea>
-        <br>
-        <button>Update Review</button>
-    </form>
-    <form th:action="@{/}">
-        <button>Cancel</button>
-    </form>
+<div th:replace="partials/navbar :: navbar"></div>
+<aside th:replace="partials/sidebar :: aside"></aside>
+
+<main class="background-theme col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
+    <section class="edit_form_section">
+        <h1 class="title">Update Review</h1>
+        <div class="container mt-6 p-6">
+            <div class="edit-form row mt-5">
+                <form class="col-lg-12" th:action="@{|/review/${user.id}/edit/${reviewToEdit.id}|}" th:method="post" th:object="${reviewToEdit}">
+                    <div class="form-field">
+                        <label class="label" for="reviewTitle">Title:</label>
+                        <input class="input-text" type="text" th:field="*{title}" id="reviewTitle" name="title">
+                    </div>
+                    <div class="form-field">
+                        <label class="label" for="reviewRating">Rating:</label>
+                        <input class="input-text" type="range" list="tickmarks" min="1" max="5" th:field="*{rating}" id="reviewRating"  name="rating">
+                        <datalist id="tickmarks">
+                            <option value="1"></option>
+                            <option value="2"></option>
+                            <option value="3"></option>
+                            <option value="4"></option>
+                            <option value="5"></option>
+                        </datalist>
+                    </div>
+                    <div class="form-field">
+                        <label class="label" for="reviewBody">Review</label>
+                        <textarea class="input-text" rows="10" cols="60" th:field="*{body}" id="reviewBody" name="body"></textarea>
+                    </div>
+                    <div class="form-field text-center">
+                        <button class="submit-btns" type="submit">Update Review</button>
+                    </div>
+                    <div class="form-field text-center">
+                        <form th:action="@{/}">
+                            <button class="submit-btns" type="submit">Cancel</button>
+                        </form>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
 </main>
 <div th:replace="partials/scripts :: scripts"></div>
-<script src="/js/navigation.js"></script>
-
 </body>
 </html>

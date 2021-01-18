@@ -5,7 +5,7 @@
     <title>Orders</title>
 </head>
 <!--<div th:replace="partials/navbar :: side-menu"></div>-->
-<body class="background-theme">
+<body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 <aside th:replace="partials/sidebar :: aside"></aside>
 <main class="background-theme col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
@@ -13,18 +13,7 @@
         <h1 class="title">Edit Order</h1>
         <div class="container mt-6 p-6 ">
             <div class="edit-form row mt-5">
-                <div class="form-field col-lg-5">
-                    <div class="form-field">
-                        <p class="current_info">Current Description : <span th:text="${order.description}"></span></p>
-                    </div>
-                    <div class="form-field">
-                        <p class="current_info">Current Request by date : <span th:value="${date}"></span></p>
-                    </div>
-                    <div class="form-field">
-                        <p class="current_info">Current Price: <span th:if="${order.price} == 0" th:text="PENDING"></span><span th:if="${order.price} !=0" th:text="'$'+${order.price}"></span></p>
-                    </div>
-                </div>
-                <form class="col-lg-5" th:action="@{/orders/{id}/edit(id=${order.id})}" th:method="post" th:object="${order}">
+                <form class="col-lg-12" th:action="@{/orders/{id}/edit(id=${order.id})}" th:method="post" th:object="${order}">
                     <div class="form-field">
                         <label for="description" class="label">New Description:</label>
                         <textarea class="input-text" type="textarea" name="description" id="description" th:field="*{description}"></textarea>
@@ -35,9 +24,9 @@
                     </div>
                     <div class="form-field" th:if="${isBaker}">
                         <label for="price" class="label">Set Price:$</label>
-                        <input class="input-text" type="number" name="price" id="price" th:field="*{price}">
+                        <input class="input-text" type="number" step=".01" name="price" id="price" th:field="*{price}">
                     </div>
-                    <div class="form-field">
+                    <div class="form-field text-center">
                         <button class="submit-btns" type="submit" id="picker">Order Image</button>
                         <input class="input-text" type="hidden" id="fileupload" th:value="${order.orderImage}" name="uploadedImage">
                     </div>
@@ -45,7 +34,9 @@
                         <input type="hidden" name="price" id="price" th:field="*{price}">
                         <input type="hidden" id="fileupload" th:value="${order.orderImage}" name="uploadedImage">
                     </div>
-                    <button class="submit-btns form-field" id="submit" type="submit">Save</button>
+                    <div class="form-field text-center">
+                        <button class="submit-btns form-field" id="submit" type="submit">Save</button>
+                    </div>
                 </form>
             </div>
         </div>

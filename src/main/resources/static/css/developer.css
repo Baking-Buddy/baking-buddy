@@ -1,16 +1,24 @@
-#devBG {
-    background-image: url("../img/BakingBG.jpg");
+.devbg {
+  background-image: url("../img/aboutbg.jpg");
+    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
 }
 
 #devCards {
     background-color: initial;
 }
 
-.text-center{
-    color: floralwhite;
+.dev-header {
+    margin-top: 10rem;
+}
+
+.dev-text {
+    font-size: 25px;
+}
+
+.dev-header, .dev-text {
+    color: #2a2a28;
 }
 
 #github {
@@ -25,4 +33,8 @@
     display: flex;
     align-content: center;
     margin-top: 50%;
+}
+
+.dev-img {
+    border-radius: 9px;
 }

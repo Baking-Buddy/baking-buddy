@@ -15,13 +15,13 @@ import java.util.List;
 
 @Service("dateService")
 public class DateService {
-
+    //String to Date Object
     public Date dateToStore(String date) throws ParseException {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date convertedDate = df.parse(date);
         return convertedDate;
     }
-
+    //Date Object to String
     public String displayDate(Date date){
         DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
         String dateString = df.format(date);

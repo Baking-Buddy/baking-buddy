@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +55,7 @@ public class ReviewController {
     @GetMapping("/review/{id}/create")
     public String showCreateReview(Model model, @PathVariable long id){
         if (userService.isLoggedIn()){
-            model.addAttribute("review", new Review());
+//            model.addAttribute("review", new Review());
             model.addAttribute("bakerID", id);
             User sessionUser = userService.sessionUser();
             model.addAttribute("user", sessionUser);
@@ -67,11 +68,17 @@ public class ReviewController {
     }
 
     @PostMapping("/review/{id}/create")
-    public String createReview(@ModelAttribute Review reviewToBeSaved,
-                               @PathVariable long id){
+    public String createReview(@PathVariable long id,
+                               @RequestParam(name = "title") String title,
+                               @RequestParam(name = "rating") Integer rating,
+                               @RequestParam(name = "body") String body){
+        Review reviewToBeSaved = new Review();
         User sessionUser = userService.sessionUser();
         reviewToBeSaved.setOwner(sessionUser);
         reviewToBeSaved.setBaker(userDao.getOne(id));
+        reviewToBeSaved.setTitle(title);
+        reviewToBeSaved.setRating(rating);
+        reviewToBeSaved.setBody(body);
         reviewToBeSaved.setDate(new Date());
         reviewDao.save(reviewToBeSaved);
         return "redirect:/reviews/{id}";

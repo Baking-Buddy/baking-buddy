@@ -104,10 +104,10 @@
                             <img th:src="${profileImage}" alt="avatar" class="avatar">
                         </a>
                     </li>
-                    <li class="nav-item d-none d-sm-none d-md-block" sec:authorize="!isAuthenticated()">
+                    <li class="nav-item d-none d-sm-none d-md-block dark-text" sec:authorize="!isAuthenticated()">
                         <a class="nav-link" th:href="@{/login}">Login</a>
                     </li>
-                    <li class="nav-item d-none d-sm-none d-md-block" sec:authorize="!isAuthenticated()">
+                    <li class="nav-item d-none d-sm-none d-md-block dark-text" sec:authorize="!isAuthenticated()">
                         <a class="nav-link" th:href="@{/register}">Join</a>
                     </li>
                     <li class="nav-item d-md-none d-lg-none" sec:authorize="!isAuthenticated()">
@@ -144,10 +144,10 @@
                         </a>
                     </li>
                     <li class="nav-item d-none d-sm-none d-md-block" sec:authorize="!isAuthenticated()">
-                        <a class="nav-link" th:href="@{/login}">Login</a>
+<!--                        <a class="nav-link" th:href="@{/login}">Login</a>-->
                     </li>
                     <li class="nav-item d-none d-sm-none d-md-block" sec:authorize="!isAuthenticated()">
-                        <a class="nav-link" th:href="@{/register}">Join</a>
+<!--                        <a class="nav-link" th:href="@{/register}">Join</a>-->
                     </li>
                     <li class="nav-item d-md-none d-lg-none" sec:authorize="!isAuthenticated()">
                         <button class="toggle-button pt-1">

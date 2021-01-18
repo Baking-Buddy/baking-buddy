@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<div th:replace="partials/navbar :: navbar"></div>
-<aside th:replace="partials/sidebar :: aside"></aside>
+<body>
+<div th:replace="partials/navbar :: side-menu"></div>
+<nav th:replace="partials/navbar :: dash-nav"></nav>
 <body>
 <main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main tools">
     <div>
@@ -21,5 +22,7 @@
     </form>
 </main>
 <div th:replace="partials/scripts :: scripts"></div>
+<script src="/js/navigation.js"></script>
+
 </body>
 </html>

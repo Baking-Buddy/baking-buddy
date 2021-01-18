@@ -4,61 +4,162 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-    <div th:fragment="navbar">
-        <div class="slide-nav" sec:authorize="isAuthenticated()">
-            <div>
-                <a href="#" class="close p-3" type="button">X</a>
-            </div>
-            <ul class="nav-items"  aria-labelledby="navbarDropdown">
-                <li>
-                    <!--                <img th:src="${profileImage}"  class="profile-picture" alt="">-->
-                </li>
-                <li><a class="nav-item" th:href="@{/dashboard}">Dashboard</a></li>
-                <li><a class="nav-item" th:href="@{/orders}">Orders</a></li>
-                <li th:if="${isBaker}"><a class="dropdown-item" th:href="@{/inventory/consumables}">Pantry</a></li>
-                <li th:if="${isBaker}"><a class="dropdown-item" th:href="@{/inventory/tools}">Tools</a></li>
-                <li><a class="nav-item" th:href="@{/inbox}">Inbox</a></li>
-                <!--                <li><a class="nav-item" th:href="@{/user/{id}/edit(id=${user.id})}">Settings</a></li>-->
-                <li>
-                    <form th:action="@{/logout}" th:method="post">
-                        <button class="dropdown-item" type="submit">Logout</button>
-                    </form>
-                </li>
-            </ul>
+<body class="login-bg">
+<!--side nav-->
+    <div class="slide-nav" sec:authorize="isAuthenticated()" th:fragment="side-menu">
+        <div>
+            <a href="#" class="close p-3" type="button">X</a>
         </div>
-        <nav id="main-nav" class="navbar navbar-expand-lg navbar-expand navbar-dark fixed-top" th:fragment="navbar">
-            <div class="container-fluid px-4">
-                <a th:href="@{/}" class="navbar-brand">
-                    <img src="https://cdn.filestackcontent.com/z2yTGxRyyPn3GUz3E7wJ" alt="baking buddy" class="m-0">
-                </a>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav home mb-2 mb-lg-0">
-                        <li class="nav-item pr-5">
-                            <form class="form-inline pt-sm-3 pt-md-2" th:action="@{/search-results}" th:method="get">
-                                <input name="query" type="text" class="form-control" placeholder="Find a Baker" aria-label="find a baker" aria-describedby="button-addon2">
-                                <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="button-addon2"><i class="fas fa-search"></i></button>
-                            </form>
-                        </li>
-                        <li class="nav-item" sec:authorize="isAuthenticated()">
-                            <a href="#"  class="nav-link toggle-button pt-sm-4 pt-md-3">
-                                <i class="fas fa-bars"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item" sec:authorize="!isAuthenticated()">
-                            <a class="nav-link pt-sm-4 pt-md-3" th:href="@{/login}">Login</a>
-                        </li>
-                        <li class="nav-item" sec:authorize="!isAuthenticated()">
-                            <a class="nav-link pt-sm-4 pt-md-3" th:href="@{/register}">Join</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link pt-sm-4 pt-md-3" th:href="@{/developers}">About Us</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <ul class="nav-items"  aria-labelledby="navbarDropdown">
+            <li>
+                <!--                <img th:src="${profileImage}"  class="profile-picture" alt="">-->
+            </li>
+            <li><a class="nav-item h4" th:href="@{/dashboard}">Dashboard</a></li>
+            <li><a class="nav-item h4" th:href="@{/orders}">Orders</a></li>
+            <li th:if="${isBaker}">
+                <a class="nav-item h4" th:href="@{/inventory/consumables}">Pantry</a>
+            </li>
+            <li th:if="${isBaker}">
+                <a class="nav-item h4" th:href="@{/inventory/tools}">Tools</a>
+            </li>
+            <li>
+                <a class="nav-item h4" th:href="@{/inbox}">Inbox</a>
+            </li>
+            <!--                <li><a class="nav-item h4" th:href="@{/user/{id}/edit(id=${user.id})}">Settings</a></li>-->
+            <li class="nav-item">
+                <form th:action="@{/logout}" th:method="post">
+                    <button class="nav-link h4" type="submit">Logout</button>
+                </form>
+            </li>
+        </ul>
     </div>
+
+<!--mobile side nav-->
+    <div class="slide-nav d-md-none d-lg-none" sec:authorize="!isAuthenticated()" th:fragment="mobile-side-menu">
+        <div>
+            <a href="#" class="close p-3" type="button">X</a>
+        </div>
+        <ul class="nav-items"  aria-labelledby="navbarDropdown">
+            <li class="nav-item" sec:authorize="!isAuthenticated()">
+                <a th:href="@{/login}" class="nav-link h4">Login</a>
+            </li>
+            <li class="nav-item" sec:authorize="!isAuthenticated()">
+                <a class="nav-link h4" th:href="@{/register}">Join</a>
+            </li>
+        </ul>
+    </div>
+
+
+    <!--        main nav-->
+    <nav id="main-nav" class="navbar navbar-expand-lg navbar-expand navbar-dark fixed-top" th:fragment="main-nav">
+        <div class="container-fluid px-4">
+            <a th:href="@{/}" class="navbar-brand">
+                <img src="https://cdn.filestackcontent.com/z2yTGxRyyPn3GUz3E7wJ" alt="baking buddy" class="m-0">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav align-items-center home p-2">
+                    <li class="nav-item pr-5">
+                        <form class="form-inline" th:action="@{/search-results}" th:method="get">
+                            <input name="query" type="text" class="form-control" placeholder="Find a Baker" aria-label="find a baker" aria-describedby="button-addon2">
+                        </form>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a href="#"  class="nav-link toggle-button w-100 m-0">
+                            <img th:src="${profileImage}" alt="avatar" class="avatar">
+                        </a>
+                    </li>
+                    <li class="nav-item d-none d-sm-none d-md-block" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link dark-text" th:href="@{/login}">Login</a>
+                    </li>
+                    <li class="nav-item d-none d-sm-none d-md-block" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link dark-text" th:href="@{/register}">Join</a>
+                    </li>
+                    <li class="nav-item d-md-none d-lg-none" sec:authorize="!isAuthenticated()">
+                        <button class="toggle-button pt-1">
+                            <span class="toggle-button__bar"></span>
+                            <span class="toggle-button__bar"></span>
+                            <span class="toggle-button__bar"></span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!--        landing page nav-->
+    <nav id="nav" class="navbar navbar-expand-lg navbar-expand navbar-dark fixed-top" th:fragment="landing-nav">
+        <div class="container-fluid px-4">
+            <a th:href="@{/}" class="navbar-brand py-0">
+                <img src="https://cdn.filestackcontent.com/z2yTGxRyyPn3GUz3E7wJ" alt="baking buddy" class="m-0">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav align-items-center home p-2">
+                    <li class="nav-item pr-5">
+                        <form class="form-inline" th:action="@{/search-results}" th:method="get">
+                            <input name="query" type="text" class="form-control" placeholder="Find a Baker" aria-label="find a baker" aria-describedby="button-addon2">
+                        </form>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a href="#"  class="nav-link toggle-button w-100 m-0">
+                            <img th:src="${profileImage}" alt="avatar" class="avatar">
+                        </a>
+                    </li>
+                    <li class="nav-item d-none d-sm-none d-md-block" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link" th:href="@{/login}">Login</a>
+                    </li>
+                    <li class="nav-item d-none d-sm-none d-md-block" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link" th:href="@{/register}">Join</a>
+                    </li>
+                    <li class="nav-item d-md-none d-lg-none" sec:authorize="!isAuthenticated()">
+                        <button class="toggle-button pt-1">
+                            <span class="toggle-button__bar"></span>
+                            <span class="toggle-button__bar"></span>
+                            <span class="toggle-button__bar"></span>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pt-sm-4 pt-md-3" th:href="@{/developers}">About Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!--        dashboard nav-->
+    <nav id="dash-nav" class="navbar navbar-expand-lg navbar-expand navbar-dark fixed-top" th:fragment="dash-nav">
+        <div class="container-fluid px-4">
+            <a th:href="@{/}" class="navbar-brand">
+                <img src="https://cdn.filestackcontent.com/z2yTGxRyyPn3GUz3E7wJ" alt="baking buddy" class="m-0">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav align-items-center home p-2">
+                    <li class="nav-item pr-5">
+                        <form class="form-inline" th:action="@{/search-results}" th:method="get">
+                            <input name="query" type="text" class="form-control" placeholder="Find a Baker" aria-label="find a baker" aria-describedby="button-addon2">
+                        </form>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a href="#"  class="nav-link toggle-button w-100 m-0">
+                            <img th:src="${profileImage}" alt="avatar" class="avatar">
+                        </a>
+                    </li>
+                    <li class="nav-item d-none d-sm-none d-md-block" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link" th:href="@{/login}">Login</a>
+                    </li>
+                    <li class="nav-item d-none d-sm-none d-md-block" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link" th:href="@{/register}">Join</a>
+                    </li>
+                    <li class="nav-item d-md-none d-lg-none" sec:authorize="!isAuthenticated()">
+                        <button class="toggle-button pt-1">
+                            <span class="toggle-button__bar"></span>
+                            <span class="toggle-button__bar"></span>
+                            <span class="toggle-button__bar"></span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div th:replace="partials/scripts :: scripts"></div>
 </body>
 </html>

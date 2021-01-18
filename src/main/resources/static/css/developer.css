@@ -1,23 +1,24 @@
-#htmlBG {
-    background: url("../img/BakingBG.jpg") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
+.devbg {
+  background-image: url("../img/aboutbg.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
     background-size: cover;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: scroll
-}
-#devBG{
-    background-color: initial;
 }
 
 #devCards {
     background-color: initial;
 }
 
-.text-center{
-    color: floralwhite;
+.dev-header {
+    margin-top: 10rem;
+}
+
+.dev-text {
+    font-size: 25px;
+}
+
+.dev-header, .dev-text {
+    color: #2a2a28;
 }
 
 #github {
@@ -34,4 +35,6 @@
     margin-top: 50%;
 }
 
-
+.dev-img {
+    border-radius: 9px;
+}

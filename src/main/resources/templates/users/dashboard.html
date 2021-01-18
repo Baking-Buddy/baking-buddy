@@ -5,90 +5,92 @@
 </head>
 
 <body>
-    <div th:replace="partials/navbar :: navbar"></div>
+<div th:replace="partials/navbar :: side-menu"></div>
+<nav th:replace="partials/navbar :: dash-nav"></nav>
 
 
 
-    <aside th:replace="partials/sidebar :: aside"></aside>
+<aside th:replace="partials/sidebar :: aside"></aside>
 <!--        main content-->
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
-<!--            table-->
-            <h3 class="py-3">Current Orders</h3>
-            <div class="table-responsive">
-                <table class="table table-hover table-striped">
-                    <thead>
-                        <th scope="col">Expected Date</th>
-                        <th th:if="${user.isBaker()}" scope="col">Customer Name</th>
-                        <th th:if="${!user.isBaker()}" scope="col">Baker Name</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                    </thead>
-                    <tbody>
-<!--                    CUSTOMER-->
-                    <tr th:each="order : ${pendingOrders}" th:if="${#strings.toString(order.status) == 'PENDING' && order.owner == user && !user.isBaker()}">
-                        <td th:text="${order.date}"></td>
-                        <td><span th:text="${order.baker.firstName}"></span><span th:text="${order.baker.lastName}"></span></td>
-                        <td th:text="${order.status}"></td>
-                        <td><a th:href="@{/orders/{id}(id=${order.id})}" class="btn btn-primary">More Details</a></td>
-                    </tr>
-<!--                        BAKER-->
-                    <tr th:each="order : ${pendingOrders}" th:if="${#strings.toString(order.status) == 'PENDING' && order.baker == user && user.isBaker()}">
-                        <td th:text="${order.date}"></td>
-                        <td><span th:text="${order.owner.firstName}"></span><span th:text="${order.owner.lastName}"></span></td>
-                        <td th:text="${order.status}"></td>
-                        <td><a th:href="@{/orders/{id}(id=${order.id})}" class="btn btn-primary">More Details</a></td>
-                    </tr>
-                </table>
-            </div>
-            <!--            -->
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
+    <!--            table-->
+    <h3 class="py-3">Current Orders</h3>
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <thead>
+            <th scope="col">Expected Date</th>
+            <th th:if="${user.isBaker()}" scope="col">Customer Name</th>
+            <th th:if="${!user.isBaker()}" scope="col">Baker Name</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+            </thead>
+            <tbody>
+            <!--                    CUSTOMER-->
+            <tr th:each="order : ${pendingOrders}" th:if="${#strings.toString(order.status) == 'PENDING' && order.owner == user && !user.isBaker()}">
+                <td th:text="${order.date}"></td>
+                <td><span th:text="${order.baker.firstName}"></span><span th:text="${order.baker.lastName}"></span></td>
+                <td th:text="${order.status}"></td>
+                <td><a th:href="@{/orders/{id}(id=${order.id})}" class="btn btn-primary">More Details</a></td>
+            </tr>
+            <!--                        BAKER-->
+            <tr th:each="order : ${pendingOrders}" th:if="${#strings.toString(order.status) == 'PENDING' && order.baker == user && user.isBaker()}">
+                <td th:text="${order.date}"></td>
+                <td><span th:text="${order.owner.firstName}"></span><span th:text="${order.owner.lastName}"></span></td>
+                <td th:text="${order.status}"></td>
+                <td><a th:href="@{/orders/{id}(id=${order.id})}" class="btn btn-primary">More Details</a></td>
+            </tr>
+        </table>
+    </div>
+    <!--            -->
 
-<!--            grid-->
-            <h3 class="py-3">Everything Else</h3>
+    <!--            grid-->
+    <h3 class="py-3">Everything Else</h3>
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Special title treatment</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Special title treatment</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Special title treatment</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Special title treatment</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-    </main>
-    
-    <div th:replace="partials/scripts :: scripts"></div>
+</main>
+
+<div th:replace="partials/scripts :: scripts"></div>
+<script src="/js/navigation.js"></script>
 </body>
 </html>

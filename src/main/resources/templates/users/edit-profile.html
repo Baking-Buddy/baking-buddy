@@ -2,93 +2,93 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="partials/bs-head :: head('Profile')"></head>
 <body>
-<!--    <div th:replace="partials/navbar :: side-menu"></div>-->
-    <nav th:replace="partials/navbar :: navbar"></nav>
-    <aside th:replace="partials/sidebar ::  aside"></aside>
-        <form th:action="@{/user/{id}/edit(id=${user.id})}" th:method="post" th:object="${user}">
+<div th:replace="partials/navbar :: side-menu"></div>
+<nav th:replace="partials/navbar :: dash-nav"></nav>
+<aside th:replace="partials/sidebar ::  aside"></aside>
+<form th:action="@{/user/{id}/edit(id=${user.id})}" th:method="post" th:object="${user}">
     <div role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
-            <div class="edit-content col-md-6 center">
-                    <div class="edit-contents">
-                                    <div class="mb-4">
-                                        <h3>Edit Account</h3>
-                                    </div>
-                                    <div class="form-group first">
-                                            <label for="firstName">First Name</label>
-                                            <input id="firstName" class="form-control" th:field="*{firstName}" name="firstname" th:errorClass="is-invalid">
-                                            <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="invalid-feedback"></div>
-
-                                    </div>
-
-                                    <div class="form-group first">
-                                        <label for="lastName">Last Name</label>
-                                        <input id="lastName" class="form-control" th:field="*{lastName}" name="lastname" th:errorClass="is-invalid" >
-                                        <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="invalid-feedback"></div>
-                                    </div>
-
-                                    <div class="form-group first">
-                                            <label for="city">City</label>
-                                            <input id="city" class="form-control" th:field="*{city}" name="city" th:errorClass="is-invalid">
-                                            <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="invalid-feedback"></div>
-                                        </div>
-
-                                        <div class="form-group first">
-                                            <label for="state">State</label>
-                                            <input id="state" class="form-control" th:field="*{state}" name="state" th:errorClass="is-invalid">
-                                            <div th:if="${#fields.hasErrors('state')}" th:errors="*{state}" class="invalid-feedback"></div>
-                                        </div>
-
-
-                                    <div class="form-group first mb-4">
-                                        <label for="email">Email</label>
-                                        <input id="email" class="form-control" th:field="*{email}" name="email" th:errorClass="is-invalid">
-                                        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
-
-                                    </div>
-                                    <button class="btn btn-pill btn-info py-1" id="submit" type="submit">Save Changes</button>
+        <div class="edit-content col-md-6 center">
+            <div class="edit-contents">
+                <div class="mb-4">
+                    <h3>Edit Account</h3>
+                </div>
+                <div class="form-group first">
+                    <label for="firstName">First Name</label>
+                    <input id="firstName" class="form-control" th:field="*{firstName}" name="firstname" th:errorClass="is-invalid">
+                    <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="invalid-feedback"></div>
 
                 </div>
+
+                <div class="form-group first">
+                    <label for="lastName">Last Name</label>
+                    <input id="lastName" class="form-control" th:field="*{lastName}" name="lastname" th:errorClass="is-invalid" >
+                    <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="invalid-feedback"></div>
+                </div>
+
+                <div class="form-group first">
+                    <label for="city">City</label>
+                    <input id="city" class="form-control" th:field="*{city}" name="city" th:errorClass="is-invalid">
+                    <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="invalid-feedback"></div>
+                </div>
+
+                <div class="form-group first">
+                    <label for="state">State</label>
+                    <input id="state" class="form-control" th:field="*{state}" name="state" th:errorClass="is-invalid">
+                    <div th:if="${#fields.hasErrors('state')}" th:errors="*{state}" class="invalid-feedback"></div>
+                </div>
+
+
+                <div class="form-group first mb-4">
+                    <label for="email">Email</label>
+                    <input id="email" class="form-control" th:field="*{email}" name="email" th:errorClass="is-invalid">
+                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
+
+                </div>
+                <button class="btn btn-pill btn-info py-1" id="submit" type="submit">Save Changes</button>
+
             </div>
+        </div>
 
 
-<!--                <div class="image-stack">-->
-<!--                    <div>-->
-<!--                        <img class="profileCheck" th:src="${profileImage.imageURL}" alt="profile image">-->
-<!--                    </div>-->
-<!--                    <div class="hide">-->
-<!--                        <img id="profileImage" class="profileCheck" src="" alt="">-->
-<!--                        <input type="hidden" id="fileupload" value="" name="uploadedImage">-->
-<!--                    </div>-->
-<!--                    <button class="btn btn-pill btn-info" type="button" id="picker">Profile Picture</button>-->
-<!--                </div>-->
+        <!--                <div class="image-stack">-->
+        <!--                    <div>-->
+        <!--                        <img class="profileCheck" th:src="${profileImage.imageURL}" alt="profile image">-->
+        <!--                    </div>-->
+        <!--                    <div class="hide">-->
+        <!--                        <img id="profileImage" class="profileCheck" src="" alt="">-->
+        <!--                        <input type="hidden" id="fileupload" value="" name="uploadedImage">-->
+        <!--                    </div>-->
+        <!--                    <button class="btn btn-pill btn-info" type="button" id="picker">Profile Picture</button>-->
+        <!--                </div>-->
 
-<!--                <div class="mb-3">-->
-<!--                    <label for="firstName" class="form-label">First Name</label>-->
-<!--                    <input type="text" class="form-control" id="firstName" th:field="*{firstName}" name="firstName">-->
-<!--                </div>-->
-<!--                <div class="mb-3">-->
-<!--                    <label for="lastName" class="form-label">Last Name</label>-->
-<!--                    <input type="text" class="form-control" id="lastName" th:field="*{lastName}" name="lastName">-->
-<!--                </div>-->
-<!--                <div class="mb-3">-->
-<!--                    <label for="city" class="form-label">City</label>-->
-<!--                    <input type="text" class="form-control" id="city" th:field="*{city}" name="city">-->
-<!--                </div>-->
-<!--                <div class="mb-3">-->
-<!--                    <label for="state" class="form-label">State</label>-->
-<!--                    <input type="text" class="form-control" id="state" th:field="*{state}" name="state">-->
-<!--                </div>-->
-<!--                <div class="mb-3">-->
-<!--                    <label for="email" class="form-label">Email</label>-->
-<!--                    <input type="email" class="form-control" id="email" th:field="*{email}" name="email">-->
-<!--                </div>-->
-<!--                <button type="submit" class="btn btn-primary">Submit</button>-->
+        <!--                <div class="mb-3">-->
+        <!--                    <label for="firstName" class="form-label">First Name</label>-->
+        <!--                    <input type="text" class="form-control" id="firstName" th:field="*{firstName}" name="firstName">-->
+        <!--                </div>-->
+        <!--                <div class="mb-3">-->
+        <!--                    <label for="lastName" class="form-label">Last Name</label>-->
+        <!--                    <input type="text" class="form-control" id="lastName" th:field="*{lastName}" name="lastName">-->
+        <!--                </div>-->
+        <!--                <div class="mb-3">-->
+        <!--                    <label for="city" class="form-label">City</label>-->
+        <!--                    <input type="text" class="form-control" id="city" th:field="*{city}" name="city">-->
+        <!--                </div>-->
+        <!--                <div class="mb-3">-->
+        <!--                    <label for="state" class="form-label">State</label>-->
+        <!--                    <input type="text" class="form-control" id="state" th:field="*{state}" name="state">-->
+        <!--                </div>-->
+        <!--                <div class="mb-3">-->
+        <!--                    <label for="email" class="form-label">Email</label>-->
+        <!--                    <input type="email" class="form-control" id="email" th:field="*{email}" name="email">-->
+        <!--                </div>-->
+        <!--                <button type="submit" class="btn btn-primary">Submit</button>-->
     </div>
-        </form>
+</form>
 
-    <div th:replace="partials/scripts :: scripts"></div>
+<div th:replace="partials/scripts :: scripts"></div>
 <!--    <script src="/keys.js"></script>-->
 <!--    <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>-->
 <!--    <script src="/js/main.js"></script>-->
-    <script src="/js/navigation.js"></script>
+<script src="/js/navigation.js"></script>
 </body>
 </html>

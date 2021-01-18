@@ -8,9 +8,11 @@
 <div th:replace="partials/navbar :: side-menu"></div>
 <nav th:replace="partials/navbar :: dash-nav"></nav>
 <aside th:replace="partials/sidebar :: aside"></aside>
-<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main  tools">
-        <h1>Tools</h1>
-    <button class="tool-btns inventory-btns" data-toggle="modal" data-target="#modal-add-tool">Add Tool</button>
+<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main tools background-theme">
+    <div class="text-center">
+        <h1 class="edit-form-title">Tools</h1>
+        <button class="submit-btns" data-toggle="modal" data-target="#modal-add-tool">Add Tool</button>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -19,7 +21,7 @@
 
 
 
-                        <div class="modal-content edit_form_section">
+                        <div class="modal-content edit_modal_section">
                             <div class="container">
                                 <div class="modal-header">
                                     <h1 class="title">New Tool</h1>
@@ -66,7 +68,7 @@
                 <div class="card-body">
                     <h4 th:text="${tool.name}" class="card-title"></h4>
                     <p th:text="${tool.description}" class="card-text"></p>
-                    <button type="button" class="tool-btns inventory-btns" data-toggle="modal" th:data-target="${'#modal'+tool.id}">UPDATE</button>
+                    <button type="button" class="submit-btns" data-toggle="modal" th:data-target="${'#modal'+tool.id}">UPDATE</button>
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
@@ -75,7 +77,7 @@
 
 
 
-                                        <div class="modal-content edit_form_section">
+                                        <div class="modal-content edit_modal_section">
                                             <div class="container">
                                                 <div class="modal-header">
                                                     <h1 th:text="${tool.name}" class="title"></h1>

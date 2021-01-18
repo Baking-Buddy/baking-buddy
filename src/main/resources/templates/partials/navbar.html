@@ -25,7 +25,9 @@
             <li>
                 <a class="nav-item h4" th:href="@{/inbox}">Inbox</a>
             </li>
-            <!--                <li><a class="nav-item h4" th:href="@{/user/{id}/edit(id=${user.id})}">Settings</a></li>-->
+            <li>
+                <a class="nav-item h4" th:href="@{/user/{id}/edit(id=${user.id})}">Settings</a>
+            </li>
             <li class="nav-item">
                 <form th:action="@{/logout}" th:method="post">
                     <button class="nav-link h4" type="submit">Logout</button>

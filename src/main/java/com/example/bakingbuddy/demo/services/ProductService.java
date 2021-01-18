@@ -25,11 +25,6 @@ public class ProductService {
         return orderDao.findAllByBaker(user);
     }
 
-//    public List<Order> showRoleOrders(Iterable id){
-//        User baker = order.getBaker();
-//        return orderDao.findAllById(id);
-//    }
-
     public List<Order> bakerOrdersProfile(Long bakerID){
         List<Order> approvedOrders = new ArrayList<>();
         List<Order> startingList = orderDao.findAllByBaker(userDao.getOne(bakerID));

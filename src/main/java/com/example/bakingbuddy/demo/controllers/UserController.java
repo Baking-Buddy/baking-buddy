@@ -186,7 +186,6 @@ public class UserController {
         return "home/index";
     }
 
-
     @GetMapping("/baker-profile/{id}")
     public String showBakerProfile(@PathVariable long id, Model model){
         User baker = usersDao.getOne(id);

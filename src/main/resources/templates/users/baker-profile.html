@@ -4,15 +4,15 @@
     <title>Title</title>
 </head>
 <body>
-    <div th:replace="partials/navbar:: side-menu"></div>
+<!--    <div th:replace="partials/navbar:: side-menu"></div>-->
     <div th:replace="partials/navbar :: mobile-side-menu"></div>
     <nav th:replace="partials/navbar :: main-nav"></nav>
-    <header th:replace="partials/banner :: banner(${user.username})"></header>
+<!--    <header th:replace="partials/banner :: banner(${baker.username})"></header>-->
 
-    <div>
-        <h1><span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></h1>
-        <h2><span th:text="${user.city}"></span>, <span th:text="${user.state}"></span></h2>
-        <input type="hidden" th:name="baker-id" th:value="${user.id}">
+    <main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
+        <h1><span th:text="${baker.firstName}"></span> <span th:text="${baker.lastName}"></span></h1>
+        <h2><span th:text="${baker.city}"></span>, <span th:text="${baker.state}"></span></h2>
+        <input type="hidden" th:name="baker-id" th:value="${baker.id}">
         <div sec:authorize="isAuthenticated()" th:if="${isAnonymous}">
             <div th:if="${sendMessage}" class="row justify-content-around">
                 <a th:href="@{|/orders/create/${baker.id}|}" sec:authorize="isAuthenticated()" class="btn btn-primary btn-message draw-border">Create Order</a>
@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </main>
     <div th:replace="partials/scripts :: scripts"></div>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

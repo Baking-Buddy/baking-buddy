@@ -5,10 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="partials/sidebar :: aside"></div>
-<nav th:replace="partials/navbar :: navbar"></nav>
+<div th:replace="partials/navbar :: side-menu"></div>
+<nav th:replace="partials/navbar :: dash-nav"></nav>
+<aside th:replace="partials/sidebar :: aside"></aside>
 <h1>Create Order</h1>
-<main class="container mt-5">
+<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
     <form th:action="@{|/orders/create/${bakerID}|}" th:method="post">
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">Expected Date</span>

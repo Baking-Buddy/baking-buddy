@@ -22,15 +22,43 @@
 }
 
 .consumables {
-    background-color: #F7D9C4;
+    background-image: url("../img/consumablesBG.jpeg");
 }
 
 .consumable-card {
-    box-shadow: 5px 5px darkorange;
+    background-color: #F2C6DE;
+    box-shadow: 5px 5px #2A2A28;
 }
 
-.consumable-card:hover {
-    box-shadow: none;
-    left: 5px;
-    top: 5px;
+/*.consumable-card:hover {*/
+/*    box-shadow: none;*/
+/*    left: 5px;*/
+/*    top: 5px;*/
+/*}*/
+
+.inventory-btns{
+    color: #fff;
+    width: 230px;
+    border: none;
+    border-radius: 25px;
+    padding: 10px;
+    -webkit-box-shadow: 0px 10px 41px -11px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 10px 41px -11px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 41px -11px rgba(0, 0, 0, 0.7);
+}
+
+.consumable-btns{
+    background: linear-gradient(45deg, #f4524d, #f4bf0d);
+}
+
+.consumable-btns:hover{
+    background: linear-gradient(45deg, #f4bf0d, #f4524d);
+}
+
+.tool-btns{
+    background: linear-gradient(45deg, #f4524d, #a9ddc6);
+}
+
+.tool-btns:hover{
+    background: linear-gradient(45deg, #a9ddc6, #f4524d);
 }

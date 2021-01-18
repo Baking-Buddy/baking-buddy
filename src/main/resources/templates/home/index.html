@@ -18,8 +18,8 @@
 
     <main class="container d-flex flex-wrap justify-content-evenly mt-5">
         <div class="card card-width card-shadow" th:each="user : ${users}" th:if="${user.isBaker()}">
+            <img class="card-img-top inbox-photo" th:src="${bakerProfileImages.get(user.id)}" alt="baker profile image">
             <div class="card-body text-center">
-<!--                <img th:src="${profileImage}" alt="baker profile image">-->
                 <a th:href="@{|/baker-profile/${user.id}|}" class="card-title h3" th:text="${user.username}"></a>
                 <p class="card-text dark-text text-uppercase">
                     <span th:text="${user.city}"></span>,

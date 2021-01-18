@@ -29,7 +29,7 @@
     </div>
     <a th:href="@{/}" class="btn btn-danger">Go Back</a>
     <div>
-        <a th:href="@{|/review/${user.id}/create|}" sec:authorize="isAuthenticated()" class="btn btn-primary">Post a Review</a>
+        <a th:href="@{|/review/${baker.id}/create|}" sec:authorize="isAuthenticated()" class="btn btn-primary">Post a Review</a>
     </div>
 </main>
 <div th:replace="partials/scripts :: scripts"></div>

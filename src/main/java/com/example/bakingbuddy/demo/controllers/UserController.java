@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -182,6 +183,8 @@ public class UserController {
             model.addAttribute("profileImage",userService.profileImage(sessionUser));
         }
         List<User> users = usersDao.findAll();
+        HashMap<Long, String> bakerProfileImages = productService.bakerProfileImages(users);
+        model.addAttribute("bakerProfileImages", bakerProfileImages);
         model.addAttribute("users", users);
         return "home/index";
     }

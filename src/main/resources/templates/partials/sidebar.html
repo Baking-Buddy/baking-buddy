@@ -1,12 +1,9 @@
-<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<!--    container-->
-
 <aside class="container" th:fragment="aside">
     <div class="row">
         <!--            sidebar-->
@@ -22,7 +19,6 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/orders}">Orders</a>
                     </li>
-                    <li th:if="${isBaker}" class="nav-item">
                     <li th:if="${isBaker}" class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Inventory
@@ -32,7 +28,33 @@
                             <li><a class="dropdown-item" th:href="@{/inventory/tools}">My Baking Tools</a></li>
                         </ul>
                     </li>
+
+                    <li th:if="${isBaker}" class="nav-item">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <a href="#" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        Inventory
+                                    </a>
+                                </h2>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                            <a class="nav-link" th:href="@{/inventory/consumables}">Pantry</a>
+                                            <a class="nav-link" th:href="@{/inventory/tools}">Baking Tools</a>
+                                    </div>
+                                </div>
+                            </div>
                     </li>
+
+
+
+
+
+
+
+
+
+
+
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/user/{id}/edit(id=${user.id})}">Settings</a>
                     </li>

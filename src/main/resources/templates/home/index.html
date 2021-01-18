@@ -16,7 +16,7 @@
         </div>
     </section>
 
-    <main class="container d-flex flex-wrap justify-content-evenly mt-5">
+    <main class="container d-flex flex-wrap justify-content-evenly mt-5 mb-5">
         <div class="card card-width card-shadow" th:each="user : ${users}" th:if="${user.isBaker()}">
             <div class="card-body text-center">
 <!--                <img th:src="${profileImage}" alt="baker profile image">-->
@@ -29,24 +29,22 @@
             </div>
         </div>
     </main>
-    <footer class="footer mt-auto py-3 bg-light">
-        <div class="container">
-            <div>
-                <img src="https://cdn.filestackcontent.com/z2yTGxRyyPn3GUz3E7wJ" alt="baking buddy" class="m-0">
-                <h2>Baking Buddy</h2>
+    <footer class="footer mt-auto py-3 footer-bg">
+        <div class="container w-100">
+            <div class="footer-logo-box d-flex align-items-center">
+                <img class="footer-logo" src="https://cdn.filestackcontent.com/z2yTGxRyyPn3GUz3E7wJ" alt="baking buddy">
+                <span class="heading-primary-sub">Baking Buddy</span>
             </div>
-            <div>
-                <ul>
-                    <li><a href="">Skyler Aschenbeck</a></li>
-                    <li><a href="">Blossom Perez</a></li>
-                    <li><a href="">Austin Varnon</a></li>
-                    <li><a href="">Armando Salazar</a></li>
+            <div class="footer-navigation d-flex w-70">
+                <ul class="footer-list d-flex list-text">
+                    <li><a href="https://www.linkedin.com/in/skyler-aschenbeck/">Skyler Aschenbeck</a></li>
+                    <li><a href="https://www.linkedin.com/in/blossom-perez-2781b7184/">Blossom Perez</a></li>
+                    <li><a href="https://www.linkedin.com/in/austinvarnon/">Austin Varnon</a></li>
+                    <li><a href="https://www.linkedin.com/in/armando-salazar89/">Armando Salazar</a></li>
                 </ul>
-                <p><a th:href="@{/developers}"></a></p>
-            </div>
-            <div>
-            </div>
+
         </div>
+            <p class="about-navigation list-text"><a th:href="@{/developers}" >About Us</a></p>
     </footer>
     <div th:replace="partials/scripts :: scripts"></div>
     <script src="/js/navigation.js"></script>

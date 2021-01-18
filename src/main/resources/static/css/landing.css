@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lily+Script+One&display=swap');
+
 :root {
     --navigation: rgba(198,222,241, 0.85);
     --mainbg: #f5f5f5;
@@ -60,9 +62,6 @@ a {
     border-radius: 50%;
 }
 
-#dash-nav {
-
-}
 
 .welcome {
     padding: 50px 80px;
@@ -76,6 +75,7 @@ a {
     font-size: 40px;
     color: #505050;
     font-weight: 700;
+    font-family: 'Lily Script One', cursive;
 }
 
 .welcome p {
@@ -259,3 +259,55 @@ a {
     background-repeat: no-repeat;
     background-size: cover;
 }
+.footer-bg {
+    background-color: var(--navigation);
+}
+
+.list-text {
+    font-weight: 700;
+    color: var(--text);
+    text-transform: uppercase;
+}
+.footer-logo-box {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.footer-logo {
+    height: 6rem;
+    margin-left: auto;
+    width: auto;
+}
+
+.heading-primary-sub {
+    display: block;
+    font-size: 3rem;
+    margin-right: auto;
+    padding-left: 10px;
+    font-family: 'Lily Script One', cursive;
+    padding-top: 25px;
+}
+
+.footer-navigation {
+    border-top: 1px solid var(--text);
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    display: inline-block;
+}
+
+.footer-navigation li {
+   padding-left: 20px;
+    padding-right: 20px;
+}
+
+.footer-list {
+    list-style: none;
+    margin: auto;
+}
+
+.about-navigation {
+    text-align: center;
+
+}
+
+

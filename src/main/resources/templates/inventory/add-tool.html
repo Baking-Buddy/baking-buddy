@@ -7,18 +7,22 @@
 <body>
 <div th:replace="partials/navbar :: side-menu"></div>
 <nav th:replace="partials/navbar :: dash-nav"></nav>
+<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main tools">
 <h1>Add Tool</h1>
     <form th:action="@{/inventory/tools/add}" th:method="post" th:object="${tool}">
-        Tool Name:
-        <input name="name" id="name" th:field="*{name}">
-        <br>
-        Description:
-        <input name="description" id="description" th:field="*{description}">
-        <br>
-        <button class="button" type="button" id="picker">Pick file</button>
+        <div class="form-group">
+            <label for="name">Tool Name</label>
+            <input name="name" id="name" th:field="*{name}">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" name="description" id="description" th:field="*{description}"></textarea>
+        </div>
+        <button class="button btn btn-message draw-border btn-warning" type="button" id="picker">Pick file</button>
         <input type="hidden" id="fileupload" value="" name="uploadedImage">
-        <button type="submit">Submit</button>
+        <button class="btn btn-message btn-success draw-border" type="submit">Submit</button>
     </form>
+</main>
     <div th:replace="partials/scripts :: scripts"></div>
     <script src="/keys.js"></script>
     <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>

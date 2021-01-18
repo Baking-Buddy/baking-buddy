@@ -1,6 +1,7 @@
 package com.example.bakingbuddy.demo.controllers;
 
 import com.example.bakingbuddy.demo.Model.Image;
+import com.example.bakingbuddy.demo.Model.Order;
 import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Repos.ReviewRepository;
 import com.example.bakingbuddy.demo.Repos.ImageRepository;
@@ -8,6 +9,7 @@ import com.example.bakingbuddy.demo.Repos.OrderRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
 import com.example.bakingbuddy.demo.services.EmailService;
 import com.example.bakingbuddy.demo.services.MailgunService;
+import com.example.bakingbuddy.demo.services.ProductService;
 import com.example.bakingbuddy.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,12 +38,13 @@ public class UserController {
     private final UserService userService;
     private ReviewRepository reviewDao;
     private MailgunService mailgunService;
+    private ProductService productService;
 
     @Value("${filestackApiKey}")
     private String fileStackApiKey;
 
 
-    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService, ImageRepository imageDao, OrderRepository orderDao, ReviewRepository reviewDao, UserService userService, MailgunService mailgunService) {
+    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService, ImageRepository imageDao, OrderRepository orderDao, ReviewRepository reviewDao, UserService userService, MailgunService mailgunService, ProductService productService) {
         this.usersDao = usersDao;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
@@ -50,6 +53,7 @@ public class UserController {
         this.imageDao = imageDao;
         this.orderDao = orderDao;
         this.mailgunService = mailgunService;
+        this.productService = productService;
     }
 
 
@@ -185,7 +189,7 @@ public class UserController {
 
     @GetMapping("/baker-profile/{id}")
     public String showBakerProfile(@PathVariable long id, Model model){
-        User user = usersDao.getOne(id);
+        User baker = usersDao.getOne(id);
         if (userService.isLoggedIn()){
             User sessionUser = userService.sessionUser();
             Image profileImage = imageDao.findByOwner(sessionUser);
@@ -197,8 +201,12 @@ public class UserController {
             }
             model.addAttribute("isBaker", sessionUser.isBaker());
         }
+        List<Order> bakerApprovedOrders = productService.bakerOrdersProfile(id);
+        Image bakerImage = imageDao.findByOwner(baker);
+        model.addAttribute("bakerApprovedOrders", bakerApprovedOrders);
+        model.addAttribute("bakerImage", bakerImage.getImageURL());
         model.addAttribute("isAnonymous", userService.isLoggedIn());
-        model.addAttribute("user", user);
+        model.addAttribute("baker", baker);
         return "users/baker-profile";
 
     }

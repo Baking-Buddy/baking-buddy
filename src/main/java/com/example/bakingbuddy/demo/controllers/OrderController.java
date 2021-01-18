@@ -121,6 +121,7 @@ public String showOrders(@Param("query") String query, Model model) {
             if (sessionUser.isBaker()) {
                 List<Order> orders = service.listAllBaker(query, sessionUser);
                 HashMap<Long, String> orderDates = dateService.listOfOrderDates(orders);
+
                 model.addAttribute("dates", orderDates);
                 model.addAttribute("orders", orders);
                 model.addAttribute("user", sessionUser);

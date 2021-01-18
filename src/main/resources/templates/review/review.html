@@ -16,7 +16,7 @@
             <p class="mt-5">Rating: <strong th:text="${review.rating}"></strong></p>
             <p class="card-text" th:text="${review.body}"></p>
             <p>Created by: <span th:text="${review.getOwner().getUsername()}"></span></p>
-            <p th:text="${review.date}"></p>
+            <p th:text="${dates.get(review.id)}"></p>
         </div>
         <div sec:authorize="isAuthenticated()">
             <form th:if="${#authentication.principal.id == review.owner.id}" th:action="@{|/review/${baker.id}/edit/${review.id}|}" th:method="get">

@@ -35,7 +35,7 @@ public class SearchController {
     private DateService dateService;
 
     @GetMapping("/search-results")
-    public String bakerSearchResults(@RequestParam(name = "query") String query, Model model){
+    public String bakerSearchResults(@RequestParam(name = "bakerQuery") String query, Model model){
         if (userService.isLoggedIn()){
             User sessionUser = userService.sessionUser();
             model.addAttribute("user", sessionUser);

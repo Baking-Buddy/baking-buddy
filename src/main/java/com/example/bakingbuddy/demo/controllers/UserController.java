@@ -7,13 +7,11 @@ import com.example.bakingbuddy.demo.Repos.ReviewRepository;
 import com.example.bakingbuddy.demo.Repos.ImageRepository;
 import com.example.bakingbuddy.demo.Repos.OrderRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
-import com.example.bakingbuddy.demo.services.EmailService;
-import com.example.bakingbuddy.demo.services.MailgunService;
-import com.example.bakingbuddy.demo.services.ProductService;
-import com.example.bakingbuddy.demo.services.UserService;
+import com.example.bakingbuddy.demo.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -31,31 +29,55 @@ import java.util.List;
 
 @Controller
 public class UserController {
+
+    @Autowired
     private UserRepository usersDao;
+
+    @Autowired
     private ImageRepository imageDao;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private OrderRepository orderDao;
-    private final EmailService emailService;
-    private final UserService userService;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
     private ReviewRepository reviewDao;
+
+    @Autowired
     private MailgunService mailgunService;
+
+    @Autowired
     private ProductService productService;
 
     @Value("${filestackApiKey}")
     private String fileStackApiKey;
 
 
-    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService, ImageRepository imageDao, OrderRepository orderDao, ReviewRepository reviewDao, UserService userService, MailgunService mailgunService, ProductService productService) {
-        this.usersDao = usersDao;
-        this.passwordEncoder = passwordEncoder;
-        this.emailService = emailService;
-        this.userService = userService;
-        this.reviewDao = reviewDao;
-        this.imageDao = imageDao;
-        this.orderDao = orderDao;
-        this.mailgunService = mailgunService;
-        this.productService = productService;
-    }
+//    public UserController(UserRepository usersDao, PasswordEncoder passwordEncoder, EmailService emailService, ImageRepository imageDao, OrderRepository orderDao, ReviewRepository reviewDao, UserService userService, MailgunService mailgunService, ProductService productService) {
+//        this.usersDao = usersDao;
+//        this.passwordEncoder = passwordEncoder;
+//        this.emailService = emailService;
+//        this.userService = userService;
+//        this.reviewDao = reviewDao;
+//        this.imageDao = imageDao;
+//        this.orderDao = orderDao;
+//        this.mailgunService = mailgunService;
+//        this.productService = productService;
+//    }
+
+    @Autowired
+    private ProductService service;
+
+    @Autowired
+    private DateService dateService;
 
 
     @RequestMapping(path = "/keys.js", produces = "application/javascript")
@@ -80,9 +102,13 @@ public class UserController {
     }
 
     @GetMapping("/dashboard")
-    public String showDashboard(Model model) {
+    public String showDashboard(@Param("query") String query, Model model) {
         if (userService.isLoggedIn()) {
             User sessionUser = userService.sessionUser();
+            List<Order> orders = service.listAllBaker(query, sessionUser);
+            HashMap<Long, String> orderDates = dateService.listOfOrderDates(orders);
+
+            model.addAttribute("dates", orderDates);
             model.addAttribute("pendingOrders", orderDao.findAll());
             model.addAttribute("user", sessionUser);
             model.addAttribute("isBaker", sessionUser.isBaker());

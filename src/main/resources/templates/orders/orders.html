@@ -6,14 +6,14 @@
 </head>
 <body>
 <div th:replace="partials/navbar :: side-menu"></div>
-<nav th:replace="partials/navbar :: main-nav"></nav>
+<nav th:replace="partials/navbar :: dash-nav"></nav>
 <aside th:replace="partials/sidebar :: aside"></aside>
 <main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
     <h1>Orders</h1>
     <form th:action="@{/orders}" method="GET">
         <div class="input-group mb-3 d-flex justify-content-end">
             <input type="text" class="form-control col-md-4" placeholder="Search Orders" aria-label="Recipient's username" name="query" th:value="${query}" aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
+            <button class="submit-btns" type="submit" id="button-addon2">Search</button>
         </div>
     </form>
 

@@ -10,27 +10,60 @@
 
 <main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main container mt-5">
 
-    <div class="card" th:each="review : ${reviews}">
-        <div class="card-body">
-            <h2 class="card-title" th:text="${review.title}"></h2>
-            <p class="mt-5">Rating: <strong th:text="${review.rating}"></strong></p>
-            <p class="card-text" th:text="${review.body}"></p>
-            <p>Created by: <span th:text="${review.getOwner().getUsername()}"></span></p>
-            <p th:text="${dates.get(review.id)}"></p>
+    <section class="reviews">
+        <div class="container">
+            <h1>Reviews</h1>
+            <p class="text-center">Here are some reviews from past customers!</p>
+            <div class="row">
+                <div class="col-md-4 text-center" th:each="review : ${reviews}">
+                    <div class="profile">
+                        <img src="../../static/img/Austin.jpg" class="user">
+                        <p class="mt-5"><span th:text="${review.title}"></span> Rating: <strong th:text="${review.rating}"></strong></p>
+                        <blockquote th:text="${review.body}"></blockquote>
+                        <h3><span th:text="${review.getOwner().getUsername()}"></span> - <span th:text="${dates.get(review.id)}"></span></h3>
+                    </div>
+
+                    <div sec:authorize="isAuthenticated()">
+                        <form th:if="${#authentication.principal.id == review.owner.id}" th:action="@{|/review/${baker.id}/edit/${review.id}|}" th:method="get">
+                            <button>Edit</button>
+                        </form>
+                        <form th:if="${#authentication.principal.id == review.owner.id}" th:action="@{|/review/${baker.id}/delete/${review.id}|}" th:method="post">
+                            <button>Delete</button>
+                        </form>
+                    </div>
+                </div>
+                <div>
+                    <a th:href="@{|/review/${baker.id}/create|}" sec:authorize="isAuthenticated()" class="btn btn-primary">Post a Review</a>
+                </div>
+            </div>
         </div>
-        <div sec:authorize="isAuthenticated()">
-            <form th:if="${#authentication.principal.id == review.owner.id}" th:action="@{|/review/${baker.id}/edit/${review.id}|}" th:method="get">
-                <button>Edit</button>
-            </form>
-            <form th:if="${#authentication.principal.id == review.owner.id}" th:action="@{|/review/${baker.id}/delete/${review.id}|}" th:method="post">
-                <button>Delete</button>
-            </form>
-        </div>
-    </div>
-    <a th:href="@{/}" class="btn btn-danger">Go Back</a>
-    <div>
-        <a th:href="@{|/review/${baker.id}/create|}" sec:authorize="isAuthenticated()" class="btn btn-primary">Post a Review</a>
-    </div>
+    </section>
+
+
+
+<!--    <div class="card" th:each="review : ${reviews}">-->
+<!--        <div class="card-body">-->
+<!--            <h2 class="card-title" th:text="${review.title}"></h2>-->
+<!--            <p class="mt-5">Rating: <strong th:text="${review.rating}"></strong></p>-->
+<!--            <p class="card-text" th:text="${review.body}"></p>-->
+<!--            <p>Created by: <span th:text="${review.getOwner().getUsername()}"></span></p>-->
+<!--            <p th:text="${dates.get(review.id)}"></p>-->
+<!--        </div>-->
+
+
+
+
+
+<!--        <div sec:authorize="isAuthenticated()">-->
+<!--            <form th:if="${#authentication.principal.id == review.owner.id}" th:action="@{|/review/${baker.id}/edit/${review.id}|}" th:method="get">-->
+<!--                <button>Edit</button>-->
+<!--            </form>-->
+<!--            <form th:if="${#authentication.principal.id == review.owner.id}" th:action="@{|/review/${baker.id}/delete/${review.id}|}" th:method="post">-->
+<!--                <button>Delete</button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <a th:href="@{/}" class="btn btn-danger">Go Back</a>-->
 </main>
 <div th:replace="partials/scripts :: scripts"></div>
 </body>

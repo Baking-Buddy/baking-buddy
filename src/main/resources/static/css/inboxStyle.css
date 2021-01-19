@@ -26,12 +26,12 @@
 }
 
 .message-to {
-    background-color: #55d7dc;
+    background: linear-gradient(45deg, #bbddd6, #92c8be);
     border: 2px black solid;
 }
 
 .message-from {
-    background-color: coral;
+    background: linear-gradient(45deg, lightcoral, darksalmon);
     border: 2px black dashed;
 }
 

@@ -8,12 +8,12 @@
 <div th:replace="partials/navbar :: side-menu"></div>
 <nav th:replace="partials/navbar :: dash-nav"></nav>
 <aside th:replace="partials/sidebar :: aside"></aside>
-<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main tools background-theme">
+<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main tools background-theme-tools">
     <div class="text-center">
         <h1 class="edit-form-title">Tools</h1>
         <button class="submit-btns" data-toggle="modal" data-target="#modal-add-tool">Add Tool</button>
     </div>
-    <div class="container">
+    <div class="container d-flex flex-wrap justify-content-evenly">
         <div class="row">
             <div class="col-md-12">
                 <div class="modal fade" id="modal-add-tool">

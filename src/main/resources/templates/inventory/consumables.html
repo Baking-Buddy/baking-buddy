@@ -71,7 +71,7 @@
     </div>
     <div class="row">
         <div th:each="consumable : ${user.consumables}" class="col-lg-4 col-md-12 text-center my-2" style="color: black">
-            <div class="card consumable-card">
+            <div class="card tool-card-width card-shadow">
                 <div class="card-body card-body-background">
                     <h4 th:text="${consumable.brand}" class="card-title"></h4>
                     <h6 th:text="${consumable.type}" class="card-subtitle text-muted"></h6>

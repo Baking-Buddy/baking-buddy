@@ -111,7 +111,7 @@ public class OrderController {
         User emailReciever = userDao.getOne(id);
         String emailSubject = "Order Recieved from: " + sessionUser.getFirstName() + " " + sessionUser.getLastName();
         mailgunService.sendSimpleMessage(emailReciever, emailSubject, dbOrder.getDescription());
-        return "redirect:/orders/" + dbOrder.getId();
+        return "redirect:/orders";
     }
 
 @GetMapping("/orders")

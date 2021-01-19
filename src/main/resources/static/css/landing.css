@@ -42,8 +42,7 @@ a {
 
 .navbar-nav li a {
     margin-right: 20px;
-    text-shadow: 1px 1px 5px #000;
-    vertical-align: middle;
+    font-weight: 700;
 }
 
 .navbar-brand img {
@@ -64,7 +63,6 @@ a {
     height: 3rem;
     border-radius: 50%;
 }
-
 
 .welcome {
     padding: 50px 80px;
@@ -101,7 +99,7 @@ a {
     top: 0;
     right: 0;
     background: var(--landing-navigation);
-    min-width: 30%;
+    width: 30%;
     height: 100vh;
 
 }
@@ -312,4 +310,8 @@ a {
 
 }
 
-
+@media screen and (max-width: 600px) {
+    .slide-nav {
+        width: 50%;
+    }
+}

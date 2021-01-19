@@ -195,6 +195,7 @@ public class UserController {
         if (userService.isLoggedIn()){
             User sessionUser = userService.sessionUser();
             Image profileImage = imageDao.findByOwner(sessionUser);
+            model.addAttribute("user", sessionUser);
             model.addAttribute("profileImage", profileImage.getImageURL());
             boolean sendMessage = false;
             if (!userService.profileOwner(sessionUser, id)){

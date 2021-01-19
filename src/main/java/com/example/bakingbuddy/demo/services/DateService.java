@@ -1,5 +1,6 @@
 package com.example.bakingbuddy.demo.services;
 
+import com.example.bakingbuddy.demo.Model.Message;
 import com.example.bakingbuddy.demo.Model.Order;
 import com.example.bakingbuddy.demo.Model.Review;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,6 +30,23 @@ public class DateService {
         String dateString = df.format(date);
         return dateString;
     }
+
+    //Date Object to String
+    public String displayDateWithTime(Date date){
+        LocalDateTime dateTime =  date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        String dateTimeConvert = dateTime.format(DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss"));
+        return dateTimeConvert;
+    }
+
+    public HashMap<Long, String> listOfMessageDates(List<Message> messages){
+        HashMap<Long, String> hashDateTime = new HashMap<>();
+        for (Message message : messages){
+            hashDateTime.put(message.getId(), displayDateWithTime(message.getDate()));
+        }
+        return hashDateTime;
+    }
+
+
 
 
 

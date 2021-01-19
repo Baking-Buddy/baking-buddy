@@ -39,12 +39,12 @@
                                                             <div th:if="${message.sender.id == sender.id}" class="message-to message">
                                                                 <h5 th:text="${message.sender.firstName + ' ' + message.sender.lastName}" class="text-left"></h5>
                                                                 <div th:text="${message.body}" class="text-left"></div>
-                                                                <p th:text="${message.date}" class="text-left message-date"></p>
+                                                                <p th:text="${messageDateTime.get(message.id)}" class="text-left message-date"></p>
                                                             </div>
                                                             <div th:if="${message.recipient.id == sender.id}" class="message-from message">
                                                                 <h5 th:text="${message.sender.firstName + ' ' + message.sender.lastName}" class="text-right"></h5>
                                                                 <div th:text="${message.body}" class="text-right"></div>
-                                                                <p th:text="${message.date}" class="text-right message-date"></p>
+                                                                <p th:text="${messageDateTime.get(message.id)}" class="text-right message-date"></p>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -161,3 +161,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+.body_background-color{
+    background-color: #c6b0e8;
+}

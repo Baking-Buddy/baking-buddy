@@ -54,18 +54,18 @@
             </thead>
             <tbody>
             <!--                    CUSTOMER-->
-            <tr th:each="order : ${pendingOrders}" th:if="${#strings.toString(order.status) == 'PENDING' && order.owner == user && !user.isBaker()}">
-                <td th:text="${order.date}"></td>
-                <td><span th:text="${order.baker.firstName}"></span><span th:text="${order.baker.lastName}"></span></td>
+            <tr th:each="order : ${pendingOrders}" th:if="${#strings.toString(order.status) == 'ACCEPTED' && order.owner == user && !user.isBaker()}">
+                <td th:text="${dates.get(order.id)}"></td>
+                <td><span th:text="${order.baker.firstName}"> </span><span th:text="${order.baker.lastName}"></span></td>
                 <td th:text="${order.status}"></td>
-                <td><a th:href="@{/orders/{id}(id=${order.id})}" class="btn btn-primary">More Details</a></td>
+                <td><a th:href="@{/orders/{id}(id=${order.id})}" class="submit-btns">More Details</a></td>
             </tr>
             <!--                        BAKER-->
-            <tr th:each="order : ${pendingOrders}" th:if="${#strings.toString(order.status) == 'PENDING' && order.baker == user && user.isBaker()}">
-                <td th:text="${order.date}"></td>
+            <tr th:each="order : ${pendingOrders}" th:if="${#strings.toString(order.status) == 'ACCEPTED' && order.baker == user && user.isBaker()}">
+                <td th:text="${dates.get(order.id)}"></td>
                 <td><span th:text="${order.owner.firstName}"></span><span th:text="${order.owner.lastName}"></span></td>
                 <td th:text="${order.status}"></td>
-                <td><a th:href="@{/orders/{id}(id=${order.id})}" class="btn btn-primary">More Details</a></td>
+                <td><a th:href="@{/orders/{id}(id=${order.id})}" class="submit-btns">More Details</a></td>
             </tr>
         </table>
     </div>

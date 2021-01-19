@@ -52,38 +52,47 @@
                 <div class="col-md-12">
                     <div class="modal fade" th:id="${'modal'+order.id}">
                         <div class="modal-dialog modal-md">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 th:if="${user.isBaker()}" th:text="${'Requested By: ' + order.owner.username}"></h1>
-                                    <h1 th:if="${!user.isBaker()}" th:text="${'Baker: ' + order.baker.username}"></h1>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <h2 th:text="${'Requested Date: ' + order.date}"></h2>
-                                    <p th:text="${'Description: ' + order.description}"></p>
-                                    <p th:if="${order.price == 0}" th:text="${'Price: Pending'}"></p>
-                                    <p th:if="${order.price != 0}" th:text="${'Price: $' + order.price}"></p>
-                                </div>
-                                <div class="modal-footer justify-content-evenly">
-                                    <a th:href="@{/orders/{id}/edit(id=${order.id})}" sec:authorize="isAuthenticated()" class="submit-btns text-center">Edit</a>
-                                    <div th:if="${user.isBaker()}">
-                                        <form th:if="${#strings.toString(order.status) == 'REJECTED'}" th:action="@{|/accept/${order.id}|}" th:method="post">
-                                            <button type="submit" class="submit-btns">Accept</button>
-                                        </form>
-                                        <form th:if="${#strings.toString(order.status) == 'ACCEPTED'}" th:action="@{|/reject/${order.id}|}" th:method="post">
-                                            <button type="submit" class="submit-btns">Reject</button>
-                                        </form>
-                                        <form th:if="${#strings.toString(order.status) == 'PENDING'}" th:action="@{|/accept/${order.id}|}" th:method="post">
-                                            <button type="submit" class="submit-btns">Accept</button>
-                                        </form>
-                                        <form th:if="${#strings.toString(order.status) == 'PENDING'}" th:action="@{|/reject/${order.id}|}" th:method="post">
-                                            <button type="submit" class="submit-btns">Reject</button>
-                                        </form>
+
+
+
+                            <div class="modal-content edit_modal_section">
+                                <div class="container">
+                                    <div class="modal-header">
+                                        <h1 class="title" th:if="${user.isBaker()}" th:text="${'Requested By: ' + order.owner.username}"></h1>
+                                        <h1 class="title" th:if="${!user.isBaker()}" th:text="${'Baker: ' + order.baker.username}"></h1>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h2 class="display-text" th:text="${'Requested Date: ' + order.date}"></h2>
+                                        <p class="display-text" th:text="${'Description: ' + order.description}"></p>
+                                        <p class="display-text" th:if="${order.price == 0}" th:text="${'Price: Pending'}"></p>
+                                        <p class="display-text" th:if="${order.price != 0}" th:text="${'Price: $' + order.price}"></p>
+                                    </div>
+                                    <div class="modal-footer justify-content-evenly edit-form">
+                                        <a th:href="@{/orders/{id}/edit(id=${order.id})}" sec:authorize="isAuthenticated()" class="submit-btns text-center">Edit</a>
+                                        <div th:if="${user.isBaker()}">
+                                            <form class="form-field" th:if="${#strings.toString(order.status) == 'REJECTED'}" th:action="@{|/accept/${order.id}|}" th:method="post">
+                                                <button type="submit" class="submit-btns">Accept</button>
+                                            </form>
+                                            <form class="form-field" th:if="${#strings.toString(order.status) == 'ACCEPTED'}" th:action="@{|/reject/${order.id}|}" th:method="post">
+                                                <button type="submit" class="submit-btns">Reject</button>
+                                            </form>
+                                            <form class="form-field" th:if="${#strings.toString(order.status) == 'PENDING'}" th:action="@{|/accept/${order.id}|}" th:method="post">
+                                                <button type="submit" class="submit-btns">Accept</button>
+                                            </form>
+                                            <form class="form-field" th:if="${#strings.toString(order.status) == 'PENDING'}" th:action="@{|/reject/${order.id}|}" th:method="post">
+                                                <button type="submit" class="submit-btns">Reject</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+
+
+
                         </div>
                     </div>
                 </div>

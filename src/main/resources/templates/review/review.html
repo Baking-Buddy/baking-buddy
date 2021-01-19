@@ -22,13 +22,13 @@
 <main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main container">
     <section id="reviews">
         <div class="container text-center">
-            <div class="row">
-                <div class="card col-lg-3 col-md-6 mx-1 p-1 text-center" th:each="review : ${reviews}">
+            <div class="row justify-content-evenly">
+                <div class="card col-lg-3 col-md-6 text-center mb-2" th:each="review : ${reviews}">
                     <div class="card-body">
 <!--                            <img th:src="${review.owner.get}" alt="" class="card-top-img img-fluid rounded-circle w-50 mb-3">-->
                         <h3 class="card-title" th:text="${review.title}"></h3>
                         <h4>Rating: <strong th:text="${review.rating}"></strong>/5</h4>
-                        <p class="card-text mt-2" th:text="${review.body}" style="color: black"></p>
+                        <p class="card-text mt-2" th:text="${review.body}"></p>
                         <p>Date posted: <span th:text="${dates.get(review.id)}"></span></p>
                         <p>by <span th:text="${review.owner.firstName}"></span> <span th:text="${review.owner.lastName}"></span></p>
                     </div>

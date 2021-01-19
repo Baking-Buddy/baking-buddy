@@ -8,15 +8,18 @@
 <div th:replace="partials/navbar :: side-menu"></div>
 <nav th:replace="partials/navbar :: dash-nav"></nav>
 <aside th:replace="partials/sidebar :: aside"></aside>
-    <main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main inbox-container inbox">
+    <main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main background-theme-inbox">
+        <div class="text-center">
+            <h1 class="edit-form-title">Inbox</h1>
+        </div>
         <div class="row">
             <div th:each="sender: ${senders}" class="col-lg-4 col-md-12 text-center py-1">
                 <div class="card message-card">
                         <img class="card-img-top inbox-photo" th:src="${senderImages.get(sender.id)}" th:alt="${sender.username}">
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${sender.username}" style="color: black"></h5>
+                            <h5 class="card-title" th:text="${sender.username}"></h5>
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary btn-message draw-border" data-toggle="modal" th:data-target="${'#modal' + sender.id}">
+                            <button type="button" class="submit-btns" data-toggle="modal" th:data-target="${'#modal' + sender.id}">
                                 <span>View Messages</span>
                             </button>
                             <div class="container">
@@ -26,7 +29,7 @@
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h1 th:text="${sender.username} + ' aka ' +${sender.firstName} +' '+ ${sender.lastName}" style="color: black"></h1>
+                                                        <h1 class="inbox-title" th:text="${sender.username} + ' aka ' +${sender.firstName} +' '+ ${sender.lastName}"></h1>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
@@ -47,10 +50,10 @@
                                                     </div>
                                                     <form th:action="@{|/inbox/${sender.id}|}" th:method="post">
                                                         <textarea class="form-control" aria-label="body" name="body"></textarea>
-                                                        <button class="btn btn-success btn-message draw-border" type="submit">Send</button>
+                                                        <button class="submit-btns" type="submit">Send</button>
                                                     </form>
                                                     <div class="modal-footer">
-                                                        <button class="btn btn-danger btn-message draw-border" data-dismiss="modal">Close</button>
+                                                        <button class="submit-btns" data-dismiss="modal">Close</button>
                                                     </div>
                                                 </div>
                                             </div>

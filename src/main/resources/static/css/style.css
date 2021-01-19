@@ -202,3 +202,76 @@ h2 {
     color: #f5f5f5;
 }
 /*We really need to consolidate our style sheets*/
+
+/*Review Start*/
+
+.review-edit-delete {
+    padding-bottom: 1em;
+}
+
+.review-edit-btn {
+    margin-bottom: 2em;
+}
+
+.review-post-btn {
+    font-size: 2.4em;
+}
+
+/*Review Ends*/
+
+/*Button Action Start*/
+
+.btns{
+    /*background: linear-gradient(45deg, #bbddd6, #92c8be);*/
+    /*color: #2a2a28;*/
+    width: 230px;
+    border: none;
+    border-radius: 25px;
+    padding: 10px;
+    -webkit-box-shadow: 0px 10px 41px -11px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 10px 41px -11px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 10px 41px -11px rgba(0, 0, 0, 0.7);
+}
+
+.btns-no-shadow{
+    /*background: linear-gradient(45deg, #bbddd6, #92c8be);*/
+    /*color: #2a2a28;*/
+    width: 230px;
+    border: none;
+    border-radius: 25px;
+    padding: 10px;
+}
+
+.add-btns{
+    background: linear-gradient(45deg, #92c8be 30%, #92c8be 70%);
+}
+
+.add-btns:hover{
+    background: linear-gradient(45deg, #f5f5f5, #92c8be);
+}
+
+.delete-btns{
+    background: linear-gradient(45deg, #ff7477 30%, #ff7477 70%);
+}
+
+.delete-btns:hover{
+    background: linear-gradient(45deg, #f5f5f5, #ff7477);
+}
+
+.edit-btns{
+    background: linear-gradient(45deg, #fde74c 30%, #fde74c 70%);
+}
+
+.edit-btns:hover{
+    background: linear-gradient(45deg, #f5f5f5, #fde74c);
+}
+
+.info-btns{
+    background: linear-gradient(45deg, #9cf6f6 30%, #9cf6f6 70%);
+}
+
+.info-btns:hover{
+    background: linear-gradient(45deg, #f5f5f5, #9cf6f6);
+}
+
+/*Button Action End*/

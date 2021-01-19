@@ -20,6 +20,9 @@
 </section>
 
 <main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main container">
+    <div class="mb-5 text-center">
+        <a class="review-post-btn btns add-btns" th:href="@{|/review/${baker.id}/create|}" sec:authorize="isAuthenticated()"  >Post a Review</a>
+    </div>
     <section id="reviews">
         <div class="container text-center">
             <div class="row justify-content-evenly">
@@ -33,41 +36,36 @@
                         <p>by <span th:text="${review.owner.firstName}"></span> <span th:text="${review.owner.lastName}"></span></p>
                     </div>
 
-                    <div class="text-center" sec:authorize="isAuthenticated()">
-                        <form th:if="${#authentication.principal.id == review.owner.id}" th:action="@{|/review/${baker.id}/edit/${review.id}|}" th:method="get">
-                            <button class="submit-btns text-center">Edit</button>
+                    <div class="text-center review-edit-delete" sec:authorize="isAuthenticated()">
+                        <form class="review-edit-btn" th:if="${#authentication.principal.id == review.owner.id}" th:action="@{|/review/${baker.id}/edit/${review.id}|}" th:method="get">
+                            <button class="btns edit-btns text-center">Edit</button>
                         </form>
-                        <form th:if="${#authentication.principal.id == review.owner.id}" th:action="@{|/review/${baker.id}/delete/${review.id}|}" th:method="post">
-                            <button class="submit-btns">Delete</button>
+                        <form class="review-delete-btn" th:if="${#authentication.principal.id == review.owner.id}" th:action="@{|/review/${baker.id}/delete/${review.id}|}" th:method="post">
+                            <button class="btns delete-btns">Delete</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-
-    <div class="mt-5 text-center">
-        <a th:href="@{|/review/${baker.id}/create|}" sec:authorize="isAuthenticated()" class="submit-btns">Post a Review</a>
-    </div>
 </main>
-<footer class="footer mt-auto py-3 footer-bg">
-    <div class="container w-100">
-        <div class="footer-logo-box d-flex align-items-center">
-            <img class="footer-logo" src="https://cdn.filestackcontent.com/z2yTGxRyyPn3GUz3E7wJ" alt="baking buddy">
-            <span class="heading-primary-sub">Baking Buddy</span>
-        </div>
-        <div class="footer-navigation d-flex w-70">
-            <ul class="footer-list d-flex list-text">
-                <li><a href="https://www.linkedin.com/in/skyler-aschenbeck/">Skyler Aschenbeck</a></li>
-                <li><a href="https://www.linkedin.com/in/blossom-perez-2781b7184/">Blossom Perez</a></li>
-                <li><a href="https://www.linkedin.com/in/austinvarnon/">Austin Varnon</a></li>
-                <li><a href="https://www.linkedin.com/in/armando-salazar89/">Armando Salazar</a></li>
-            </ul>
+<!--<footer class="footer mt-auto py-3 footer-bg">-->
+<!--    <div class="container w-100">-->
+<!--        <div class="footer-logo-box d-flex align-items-center">-->
+<!--            <img class="footer-logo" src="https://cdn.filestackcontent.com/z2yTGxRyyPn3GUz3E7wJ" alt="baking buddy">-->
+<!--            <span class="heading-primary-sub">Baking Buddy</span>-->
+<!--        </div>-->
+<!--        <div class="footer-navigation d-flex w-70">-->
+<!--            <ul class="footer-list d-flex list-text">-->
+<!--                <li><a href="https://www.linkedin.com/in/skyler-aschenbeck/">Skyler Aschenbeck</a></li>-->
+<!--                <li><a href="https://www.linkedin.com/in/blossom-perez-2781b7184/">Blossom Perez</a></li>-->
+<!--                <li><a href="https://www.linkedin.com/in/austinvarnon/">Austin Varnon</a></li>-->
+<!--                <li><a href="https://www.linkedin.com/in/armando-salazar89/">Armando Salazar</a></li>-->
+<!--            </ul>-->
 
-        </div>
-        <p class="about-navigation list-text"><a th:href="@{/developers}" >About Us</a></p>
-</footer>
+<!--        </div>-->
+<!--        <p class="about-navigation list-text"><a th:href="@{/developers}" >About Us</a></p>-->
+<!--</footer>-->
 <div th:replace="partials/scripts :: scripts"></div>
 <script src="/js/navigation.js"></script>
 </body>

@@ -107,10 +107,10 @@
                         </a>
                     </li>
                     <li class="nav-item d-none d-sm-none d-md-block" sec:authorize="!isAuthenticated()">
-                        <a class="nav-link" th:href="@{/login}">Login</a>
+                        <a class="nav-link dark-text" th:href="@{/login}">Login</a>
                     </li>
                     <li class="nav-item d-none d-sm-none d-md-block" sec:authorize="!isAuthenticated()">
-                        <a class="nav-link" th:href="@{/register}">Join</a>
+                        <a class="nav-link dark-text" th:href="@{/register}">Join</a>
                     </li>
                     <li class="nav-item d-md-none d-lg-none" sec:authorize="!isAuthenticated()">
                         <button class="toggle-button pt-1">
@@ -118,9 +118,6 @@
                             <span class="toggle-button__bar"></span>
                             <span class="toggle-button__bar"></span>
                         </button>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link pt-sm-4 pt-md-3" th:href="@{/developers}">About Us</a>
                     </li>
                 </ul>
             </div>

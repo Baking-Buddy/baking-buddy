@@ -51,6 +51,23 @@
         <a th:href="@{|/review/${baker.id}/create|}" sec:authorize="isAuthenticated()" class="submit-btns">Post a Review</a>
     </div>
 </main>
+<footer class="footer mt-auto py-3 footer-bg">
+    <div class="container w-100">
+        <div class="footer-logo-box d-flex align-items-center">
+            <img class="footer-logo" src="https://cdn.filestackcontent.com/z2yTGxRyyPn3GUz3E7wJ" alt="baking buddy">
+            <span class="heading-primary-sub">Baking Buddy</span>
+        </div>
+        <div class="footer-navigation d-flex w-70">
+            <ul class="footer-list d-flex list-text">
+                <li><a href="https://www.linkedin.com/in/skyler-aschenbeck/">Skyler Aschenbeck</a></li>
+                <li><a href="https://www.linkedin.com/in/blossom-perez-2781b7184/">Blossom Perez</a></li>
+                <li><a href="https://www.linkedin.com/in/austinvarnon/">Austin Varnon</a></li>
+                <li><a href="https://www.linkedin.com/in/armando-salazar89/">Armando Salazar</a></li>
+            </ul>
+
+        </div>
+        <p class="about-navigation list-text"><a th:href="@{/developers}" >About Us</a></p>
+</footer>
 <div th:replace="partials/scripts :: scripts"></div>
 <script src="/js/navigation.js"></script>
 </body>

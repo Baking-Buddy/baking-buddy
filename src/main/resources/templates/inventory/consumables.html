@@ -5,7 +5,7 @@
 <div th:replace="partials/navbar :: side-menu"></div>
 <nav th:replace="partials/navbar :: dash-nav"></nav>
 <aside th:replace="partials/sidebar :: aside"></aside>
-<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main background-theme-consumables">
+<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main tools">
     <div class="text-center">
         <h1 class="edit-form-title">Consumables</h1>
         <button class="submit-btns" data-toggle="modal" data-target="#modal-add-consumable">Add Consumable</button>
@@ -37,7 +37,7 @@
                                     </div>
                                     <div class="form-group form-field">
                                         <label class="label" for="amount">Amount: </label>
-                                        <input class="form-control input-text" type="number" name="amount" id="amount" th:field="*{amount}">
+                                        <input class="form-control input-text" type="number" step=".01" name="amount" id="amount" th:field="*{amount}">
                                     </div>
                                     <legend>Weight Unit:</legend>
                                     <div class="form-check form-check-inline form-field">

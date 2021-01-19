@@ -10,28 +10,27 @@
 <header id="header">
     <nav th:replace="partials/navbar :: landing-nav"></nav>
 </header>
+<section id="welcome">
+    <div class="container">
+        <div class="welcome text-center">
+            <h1><span th:text="${baker.username}"></span>Reviews</h1>
+            <p class="text-uppercase">Check out what previous customers have said!</p>
+        </div>
+    </div>
+</section>
 
-
-<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main container mt-5">
+<main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main container">
     <section id="reviews">
-        <div class="container my-3 py-5 text-center">
-            <div class="row mb-5">
-                <div class="col">
-                    <h1 class="title">Reviews</h1>
-                    <p class="mt-3" style="color: black">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aspernatur autem eos incidunt inventore
-                    </p>
-                </div>
-            </div>
+        <div class="container text-center">
             <div class="row">
                 <div class="card col-lg-3 col-md-6 mx-1 p-1 text-center" th:each="review : ${reviews}">
                     <div class="card-body">
 <!--                            <img th:src="${review.owner.get}" alt="" class="card-top-img img-fluid rounded-circle w-50 mb-3">-->
-                        <h3>Created by: <span th:text="${review.getOwner().getUsername()}"></span></h3>
-                        <h2 class="card-title" th:text="${review.title}"></h2>
-                        <h5 class="mt-5">Rating: <strong th:text="${review.rating}"></strong></h5>
-                        <p class="card-text" th:text="${review.body}"></p>
-                        <p th:text="${dates.get(review.id)}"></p>
+                        <h3 class="card-title" th:text="${review.title}"></h3>
+                        <h4>Rating: <strong th:text="${review.rating}"></strong>/5</h4>
+                        <p class="card-text mt-2" th:text="${review.body}" style="color: black"></p>
+                        <p>Date posted: <span th:text="${dates.get(review.id)}"></span></p>
+                        <p>by <span th:text="${review.owner.firstName}"></span> <span th:text="${review.owner.lastName}"></span></p>
                     </div>
 
                     <div class="text-center" sec:authorize="isAuthenticated()">
@@ -48,10 +47,11 @@
     </section>
 
 
-    <div>
+    <div class="mt-5 text-center">
         <a th:href="@{|/review/${baker.id}/create|}" sec:authorize="isAuthenticated()" class="submit-btns">Post a Review</a>
     </div>
 </main>
 <div th:replace="partials/scripts :: scripts"></div>
+<script src="/js/navigation.js"></script>
 </body>
 </html>

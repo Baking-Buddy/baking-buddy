@@ -204,6 +204,9 @@ public class UserController {
     public String showHomePage(Model model){
         if (userService.isLoggedIn()){
            User sessionUser = userService.sessionUser();
+           if(sessionUser.getId() == 0){
+               return "redirect: /logout";
+           }
             model.addAttribute("user", sessionUser);
             model.addAttribute("isBaker", sessionUser.isBaker());
             model.addAttribute("profileImage",userService.profileImage(sessionUser));

@@ -25,7 +25,12 @@
                     <span th:text="${user.city}"></span>,
                     <span th:text="${user.state}"></span>
                 </p>
-                <a th:href="@{|/reviews/${user.id}|}" class="btn btn-purple">View Reviews</a>
+                <div class="mb-3">
+                    <a th:href="@{|/baker-profile/${user.id}|}" class="submit-btns">View Profile</a>
+                </div>
+                <div>
+                    <a th:href="@{|/reviews/${user.id}|}" class="submit-btns">View Reviews</a>
+                </div>
             </div>
         </div>
     </main>

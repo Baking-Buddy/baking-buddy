@@ -24,9 +24,9 @@
         <input type="hidden" th:name="baker-id" th:value="${baker.id}">
         <div sec:authorize="isAuthenticated()" th:if="${isAnonymous}">
             <div th:if="${sendMessage}" class="row justify-content-evenly">
-                <a th:href="@{|/orders/create/${baker.id}|}" sec:authorize="isAuthenticated()" class="submit-btns text-center">Create Order</a>
-                <a th:href="@{|/review/${baker.id}/create|}" sec:authorize="isAuthenticated()" class="submit-btns text-center">Post a Review</a>
-                <button sec:authorize="isAuthenticated()" class="submit-btns" data-toggle="modal" data-target="#newMessage">Send Message</button>
+                <a th:href="@{|/orders/create/${baker.id}|}" sec:authorize="isAuthenticated()" class="btns add-btns text-center">Create Order</a>
+                <a th:href="@{|/review/${baker.id}/create|}" sec:authorize="isAuthenticated()" class="btns add-btns text-center">Post a Review</a>
+                <button sec:authorize="isAuthenticated()" class="btns add-btns" data-toggle="modal" data-target="#newMessage">Send Message</button>
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -38,10 +38,10 @@
                                         </div>
                                         <form th:action="@{|/inbox/${baker.id}|}" th:method="post">
                                             <textarea class="form-control" aria-label="body" name="body"></textarea>
-                                            <button class="btn btn-success" type="submit">Send</button>
+                                            <button class="btns add-btns" type="submit">Send</button>
                                         </form>
                                         <div class="modal-footer">
-                                            <input class="btn btn-primary" data-dismiss="modal" value="Close">
+                                            <input class="btns delete-btns" data-dismiss="modal" value="Close">
                                         </div>
                                     </div>
                                 </div>
@@ -57,7 +57,7 @@
             <div class="card-body text-center">
                 <p class="card-text dark-text text-uppercase" th:text="${'Requested by: ' + order.owner.username}"></p>
                 <p class="card-text dark-text text-uppercase" th:text="${'Date Posted: ' + order.date}"></p>
-                <button class="submit-btns" data-toggle="modal" th:data-target="${'#modal'+order.id}">More Info</button>
+                <button class="btns info-btns" data-toggle="modal" th:data-target="${'#modal'+order.id}">More Info</button>
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -79,7 +79,7 @@
                                             <div class="card-text dark-text text-uppercase" th:if="${order.price > 0}" th:text="${'Price: $' + order.price}"></div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button class="submit-btns" data-dismiss="modal">Close</button>
+                                            <button class="btns delete-btns" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>

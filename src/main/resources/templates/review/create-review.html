@@ -36,14 +36,14 @@
                         <textarea class="input-text" rows="10" cols="60" name="body" id="reviewBody"></textarea>
                     </div>
                     <div class="form-field">
-                        <button class="submit-btns">Post Review</button>
-                    </div>
-                    <div class="form-field text-center">
-                        <form th:action="@{/}">
-                            <button class="submit-btns">Cancel</button>
-                        </form>
+                        <button class="btns add-btns">Post Review</button>
                     </div>
                 </form>
+                <div class="form-field text-center">
+                    <form th:action="@{/}" th:method="get">
+                        <button type="submit" class="btns delete-btns">Cancel</button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>

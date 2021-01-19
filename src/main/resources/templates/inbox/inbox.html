@@ -19,7 +19,7 @@
                         <div class="card-body">
                             <h5 class="card-title" th:text="${sender.username}"></h5>
                             <!-- Button trigger modal -->
-                            <button type="button" class="submit-btns" data-toggle="modal" th:data-target="${'#modal' + sender.id}">
+                            <button type="button" class="btns info-btns" data-toggle="modal" th:data-target="${'#modal' + sender.id}">
                                 <span>View Messages</span>
                             </button>
                             <div class="container">
@@ -50,10 +50,10 @@
                                                     </div>
                                                     <form class="my-2 p-2" th:action="@{|/inbox/${sender.id}|}" th:method="post">
                                                         <textarea class="form-control" aria-label="body" name="body"></textarea>
-                                                        <button class="submit-btns-no-shadow" type="submit">Send</button>
+                                                        <button class="btns-no-shadow add-btns" type="submit">Send</button>
                                                     </form>
                                                     <div class="modal-footer">
-                                                        <button class="submit-btns-no-shadow" data-dismiss="modal">Close</button>
+                                                        <button class="btns-no-shadow delete-btns" data-dismiss="modal">Close</button>
                                                     </div>
                                                 </div>
                                             </div>

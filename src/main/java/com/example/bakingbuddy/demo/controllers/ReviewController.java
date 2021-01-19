@@ -111,7 +111,7 @@ public class ReviewController {
             return  "redirect:/reviews/" + id;
         }
         model.addAttribute("reviewToEdit", reviewDao.getOne(reviewID));
-        model.addAttribute("user", sessionUser);
+        model.addAttribute("user", userService.findUserByBakerID(id));
         model.addAttribute("isBaker", sessionUser.isBaker());
         model.addAttribute("profileImage",userService.profileImage(sessionUser));
         return "review/edit-review";

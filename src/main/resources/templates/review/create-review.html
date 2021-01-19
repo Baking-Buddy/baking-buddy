@@ -6,34 +6,49 @@
 </head>
 <body>
 <div th:replace="partials/navbar :: side-menu"></div>
-<nav th:replace="partials/navbar :: main-nav"></nav>
-<h1>Create a Review</h1>
-<br>
-<main class="container">
-    <form th:action="@{|/review/${bakerID}/create|}" th:method="post">
+<nav th:replace="partials/navbar :: dash-nav"></nav>
+<aside th:replace="partials/sidebar :: aside"></aside>
 
-        <label for="reviewTitle">Title:</label>
-        <input type="text" name="title" id="reviewTitle">
-        <br>
-        <label for="reviewRating">Rating:</label>
-        <input type="range" list="tickmarks" min="1" max="5" name="rating" id="reviewRating">
-        <datalist id="tickmarks">
-            <option value="1" ></option>
-            <option value="2"></option>
-            <option value="3"></option>
-            <option value="4"></option>
-            <option value="5" ></option>
-        </datalist>
-        <br>
-        <label for="reviewBody"></label>
-        <textarea rows="10" cols="60" name="body" id="reviewBody"></textarea>
-        <br>
-        <button>Post Review</button>
-    </form>
-    <form th:action="@{/}">
-        <button>Cancel</button>
-    </form>
+
+<main class="background-theme col-md-9 ml-sm-auto col-lg-10 px-4 dash-main">
+    <section class="edit_form_section">
+        <h1 class="title">Create a Review</h1>
+        <div class="container mt-6 p-6">
+            <div class="edit-form row mt-5">
+                <form class="col-lg-12" th:action="@{|/review/${bakerID}/create|}" th:method="post">
+                    <div class="form-field">
+                        <label class="label" for="reviewTitle">Title:</label>
+                        <input class="input-text" type="text" name="title" id="reviewTitle">
+                    </div>
+                    <div class="form-field">
+                        <label class="label" for="reviewRating">Rating:</label>
+                        <input class="input-text" type="range" list="tickmarks" min="1" max="5" name="rating" id="reviewRating">
+                        <datalist id="tickmarks">
+                            <option value="1" ></option>
+                            <option value="2"></option>
+                            <option value="3"></option>
+                            <option value="4"></option>
+                            <option value="5" ></option>
+                        </datalist>
+                    </div>
+                    <div class="form-field">
+                        <label class="label" for="reviewBody"></label>
+                        <textarea class="input-text" rows="10" cols="60" name="body" id="reviewBody"></textarea>
+                    </div>
+                    <div class="form-field">
+                        <button class="submit-btns">Post Review</button>
+                    </div>
+                    <div class="form-field text-center">
+                        <form th:action="@{/}">
+                            <button class="submit-btns">Cancel</button>
+                        </form>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
 </main>
+
 <div th:replace="partials/scripts :: scripts"></div>
 <script src="/js/navigation.js"></script>
 

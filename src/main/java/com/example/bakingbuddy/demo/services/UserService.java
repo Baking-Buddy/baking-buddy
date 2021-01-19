@@ -14,26 +14,26 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    private final UserRepository userDao;
-    private final OrderRepository orderDao;
-    private final ToolRepository toolDao;
-    private final ConsumableRepository consuambleDao;
-    private final ReviewRepository reviewDao;
-    private final ImageRepository imageDao;
 
-    public UserService(UserRepository userDao,
-                       OrderRepository orderDao,
-                       ToolRepository toolDao,
-                       ConsumableRepository consumableDao,
-                       ReviewRepository reviewDao,
-                       ImageRepository imageDao) {
-        this.userDao = userDao;
-        this.orderDao = orderDao;
-        this.toolDao = toolDao;
-        this.consuambleDao = consumableDao;
-        this.reviewDao = reviewDao;
-        this.imageDao = imageDao;
-    }
+    @Autowired
+    private UserRepository userDao;
+
+    @Autowired
+    private OrderRepository orderDao;
+
+    @Autowired
+    private ToolRepository toolDao;
+
+    @Autowired
+    private ConsumableRepository consuambleDao;
+
+    @Autowired
+    private ReviewRepository reviewDao;
+
+    @Autowired
+    private ImageRepository imageDao;
+
+
 
     @Transactional
     public Optional<User> findUserByEmail(String email) {
@@ -121,6 +121,10 @@ public class UserService {
 
         user.setResetPasswordToken(null);
         userDao.save(user);
+    }
+
+    public User findUserByBakerID(long id){
+        return userDao.getOne(id);
     }
 
 }

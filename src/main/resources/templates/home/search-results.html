@@ -27,56 +27,56 @@
                     <span th:text="${baker.city}"></span>,
                     <span th:text="${baker.state}"></span>
                 </p>
-                <div>
-                    <a th:href="@{|/baker-profile/${baker.id}|}" class="btn btn-purple">View Profile</a>
+                <div class="mb-3">
+                    <a th:href="@{|/baker-profile/${baker.id}|}" class="submit-btns">View Profile</a>
                 </div>
                 <div class="mt-1">
-                    <button class="btn btn-purple" data-toggle="modal" th:data-target="${'#modal'+baker.id}">View Reviews</button>
+                    <a th:href="@{|/reviews/${baker.id}|}" class="submit-btns">View Reviews</a>
                 </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="modal fade" th:id="${'modal'+baker.id}">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 th:text="${baker.username}"></h1>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div th:each="review : ${bakerReviews.get(baker.id)}" class="mb-3 modal-review">
-                                                <h5 th:text="${review.title}"></h5>
-                                                <p th:text="${review.body}" style="color: black"></p>
-                                                <span th:if="${review.rating > 3}" class="modal-rating modal-rating-good">
-                                                    <span th:text="'Rating: '"></span>
-                                                    <span th:text="${review.rating}"></span>
-                                                </span>
-                                                <span th:if="${review.rating == 3}" class="modal-rating modal-rating-average">
-                                                    <span th:text="'Rating: '"></span>
-                                                    <span th:text="${review.rating}"></span>
-                                                </span>
-                                                <span th:if="${review.rating == 2}" class="modal-rating modal-rating-subpar">
-                                                    <span th:text="'Rating: '"></span>
-                                                    <span th:text="${review.rating}"></span>
-                                                </span>
-                                                <span th:if="${review.rating == 1}" class="modal-rating modal-rating-bad">
-                                                    <span th:text="'Rating: '"></span>
-                                                    <span th:text="${review.rating}"></span>
-                                                </span>
-                                                <div>
-                                                    <p th:text="'Posted by: ' + ${review.owner.username}"></p>
-                                                    <p th:text="'Posted on: ' + ${reviewDates.get(review.id)}"></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!--                <div class="container">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-md-12">-->
+<!--                            <div class="modal fade" th:id="${'modal'+baker.id}">-->
+<!--                                <div class="modal-dialog modal-lg">-->
+<!--                                    <div class="modal-content">-->
+<!--                                        <div class="modal-header">-->
+<!--                                            <h1 th:text="${baker.username}"></h1>-->
+<!--                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                                                <span aria-hidden="true">&times;</span>-->
+<!--                                            </button>-->
+<!--                                        </div>-->
+<!--                                        <div class="modal-body">-->
+<!--                                            <div th:each="review : ${bakerReviews.get(baker.id)}" class="mb-3 modal-review">-->
+<!--                                                <h5 th:text="${review.title}"></h5>-->
+<!--                                                <p th:text="${review.body}" style="color: black"></p>-->
+<!--                                                <span th:if="${review.rating > 3}" class="modal-rating modal-rating-good">-->
+<!--                                                    <span th:text="'Rating: '"></span>-->
+<!--                                                    <span th:text="${review.rating}"></span>-->
+<!--                                                </span>-->
+<!--                                                <span th:if="${review.rating == 3}" class="modal-rating modal-rating-average">-->
+<!--                                                    <span th:text="'Rating: '"></span>-->
+<!--                                                    <span th:text="${review.rating}"></span>-->
+<!--                                                </span>-->
+<!--                                                <span th:if="${review.rating == 2}" class="modal-rating modal-rating-subpar">-->
+<!--                                                    <span th:text="'Rating: '"></span>-->
+<!--                                                    <span th:text="${review.rating}"></span>-->
+<!--                                                </span>-->
+<!--                                                <span th:if="${review.rating == 1}" class="modal-rating modal-rating-bad">-->
+<!--                                                    <span th:text="'Rating: '"></span>-->
+<!--                                                    <span th:text="${review.rating}"></span>-->
+<!--                                                </span>-->
+<!--                                                <div>-->
+<!--                                                    <p th:text="'Posted by: ' + ${review.owner.username}"></p>-->
+<!--                                                    <p th:text="'Posted on: ' + ${reviewDates.get(review.id)}"></p>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
         </div>
 </main>

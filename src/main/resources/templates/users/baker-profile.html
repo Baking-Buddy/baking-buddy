@@ -34,14 +34,14 @@
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h1 th:text="${baker.username} + ' aka ' +${baker.firstName} +' '+ ${baker.lastName}"></h1>
+                                            <h1 class="inbox-title" th:text="${baker.username} + ' aka ' +${baker.firstName} +' '+ ${baker.lastName}"></h1>
                                         </div>
-                                        <form th:action="@{|/inbox/${baker.id}|}" th:method="post">
+                                        <form class="text-center" th:action="@{|/inbox/${baker.id}|}" th:method="post">
                                             <textarea class="form-control" aria-label="body" name="body"></textarea>
-                                            <button class="btns add-btns" type="submit">Send</button>
+                                            <button class="btns add-btns my-2" type="submit">Send</button>
                                         </form>
                                         <div class="modal-footer">
-                                            <input class="btns delete-btns" data-dismiss="modal" value="Close">
+                                            <input class="btns delete-btns text-center" data-dismiss="modal" value="Close">
                                         </div>
                                     </div>
                                 </div>

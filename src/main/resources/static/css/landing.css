@@ -18,6 +18,10 @@ a {
 .card-width {
     min-width: 30%;
 }
+
+.tool-card-width {
+    width: 60%;
+}
 .dark-text {
     color: #2a2a28 !important;
 }
@@ -259,6 +263,7 @@ a {
     background-repeat: no-repeat;
     background-size: auto;
 }
+
 .footer-bg {
     background-color: var(--navigation);
 }

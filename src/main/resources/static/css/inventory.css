@@ -2,46 +2,6 @@
     background-color: #C9E4DE;
 }
 
-.tool-card {
-    box-shadow: 5px 5px seagreen;
-}
-
-.tool-card:hover{
-    box-shadow: none;
-    left: 5px;
-    top: 5px;
-}
-
-.consumable-card:hover{
-    box-shadow: none;
-    left: 5px;
-    top: 5px;
-}
-
-.tool-image{
-    width: 200px;
-    height: auto;
-}
-.tool-image {
-    width: auto;
-    height: 300px;
-}
-
-.consumables {
-    background-image: url("../img/consumablesBG.jpeg");
-}
-
-.consumable-card {
-    background-color: #f5f5f5;
-    box-shadow: 5px 5px #2A2A28;
-}
-
-/*.consumable-card:hover {*/
-/*    box-shadow: none;*/
-/*    left: 5px;*/
-/*    top: 5px;*/
-/*}*/
-
 .inventory-btns{
     color: #fff;
     width: 230px;

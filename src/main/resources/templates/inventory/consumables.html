@@ -8,7 +8,7 @@
 <main class="col-md-9 ml-sm-auto col-lg-10 px-4 dash-main tools">
     <div class="text-center mb-2">
         <h1 class="edit-form-title">Consumables</h1>
-        <button class="submit-btns" data-toggle="modal" data-target="#modal-add-consumable">Add Consumable</button>
+        <button class="btns add-btns" data-toggle="modal" data-target="#modal-add-consumable">Add Consumable</button>
     </div>
     <div class="container d-flex flex-wrap justify-content-evenly">
         <div class="row">
@@ -37,7 +37,7 @@
                                     </div>
                                     <div class="form-group form-field">
                                         <label class="label" for="amount">Amount: </label>
-                                        <input class="form-control input-text" type="number" step=".01" name="amount" id="amount" th:field="*{amount}">
+                                        <input class="form-control input-text text-right" type="number" step=".01" name="amount" id="amount" th:field="*{amount}">
                                     </div>
                                     <legend>Weight Unit:</legend>
                                     <div class="form-check form-check-inline form-field">
@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <div class="text-center">
-                                        <button class="submit-btns" type="submit">Submit</button>
+                                        <button class="btns add-btns" type="submit">Submit</button>
                                     </div>
                                 </div>
                             </form>
@@ -76,7 +76,7 @@
                     <h4 th:text="${consumable.brand}" class="card-title"></h4>
                     <h6 th:text="${consumable.type}" class="card-subtitle text-muted"></h6>
                     <p class="card-text"><span th:text="${consumable.amount}"></span> - <span th:text="${consumable.weightUnit}"></span></p>
-                    <button type="button" class="submit-btns" data-toggle="modal" th:data-target="${'#modal'+consumable.id}">UPDATE</button>
+                    <button type="button" class="btns edit-btns" data-toggle="modal" th:data-target="${'#modal'+consumable.id}">UPDATE</button>
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
@@ -98,9 +98,9 @@
                                                         <p th:text="${'Current Amount: ' + consumable.amount + '-' + consumable.weightUnit}" class="text-muted"></p>
                                                         <form th:action="@{/inventory/consumables/{id}/edit(id=${consumable.id})}" th:method="post" th:object="${consumable}">
                                                             <div class="form-group form-field">
-                                                                <input class="input-text" type="number" name="amount" step=".01" th:value="${consumable.amount}">
+                                                                <input class="input-text text-right" type="number" name="amount" step=".01" th:value="${consumable.amount}">
                                                             </div>
-                                                            <button class="submit-btns" type="submit">Submit</button>
+                                                            <button class="btns add-btns" type="submit">Submit</button>
                                                         </form>
                                                     </div>
                                                 </div>

@@ -25,10 +25,10 @@
                     </div>
                     <div class="form-field" th:if="${isBaker}">
                         <label for="price" class="label">Set Price:$</label>
-                        <input class="input-text" type="number" step=".01" name="price" id="price" th:field="*{price}">
+                        <input class="input-text text-right" type="number" step=".01" name="price" id="price" th:field="*{price}">
                     </div>
                     <div class="form-field text-center">
-                        <button class="submit-btns" type="submit" id="picker">Order Image</button>
+                        <button class="btns edit-btns" type="submit" id="picker">Order Image</button>
                         <input class="input-text" type="hidden" id="fileupload" th:value="${order.orderImage}" name="uploadedImage">
                     </div>
                     <div class="form-field" th:if="${!isBaker}">
@@ -36,7 +36,7 @@
                         <input type="hidden" id="fileupload" th:value="${order.orderImage}" name="uploadedImage">
                     </div>
                     <div class="form-field text-center">
-                        <button class="submit-btns form-field" id="submit" type="submit">Save</button>
+                        <button class="btns add-btns form-field" id="submit" type="submit">Save</button>
                     </div>
                 </form>
             </div>

@@ -31,7 +31,7 @@
                 <td><span th:text="${order.baker.firstName}"></span> <span th:text="${order.baker.lastName}"></span></td>
                 <td th:text="${order.status}"></td>
 <!--                <td><a th:href="@{/orders/{id}(id=${order.id})}" class="btn btn-primary">More Details</a></td>-->
-                <td><button type="button" class="submit-btns" data-toggle="modal" th:data-target="${'#modal'+order.id}">More Info</button></td>
+                <td><button type="button" class="btns-no-shadow info-btns" data-toggle="modal" th:data-target="${'#modal'+order.id}">More Info</button></td>
             </tr>
             <!--                        BAKER-->
             <tr th:each="order : ${pendingOrders}" th:if="${#strings.toString(order.status) == 'PENDING' && order.baker == user && user.isBaker()}">
@@ -39,7 +39,7 @@
                 <td><span th:text="${order.owner.firstName}"></span><span th:text="${order.owner.lastName}"></span></td>
                 <td th:text="${order.status}"></td>
 <!--                <td><a th:href="@{/orders/{id}(id=${order.id})}" class="btn btn-primary">More Details</a></td>-->
-                <td><button type="button" class="submit-btns-no-shadow" data-toggle="modal" th:data-target="${'#modal'+order.id}">More Info</button></td>
+                <td><button type="button" class="btns-no-shadow info-btns" data-toggle="modal" th:data-target="${'#modal'+order.id}">More Info</button></td>
             </tr>
         </table>
     </div>
@@ -61,7 +61,7 @@
                 <td><span th:text="${order.baker.firstName}"> </span><span th:text="${order.baker.lastName}"></span></td>
                 <td th:text="${order.status}"></td>
 <!--                <td><a th:href="@{/orders/{id}(id=${order.id})}" class="submit-btns">More Details</a></td>-->
-                <td><button type="button" class="submit-btns-no-shadow" data-toggle="modal" th:data-target="${'#modal'+order.id}">More Info</button></td>
+                <td><button type="button" class="btns-no-shadow info-btns" data-toggle="modal" th:data-target="${'#modal'+order.id}">More Info</button></td>
             </tr>
             <!--                        BAKER-->
             <tr th:each="order : ${pendingOrders}" th:if="${#strings.toString(order.status) == 'ACCEPTED' && order.baker == user && user.isBaker()}">
@@ -69,7 +69,7 @@
                 <td><span th:text="${order.owner.firstName}"></span><span th:text="${order.owner.lastName}"></span></td>
                 <td th:text="${order.status}"></td>
 <!--                <td><a th:href="@{/orders/{id}(id=${order.id})}" class="submit-btns-no-shadow">More Details</a></td>-->
-                <td><button type="button" class="submit-btns-no-shadow" data-toggle="modal" th:data-target="${'#modal'+order.id}">More Info</button></td>
+                <td><button type="button" class="btns-no-shadow info-btns" data-toggle="modal" th:data-target="${'#modal'+order.id}">More Info</button></td>
             </tr>
         </table>
     </div>
@@ -78,7 +78,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="modal fade" th:id="${'modal'+order.id}">
-                    <div class="modal-dialog modal-md">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content edit_modal_section">
                             <div class="container">
                                 <div class="modal-header">
@@ -95,19 +95,19 @@
                                     <p class="display-text" th:if="${order.price != 0}" th:text="${'Price: $' + order.price}"></p>
                                 </div>
                                 <div class="modal-footer justify-content-evenly edit-form">
-                                    <a th:href="@{/orders/{id}/edit(id=${order.id})}" sec:authorize="isAuthenticated()" class="submit-btns text-center">Edit</a>
+                                    <a th:href="@{/orders/{id}/edit(id=${order.id})}" sec:authorize="isAuthenticated()" class="btns edit-btns text-center">Edit</a>
                                     <div th:if="${user.isBaker()}">
                                         <form class="form-field" th:if="${#strings.toString(order.status) == 'REJECTED'}" th:action="@{|/accept/${order.id}|}" th:method="post">
-                                            <button type="submit" class="submit-btns">Accept</button>
+                                            <button type="submit" class="btns add-btns">Accept</button>
                                         </form>
                                         <form class="form-field" th:if="${#strings.toString(order.status) == 'ACCEPTED'}" th:action="@{|/reject/${order.id}|}" th:method="post">
-                                            <button type="submit" class="submit-btns">Reject</button>
+                                            <button type="submit" class="btns delete-btns">Reject</button>
                                         </form>
                                         <form class="form-field" th:if="${#strings.toString(order.status) == 'PENDING'}" th:action="@{|/accept/${order.id}|}" th:method="post">
-                                            <button type="submit" class="submit-btns">Accept</button>
+                                            <button type="submit" class="btns add-btns">Accept</button>
                                         </form>
                                         <form class="form-field" th:if="${#strings.toString(order.status) == 'PENDING'}" th:action="@{|/reject/${order.id}|}" th:method="post">
-                                            <button type="submit" class="submit-btns">Reject</button>
+                                            <button type="submit" class="btns delete-btns">Reject</button>
                                         </form>
                                     </div>
                                 </div>

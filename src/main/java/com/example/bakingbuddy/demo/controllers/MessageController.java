@@ -6,6 +6,7 @@ import com.example.bakingbuddy.demo.Model.User;
 import com.example.bakingbuddy.demo.Repos.ImageRepository;
 import com.example.bakingbuddy.demo.Repos.MessageRepository;
 import com.example.bakingbuddy.demo.Repos.UserRepository;
+import com.example.bakingbuddy.demo.services.DateService;
 import com.example.bakingbuddy.demo.services.EmailService;
 import com.example.bakingbuddy.demo.services.MailgunService;
 import com.example.bakingbuddy.demo.services.UserService;
@@ -38,6 +39,9 @@ public class MessageController {
     @Autowired
     private ImageRepository imageDao;
 
+    @Autowired
+    private DateService dateService;
+
     @GetMapping("/inbox")
     public String inbox(Model model){
         if (!userService.isLoggedIn()){
@@ -58,6 +62,7 @@ public class MessageController {
         for (User sender : senderList){
             senderImages.put(sender.getId(), userService.profileImage(sender));
         }
+        model.addAttribute("messageDateTime", dateService.listOfMessageDates(userMessages));
         model.addAttribute("senderImages", senderImages);
         model.addAttribute("isBaker", sessionUser.isBaker());
         model.addAttribute("user", userDao.getOne(sessionUser.getId()));

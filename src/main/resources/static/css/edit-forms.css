@@ -121,7 +121,7 @@
     padding: 10px;
 }
 
-.submit-btns-no-shadow{
+.submit-btns-no-shadow:hover{
     background: linear-gradient(45deg, #f5f5f5, #92c8be);
 }
 

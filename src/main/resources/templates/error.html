@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="partials/bs-head :: head('OOPS')"></head>
-<body>
+<body class="errorbg">
     <div th:replace="partials/navbar :: side-menu"></div>
     <div th:replace="partials/navbar :: mobile-side-menu"></div>
     <header id="header">
@@ -20,7 +20,7 @@
 <!--    <a th:href="@{/}" class="btn btn-pill btn-danger">-->
 <!--        UH-OH-->
 <!--    </a>-->
-    <footer class="footer mt-auto py-3 footer-bg">
+    <footer class="footer footer-bottom mt-auto py-3 footer-bg">
         <div class="container w-100">
             <div class="footer-logo-box d-flex align-items-center">
                 <img class="footer-logo" src="https://cdn.filestackcontent.com/z2yTGxRyyPn3GUz3E7wJ" alt="baking buddy">
@@ -33,7 +33,7 @@
                     <li><a href="https://www.linkedin.com/in/austinvarnon/">Austin Varnon</a></li>
                     <li><a href="https://www.linkedin.com/in/armando-salazar89/">Armando Salazar</a></li>
                 </ul>
-
+                </div>
             </div>
             <p class="about-navigation list-text"><a th:href="@{/developers}" >About Us</a></p>
     </footer>

@@ -256,7 +256,8 @@ a {
     background-image: url("../img/aboutbg.jpg");
     background-position: center;
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: cover;
+    height: 100vh;
 }
 .footer-bg {
     background-color: var(--navigation);

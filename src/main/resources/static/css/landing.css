@@ -287,6 +287,11 @@ a {
     padding-top: 25px;
 }
 
+.footer-bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
 .footer-navigation {
     border-top: 1px solid var(--text);
     padding-top: 2rem;
